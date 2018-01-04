@@ -1,0 +1,35 @@
+<nav class="navbar navbar-toggleable-sm navbar-inverse bg-faded">
+    
+    <div class="container">
+        
+        {{!-- Navbar Toggler - Stays at right upper corner on small and extra small device --}}
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#primary-navigation" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        {{!-- Brand Name And Logo --}}
+        <a class="navbar-brand" href="#">
+            {{!-- <img src="/images/jabber-logo.png" alt="Jabber Logo" class="img-fluid"> --}}
+            <strong>JABBER</strong>
+        </a>
+
+        <div class="collapse navbar-collapse" id="primary-navigation">
+            
+            {{!-- Primary Navigation Menu - Stays at right upper corner on large and medium device --}}
+            <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/signin">Login</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Register</a>
+                </li>
+            
+                <li class="nav-item">
+                    <a class="nav-link" href="/contactus">Contact Us</a>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,65 @@
+/* Custom CSS File */
+/* --------------- */
+/* Project Title : JABBER */
+/* Team Members : 
+    1) Jamal
+    2) Jeff
+    3) Kalpesh
+    4) Peter */
+/* Starting Date : 01-03-2018 */
+/* Version : 1.0.0 */
+/* Copyright reserved 2018 */
+/* ----------------------- */
+
+html,
+body{
+    height: 100%;
+}
+.wrapper{
+    /* wrapper's height = calc(100% - (header's(navbar) height + footer's height)) */
+    /* This is to keep footer at the bottom of the page ( If page height is less than browser's height (100%) ) */
+    min-height: calc(100% - (56px + 64px)) !important;
+}
+/* Navbar */
+.navbar{
+    background-color: #293241;
+}
+
+/* Footer */
+.footer{
+    background-color: #293241;
+    color: #FFF;
+    padding: 20px 0;
+    margin-top: 1px;
+}
+
+/* Media Queries */
+/* ------------- */
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) {
+    /* Alpha 6 version of bootstrap 4 behaves strange on xm devices with 'container' class */
+    /* This is fix(hack) to it untill theu come up with any changes */
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px){ 
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+}
