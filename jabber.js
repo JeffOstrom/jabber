@@ -13,24 +13,23 @@ app.set('view engine', 'handlebars');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : false}));
-// app.use(cookieParser());
 
 /* Set Static Folder */
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
     res.render('index');
 });
 
-app.get('/signin', function(req, res){
+app.get('/signin', function(req, res) {
     res.render('signin');
 });
 
-app.get('/signup', function(req, res){
+app.get('/signup', function(req, res) {
     res.render('signup');
 });
 
-app.get('/contactus', function(req, res){
+app.get('/contactus', function(req, res) {
     res.render('contactus');
 });
 

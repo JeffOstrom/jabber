@@ -1,24 +1,24 @@
 {
-  "name": "jabber",
-  "version": "1.0.0",
-  "description": "Full Stack Web Application",
-  "main": "jabber.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bootcamp-group/jabber.git"
-  },
-  "author": "Jamal, Jeff, Kalpesh, Peter",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bootcamp-group/jabber/issues"
-  },
-  "homepage": "https://github.com/bootcamp-group/jabber#readme",
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "express-handlebars": "^3.0.0"
-  }
+	"name": "jabber",
+	"version": "1.0.0",
+	"description": "Full Stack Web Application",
+	"main": "jabber.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bootcamp-group/jabber.git"
+	},
+	"author": "Jamal, Jeff, Kalpesh, Peter",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/bootcamp-group/jabber/issues"
+	},
+	"homepage": "https://github.com/bootcamp-group/jabber#readme",
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"express": "^4.16.2",
+		"express-handlebars": "^3.0.0"
+	}
 }
