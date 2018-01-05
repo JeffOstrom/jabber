@@ -22,7 +22,7 @@
 + Jamal
 + Jeff
 + [Kalpesh](https://github.com/kapu9899)
-+ Peter
++ [Peter](https://github.com/ptpeck357)
 
 ## License
 + Open Source
