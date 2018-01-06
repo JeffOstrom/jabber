@@ -9,6 +9,8 @@
 + Put the opening bracket at the end of the first line
 + Use one space before the opening bracket
 + Put the closing bracket on a new line, without leading spaces
++ Use /* ... */ this comment style. Even for single line
++ Add comments to your code
 
 # General rules for object definitions
 
@@ -18,5 +20,4 @@
 + Do not add a comma after the last property-value pair
 + Place the closing bracket on a new line, without leading spaces
 + Always end an object definition with a semicolon
-
 + Use lower case file names

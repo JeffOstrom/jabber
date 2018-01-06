@@ -12,22 +12,94 @@
 /* ----------------------- */
 
 html,
-body{
+body {
     height: 100%;
+    background-color: #EEE;
+    font-family: 'Abel', sans-serif;
 }
-.wrapper{
+
+/* Navbar */
+.navbar-brand:hover {
+    color: #E84855 !important;
+}
+.navbar-nav > .nav-item > .nav-link:hover {
+    color: #E84855 !important;
+}
+.jabber-logo {
+    width: 40px;
+}
+
+/* Jumbotron */
+.jumbotron {
+    background-color: #FFF;
+    border-radius: 0;
+}
+.jumbotron > .container-fluid > .btn:hover {
+    background-color: #2D3047 !important;
+}
+
+/* Sign In Section */
+.card-sign-in,
+.card-sign-up,
+.card-contact-us {
+    margin: 20px 0px;
+    border: 2px solid #1B998B;
+    box-shadow: 5px 5px 5px #e3e3e3;
+}
+.btn-signin:hover {
+    cursor: pointer;
+    background-color: #2D3047 !important;
+}
+
+/* Custom classes */
+.wrapper {
     /* wrapper's height = calc(100% - (header's(navbar) height + footer's height)) */
     /* This is to keep footer at the bottom of the page ( If page height is less than browser's height (100%) ) */
     min-height: calc(100% - (56px + 64px)) !important;
 }
-/* Navbar */
-.navbar{
-    background-color: #293241;
+.hr-heading{
+	max-width: 100%;
+	border-width: 3px;
+    border-color: #FF9B71;
+}
+
+/* Background color classes */
+.bg-junglegreen {
+    background-color: #1B998B !important;
+}
+.bg-gunmetal {
+    background-color: #2D3047 !important;
+}
+.bg-pastelyellow {
+    background-color: #FFFD82 !important;
+}
+.bg-pinkorange {
+    background-color: #FF9B71 !important;
+}
+.bg-desire {
+    background-color: #E84855 !important;
+}
+
+/* Text color classes */
+.text-junglegreen {
+    color: #1B998B !important;
+}
+.text-gunmetal {
+    color: #2D3047 !important;
+}
+.text-pastelyellow {
+    color: #FFFD82 !important;
+}
+.text-pinkorange {
+    color: #FF9B71 !important;
+}
+.text-desire {
+    color: #E84855 !important;
 }
 
 /* Footer */
-.footer{
-    background-color: #293241;
+.footer {
+    background-color: #2D3047;
     color: #FFF;
     padding: 20px 0;
     margin-top: 1px;
@@ -38,7 +110,7 @@ body{
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575px) {
     /* Alpha 6 version of bootstrap 4 behaves strange on xm devices with 'container' class */
-    /* This is fix(hack) to it untill theu come up with any changes */
+    /* This is fix(hack) to it untill they come up with solution */
     .container {
         margin-left: 0;
         margin-right: 0;
@@ -46,7 +118,7 @@ body{
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) and (max-width: 767px){ 
+@media (min-width: 576px) and (max-width: 767px) { 
 
 }
 

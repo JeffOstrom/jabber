@@ -1,7 +1,51 @@
-<section class="container wrapper">
+<section class="container wrapper section-contact-us">
     <div class="row">
-        <div class="col">
-            <h1>This is contact us page</h1>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 offset-xl-3 offset-lg-3 offset-0">
+            
+            <div class="card card-contact-us">
+                <div class="card-block">
+                    <h4 class="card-title">Contact Us</h4>
+                    <hr class="hr-heading">
+                    <form action='/users/contactus' method='POST' class="form-contact-us">
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-user-circle text-white"></i></div>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-at text-white"></i></div>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-phone text-white"></i></div>
+                                <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <textarea class="form-control" id="message" name="message" rows="3" placeholder="Message"></textarea>
+                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-align-justify text-white"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-right">
+                            <button type='submit' class="btn bg-junglegreen btn-signin text-white">
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;Submit
+                            </button><br>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
