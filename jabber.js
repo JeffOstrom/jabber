@@ -3,6 +3,9 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 
+var index = require('./routes/index');
+var users = require('./routes/user');
+
 /* Init App */
 var app = express();
 
@@ -17,21 +20,8 @@ app.use(bodyParser.urlencoded({ extended : false}));
 /* Set Static Folder */
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(req, res) {
-    res.render('index');
-});
-
-app.get('/signin', function(req, res) {
-    res.render('signin');
-});
-
-app.get('/signup', function(req, res) {
-    res.render('signup');
-});
-
-app.get('/contactus', function(req, res) {
-    res.render('contactus');
-});
+app.use('/', index);
+app.use('/', users);
 
 app.set('port', (process.env.PORT || 3000));
 
