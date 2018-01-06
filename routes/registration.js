@@ -1,14 +1,17 @@
 var express 		= require('express');
 var router 			= express.Router();
-var bcrypt 			= require('bcryptjs');
+
+var bcrypt 			= require('bcrypt');
+var salt 			= bcrypt.genSaltSync(10);
+var hash 			= bcrypt.hashSync("my password", salt);
+
 var passport 		= require('passport'), 
 var LocalStrategy 	= require('passport-local').Strategy;
-var db				= require("../models")
 
 var User 			= require("..models/accounts")
 
 passport.serializeUser(function(user, done) {
-  	done(null, user._id);
+  	done(null, user);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -18,10 +21,6 @@ passport.deserializeUser(function(id, done) {
 });
 
 //Register User
-router.get('/signup', function(req, res, next) {
-	res.render('signup');
-});
-
 router.post('/signup', function(req, res, next) {
 	
 	var firstName 	= req.body.username;
@@ -30,6 +29,7 @@ router.post('/signup', function(req, res, next) {
 	var	password 	= req.body.password;
 	//Confirm Password
 	var password2	= req.body.password2;
+	var bio			= req.body.bio;
 
 	//Validating field forms
 	req.checkBody('firstname', 	'Name is required').notEmpty();
@@ -46,6 +46,14 @@ router.post('/signup', function(req, res, next) {
 	} 
 });
 
+/*Login*/
+router.post('/login', 
+  	passport.authenticate('local', { failureRedirect: '/login' }),
+  	function(req, res) {
+    	res.redirect('/dashboard');
+  	};
+);
+
 passport.use('local.signup', new LocalStrategy ({
 	usernameField: 'email',
 	usernameField: 'email',
@@ -57,8 +65,11 @@ passport.use('local.signup', new LocalStrategy ({
 			}
 
 			if(user) {
-				return done(null, user);
-			} else {
+				req.flash('msgError', 'User Already Exists')
+				return done(null, false);
+			} 
+
+			if(!user) {
 				return done(null, false, { message: 'Incorrect username.' });
 			}
 
@@ -72,6 +83,7 @@ passport.use('local.signup', new LocalStrategy ({
 			newUser.lastname	= req.body.lastname;
 			newUser.email		= req.body.email;
 			newUser.password 	= req.body.password;
+			newUser.bio			= req.body.bio;
 
 			newUser.save(function(err){
 				if(err) {
