@@ -7,9 +7,15 @@ var dashboard = require('./routes/dashboard.js')
 var index = require('./routes/index.js')
 var login = require('./routes/login.js')
 var registration = require('./routes/registration.js')
-var users = require('./routes/user.js')
-var db = require('./models')
 
+var users = require('./routes/user.js')
+var db = require('./models');
+
+var db = require("./models");
+
+
+var index = require('./routes/index');
+var users = require('./routes/user');
 
 /* Init App */
 var app = express();
@@ -26,7 +32,6 @@ app.use(bodyParser.urlencoded({ extended : false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-//app.use('/', users)
 app.use('/', contactus);
 app.use('/', dashboard);
 app.use('/', login);

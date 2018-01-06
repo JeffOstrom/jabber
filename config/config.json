@@ -1,9 +1,13 @@
 {
 	"development": {
 		"username": "root",
+<<<<<<< HEAD
 		"password": null,
+=======
+		"password": "admin",
+>>>>>>> 81dac1d69f0e1eb331e8f54d620abf6796229a2a
 		"database": "jabber",
-		"host": "127.0.0.1",
+		"host": "localhost",
 		"dialect": "mysql"
 	},
 	"test": {
