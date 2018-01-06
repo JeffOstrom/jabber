@@ -10,6 +10,10 @@
 + Bcrypt JS
 
 ## Resources
++ [Color Scheme](https://coolors.co/1b998b-2d3047-fffd82-ff9b71-e84855)
++ [Icons](https://fontawesome.com/)
++ [Fonts](https://fonts.google.com/)
++ [Logo](https://logomakr.com/5t6B2i)
 
 ## Node Package Reference
 + [Express](https://www.npmjs.com/package/express)
