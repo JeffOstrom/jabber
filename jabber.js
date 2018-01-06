@@ -7,7 +7,9 @@ var dashboard = require('./routes/dashboard.js')
 var index = require('./routes/index.js')
 var login = require('./routes/login.js')
 var registration = require('./routes/registration.js')
-var users = require('./routes/user.js')
+var users = require('./routes/user.js');
+
+var db = require("./models");
 
 
 var index = require('./routes/index');
@@ -35,6 +37,8 @@ app.use('/', registration);
 
 app.set('port', (process.env.PORT || 3000));
 
-app.listen(app.get('port'), function(){
+db.sequelize.sync().then(function() {
+	app.listen(app.get('port'), function(){
     console.log('Server started on port ' + app.get('port'));
+	});
 });
