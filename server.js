@@ -17,7 +17,7 @@ APP.use(BODYPARSER.json({ type: "application/vnd.api+json" }));
 APP.use(EXPRESS.static(PATH.join(__dirname, '/public')));
 
 
-// ROUTES might need to adjusted!!
+// ROUTES might need to adjusted
 var login = require('./routes/login.js');
 APP.use("/", login);
 
