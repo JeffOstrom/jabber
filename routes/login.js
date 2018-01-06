@@ -1,10 +1,11 @@
+
 var path = require("path");
 var express = require('express');
 var router = express.Router();
 
-
-router.get('/contactus', function(req, res) {
-    res.render('contactus');
+router.get('/signin', function(req, res) {
+    res.render('signin');
 });
+
 
 module.exports = router;

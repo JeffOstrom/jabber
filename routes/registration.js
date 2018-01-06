@@ -5,10 +5,10 @@ var bcrypt = require('bcrypt');
 var salt = bcrypt.genSaltSync(10);
 var hash = bcrypt.hashSync("my password", salt);
 
-var passport = require('passport'), 
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require("..models/accounts")
+// var User = require("..models/accounts");
 
 passport.serializeUser(function(user, done) {
   	done(null, user);
@@ -40,10 +40,10 @@ router.post('/signup', function(req, res, next) {
 	req.checkBody('bio', 		'Please tell us something about yourself').notEmpty();
 	req.checkBody('profilepic', 'Please upload a profile picture').notEmpty();
 
-	var errors = req.validationErrors()
+	var errors = req.validationErrors();
 	if (errors) {
 		res.render('signup')
-	} 
+	} ;
 });
 
 /*Login*/
@@ -51,7 +51,7 @@ router.post('/signin',
   	passport.authenticate('local', { failureRedirect: '/signin' }),
   	function(req, res) {
     	res.redirect('/dashboard');
-  	};
+  	}
 );
 
 passport.use('local.signup', new LocalStrategy ({
@@ -94,7 +94,8 @@ passport.use('local.signup', new LocalStrategy ({
 				return done(null, newUser);
 			});
 		});
-	};
+	}
 ));
 
-module.exports		= router;
+module.exports = router;
+
