@@ -44,7 +44,7 @@ body {
 .card-contact-us {
     margin: 20px 0px;
     border: 2px solid #1B998B;
-    box-shadow: 5px 5px 5px #e3e3e3;
+    box-shadow: 5px 5px 5px #CCC;
 }
 .btn-signin:hover {
     cursor: pointer;
