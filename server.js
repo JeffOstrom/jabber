@@ -18,8 +18,7 @@ APP.use(EXPRESS.static(PATH.join(__dirname, '/public')));
 
 
 
-// ROUTES might need to adjust
-
+// ROUTES might need to adjusted
 var login = require('./routes/login.js');
 APP.use("/", login);
 
