@@ -24,7 +24,7 @@
 
 ## Contributors
 + Jamal
-+ Jeff
++ [Jeff](https://github.com/JeffOstrom)
 + [Kalpesh](https://github.com/kapu9899)
 + [Peter](https://github.com/ptpeck357)
 
