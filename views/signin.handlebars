@@ -1,7 +1,37 @@
-<section class="container wrapper">
+<section class="container wrapper section-sign-in">
     <div class="row">
-        <div class="col">
-            <h1>This is signin page</h1>
-        </div>
-    </div>
-</section>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 offset-xl-3 offset-lg-3 offset-0">
+            
+            <div class="card card-sign-in">
+                <div class="card-block">
+                    <h4 class="card-title">Sign In</h4>
+                    <hr class="hr-heading">
+                    <form action='/users/signin' method='POST' class="form-sign-in">
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-at text-white"></i></div>
+                                <input type="email" class="form-control" id="username" name="username" placeholder="Email">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-key text-white"></i></div>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            </div>
+                        </div>
+
+                        <div class="form-group text-right">
+                            <button type='submit' class="btn bg-junglegreen btn-signin text-white">
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;Submit
+                            </button><br>
+                        </div>
+
+                    </form>
+                </div>
+            </div>{{!-- card --}}
+
+        </div>{{!-- col --}}
+    </div>{{!-- row --}}
+</section>{{!-- section --}}

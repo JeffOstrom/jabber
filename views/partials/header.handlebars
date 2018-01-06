@@ -1,4 +1,4 @@
-<nav class="navbar navbar-toggleable-sm navbar-inverse bg-faded">
+<nav class="navbar navbar-toggleable-sm navbar-inverse bg-gunmetal">
     
     <div class="container">
         
@@ -8,8 +8,8 @@
         </button>
 
         {{!-- Brand Name And Logo --}}
-        <a class="navbar-brand" href="#">
-            {{!-- <img src="/images/jabber-logo.png" alt="Jabber Logo" class="img-fluid"> --}}
+        <a class="navbar-brand text-pastelyellow" href="/">
+            <img src="/images/png/jabber-logo.png" alt="Jabber Logo" class="img-fluid jabber-logo">
             <strong>JABBER</strong>
         </a>
 
@@ -18,18 +18,24 @@
             {{!-- Primary Navigation Menu - Stays at right upper corner on large and medium device --}}
             <ul class="navbar-nav ml-auto mt-2 mt-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/signin">Login</a>
+                    <a class="nav-link text-pastelyellow" href="/signin">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
                 </li>
             
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup">Register</a>
+                    <a class="nav-link text-pastelyellow" href="/signup">
+                        <i class="fas fa-user-plus"></i> Register
+                    </a>
                 </li>
             
                 <li class="nav-item">
-                    <a class="nav-link" href="/contactus">Contact Us</a>
+                    <a class="nav-link text-pastelyellow" href="/contactus">
+                        <i class="fas fa-envelope"></i> Contact Us
+                    </a>
                 </li>
             </ul>
             
-        </div>
-    </div>
-</nav>
+        </div>{{!-- primary menu --}}
+    </div> {{!-- container --}}
+</nav> {{!-- nav --}}
