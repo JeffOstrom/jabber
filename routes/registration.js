@@ -8,7 +8,7 @@ var hash = bcrypt.hashSync("my password", salt);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// var User = require("..models/accounts");
+var User = require("../models/accounts");
 
 passport.serializeUser(function(user, done) {
   	done(null, user);
