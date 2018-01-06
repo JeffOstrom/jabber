@@ -2,8 +2,9 @@
 	"development": {
 		"username": "root",
 		"password": "123",
+
 		"database": "jabber",
-		"host": "127.0.0.1",
+		"host": "localhost",
 		"dialect": "mysql"
 	},
 	"test": {
