@@ -45,8 +45,8 @@ router.post('/signup', function(req, res, next) {
 	};
 
 	//Validating field forms
-	req.checkBody('firstname', 'Name is required').notEmpty();
-	req.checkBody('lastname', 'Name is required').notEmpty();
+	req.checkBody('firstname', 'Firstname is required').notEmpty();
+	req.checkBody('lastname', 'Lastname is required').notEmpty();
 	req.checkBody('email', 'Email is required').isEmail();
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
@@ -56,11 +56,12 @@ router.post('/signup', function(req, res, next) {
 	var errors = req.validationErrors();
     if(errors){
         res.render('signup', {
-            error : errors
+            errors : errors
         });
     }
     else{
     	db.User.create(newUser).then(function() {
+			req.flash('success_msg', 'You are registered and can now login');
 			res.redirect('/signin');
 		});
     }

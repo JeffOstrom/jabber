@@ -73,6 +73,9 @@ input:focus {
     border-width: 3px;
     border-color: #FF9B71;
 }
+.notifications {
+    margin-top: 20px;
+}
 
 /* Background color classes */
 .bg-junglegreen {
