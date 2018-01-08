@@ -1,4 +1,17 @@
 <section class="container wrapper section-contact-us">
+
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 offset-xl-3 offset-lg-3 offset-0">
+            {{#if errs}}
+                {{#each errs}}
+                    <div class="alert alert-danger">
+                        {{msg}}
+                    </div>
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 offset-xl-3 offset-lg-3 offset-0">
             

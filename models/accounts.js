@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                len: [1, 50]
+                len: [1, 50],
+                isAlpha: true
             }
         },
 
@@ -13,7 +14,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-            len: [1, 50]
+                len: [1, 50],
+                isAlpha: true
             }
         },
 
@@ -21,26 +23,25 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-            len: [1, 50],
-            isEmail : true
+                len: [1, 50],
+                isEmail : true
             }
         },
 
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-            len: [1, 50]
-            }
-        },
-
-        bio: {
-            type: DataTypes.TEXT
         }
 
-        // profilepicture: {
-        //     type: DataTypes.text
+        // bio: {
+        //     type: DataTypes.TEXT,
+        //     allowNull: true
         // },
+
+        // profilepicture: {
+        //     type: DataTypes.STRING,
+        //     allowNull: true
+        // }
 
   });
 
