@@ -40,12 +40,12 @@ router.post('/signup', function(req, res){
 
     	/*Creating new user*/
         var newUser = new User();
-			newUser.firstname = req.body.firstname;
-			newUser.lastname = req.body.lastname;
-			newUser.email = req.body.email;
-			newUser.password = req.body.password;
-			newUser.bio	= req.body.bio;
-			newUser.profilepic = req.body.profilepic;
+			newUser.firstname = firstname;
+			newUser.lastname = lastname;
+			newUser.email = email;
+			newUser.password = password;
+			newUser.bio	= bio;
+			newUser.profilepic = profilepic;
 
 		/*Hiding the user's password in the database*/
         bcrypt.genSalt(10, function(err, salt) {

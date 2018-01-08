@@ -2,11 +2,12 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
-var contactus = require('./routes/contactus.js')
-var dashboard = require('./routes/dashboard.js')
-var index = require('./routes/index.js')
-var login = require('./routes/login.js')
-var registration = require('./routes/registration.js')
+var contactus = require('./routes/contactus.js');
+var dashboard = require('./routes/dashboard.js');
+var index = require('./routes/index.js');
+var login = require('./routes/login.js');
+var registration = require('./routes/registration.js');
+var expressValidator = require('express-validator');
 
 var users = require('./routes/user.js')
 var db = require('./models');
@@ -33,6 +34,7 @@ app.use('/', contactus);
 app.use('/', dashboard);
 app.use('/', login);
 app.use('/', registration);
+app.use(expressValidator());
 
 app.set('port', (process.env.PORT || 3000));
 
