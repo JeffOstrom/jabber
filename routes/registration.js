@@ -35,7 +35,7 @@ router.post('/signup', function(req, res){
 
     if(errors){
         res.render('signup', {
-            errors : errors
+            errs : errors
         })
     } else	{
     	db.User.findOne({
@@ -60,7 +60,7 @@ router.post('/signup', function(req, res){
 		            bcrypt.hash(newUser.password, salt, function(err, hash) {
 		                newUser.password = hash;
 		                db.User.create(newUser).then(function(user){
-		                    // res.flash('success_msg', 'You are registered and can now login');
+		                    res.flash('success_msg', 'You are registered and can now login');
 		                    console.log("You are registered and can now login")
 				            res.redirect('/signin');
 		                });
@@ -70,7 +70,7 @@ router.post('/signup', function(req, res){
 	    	} else { 
                 console.log("Email already registered with us")
                 res.redirect('/signup');
-                req.flash('error_msg', 'Email already registered with us');
+                req.flash('errs', 'Email already registered with us');
             }
 		});	
     };
@@ -88,13 +88,13 @@ passport.use(new LocalStrategy(
 	    	}
 
 	        if(user === null){
-	            return done(null, false, {error: 'Unknown User'});
+	            return done(null, false, {errors: 'Unknown User'});
 	        } else {
 	            bcrypt.compare(password, user.password, function(err, isMatch){
 	                if(isMatch){
 	                    return done(null, user);
 	                } else {
-	                    return done(null, false, {error: 'Invalid Password'});
+	                    return done(null, false, {errors: 'Invalid Password'});
 	                };
 	            });
 	        }

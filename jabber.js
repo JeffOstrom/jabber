@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var exphbs = require('express-handlebars');
 
 var session = require('express-session');
-var flash = require('req-flash');
+var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -23,17 +23,50 @@ var index = require('./routes/index');
 
 /* Init App */
 var app = express();
-app.use(expressValidator());
-app.use(cookieParser());
-app.use(session({secret: '123'}));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
 
 /* View Engine */
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({ defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
+
+app.use(cookieParser('asdf33g4w4hghjkuil8saef345')); // cookie parser must use the same secret as express-session.
+
+const cookieExpirationDate = new Date();
+const cookieExpirationDays = 365;
+cookieExpirationDate.setDate(cookieExpirationDate.getDate() + cookieExpirationDays);
+
+app.use(session({
+	secret: 'asdf33g4w4hghjkuil8saef345', // must match with the secret for cookie-parser
+	resave: true,
+	saveUninitialized: true,
+	cookie: {
+	    httpOnly: true,
+	    expires: cookieExpirationDate // use expires instead of maxAge
+	}
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* Express Validator */
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.')
+        , root    = namespace.shift()
+        , formParam = root;
+
+        while(namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg   : msg,
+            value : value
+        };
+    }
+}));
+
+app.use(flash());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : false}));
