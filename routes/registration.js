@@ -68,9 +68,9 @@ router.post('/signup', function(req, res){
 		        });
 
 	    	} else { 
-                // req.flash('success_msg', 'Email already registered with us');
                 console.log("Email already registered with us")
                 res.redirect('/signup');
+                req.flash('error_msg', 'Email already registered with us');
             }
 		});	
     };
@@ -88,13 +88,13 @@ passport.use(new LocalStrategy(
 	    	}
 
 	        if(user === null){
-	            return done(null, false, {message: 'Unknown User'});
+	            return done(null, false, {error: 'Unknown User'});
 	        } else {
 	            bcrypt.compare(password, user.password, function(err, isMatch){
 	                if(isMatch){
 	                    return done(null, user);
 	                } else {
-	                    return done(null, false, {message: 'Invalid Password'});
+	                    return done(null, false, {error: 'Invalid Password'});
 	                };
 	            });
 	        }
