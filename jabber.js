@@ -11,9 +11,6 @@ var registration = require('./routes/registration.js')
 var users = require('./routes/user.js')
 var db = require('./models');
 
-var db = require("./models");
-
-
 var index = require('./routes/index');
 var users = require('./routes/user');
 
