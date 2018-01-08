@@ -2,22 +2,28 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
+
+var session = require('express-session');
+var flash = require('connect-flash');
+var expressValidator = require('express-validator');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+/*Database*/
+var db = require('./models');
+
+/*Routes*/
 var contactus = require('./routes/contactus.js');
 var dashboard = require('./routes/dashboard.js');
 var index = require('./routes/index.js');
 var login = require('./routes/login.js');
 var registration = require('./routes/registration.js');
-var expressValidator = require('express-validator');
-
-var users = require('./routes/user.js')
-var db = require('./models');
-
 var index = require('./routes/index');
-var users = require('./routes/user');
 
 /* Init App */
 var app = express();
 app.use(expressValidator());
+app.use(flash());
 
 /* View Engine */
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +36,8 @@ app.use(bodyParser.urlencoded({ extended : false}));
 /* Set Static Folder */
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', index);
 app.use('/', contactus);
 app.use('/', dashboard);

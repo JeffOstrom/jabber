@@ -60,14 +60,16 @@ router.post('/signup', function(req, res){
 		            bcrypt.hash(newUser.password, salt, function(err, hash) {
 		                newUser.password = hash;
 		                db.User.create(newUser).then(function(user){
-		                    console.log('success_msg', 'You are registered and can now login');
+		                    // res.flash('success_msg', 'You are registered and can now login');
+		                    console.log("You are registered and can now login")
 				            res.redirect('/signin');
 		                });
 		            });
 		        });
 
 	    	} else { 
-                console.log('success_msg', 'Email already registered with us');
+                // req.flash('success_msg', 'Email already registered with us');
+                console.log("Email already registered with us")
                 res.redirect('/signup');
             }
 		});	
@@ -75,26 +77,25 @@ router.post('/signup', function(req, res){
 });
 
 passport.use(new LocalStrategy(
-    function(username, password, done) {
+    function(email, password, done) {
 	    db.User.findOne({
 	        where: {
-	            name: username
+	            email: email
 	          }
-	    }).then(function(user){
+	    }).then(function(user, err){
 	    	if(err) {
 	    		return done(err);
 	    	}
 
-	        if(user === null || user.dataValues.name !== username){
+	        if(user === null){
 	            return done(null, false, {message: 'Unknown User'});
 	        } else {
 	            bcrypt.compare(password, user.password, function(err, isMatch){
 	                if(isMatch){
 	                    return done(null, user);
-	                }
-	                else{
+	                } else {
 	                    return done(null, false, {message: 'Invalid Password'});
-	                }
+	                };
 	            });
 	        }
 	    });
@@ -108,7 +109,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     db.User.findOne({
         where: {
-            id: id
+            id: email
          }
     }).then(function(user){
         done(null, user.dataValues);
