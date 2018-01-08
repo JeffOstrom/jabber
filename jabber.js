@@ -17,6 +17,7 @@ var users = require('./routes/user');
 
 /* Init App */
 var app = express();
+app.use(expressValidator());
 
 /* View Engine */
 app.set('views', path.join(__dirname, 'views'));
@@ -34,8 +35,6 @@ app.use('/', contactus);
 app.use('/', dashboard);
 app.use('/', login);
 app.use('/', registration);
-app.use(expressValidator());
-
 app.set('port', (process.env.PORT || 3000));
 
 db.sequelize.sync({alter: true}).then(function() {
