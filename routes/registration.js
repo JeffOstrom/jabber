@@ -14,19 +14,28 @@ router.get('/signup', function(req, res){
 /* Register */
 router.post('/signup', function(req, res){
 
-    var firstname = req.body.firstname;
-	var	lastname = req.body.lastname;
-	var	email = req.body.email;
-	var	contact = req.body.contact;
+   var firstname = req.body.firstname;
+	var lastname = req.body.lastname;
+	var email = req.body.email;
+	var contact = req.body.contact;
 	var cpassword = req.body.cpassword;
+
+//Register User
+router.post('/signup', function(req, res, next) {
+	
+	var firstName = req.body.username;
+	var lastname = req.body.lastname;
+	var email = req.body.email;
+	var password = req.body.password;
+	var password2 = req.body.password2;
 	var bio	= req.body.bio;
 
     //Validating field forms
-	req.checkBody('firstname', 	'Name is required').notEmpty();
-	req.checkBody('lastname',	'Name is required').notEmpty();
-	req.checkBody('email', 		'Email is required').isEmail();
-	req.checkBody('password', 	'Password is required').notEmpty();
-	req.checkBody('cpassword', 	'Password does not match').equals(req.body.password);
+	req.checkBody('firstname', 'Name is required').notEmpty();
+	req.checkBody('lastname', 'Name is required').notEmpty();
+	req.checkBody('email', 'Email is required').isEmail();
+	req.checkBody('password', 'Password is required').notEmpty();
+	req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
 	// req.checkBody('bio', 		'Please tell us something about yourself').notEmpty();
 	// req.checkBody('profilepic', 'Please upload a profile picture').notEmpty();
 
@@ -38,14 +47,14 @@ router.post('/signup', function(req, res){
         })
     } else	{
     	db.User.findOne({
-	        where: {
-	            email: email
-	          }
-	    }).then(function(user){
+	       where: {
+	           email: email
+	       }
+	   }).then(function(user){
 	        if(user === null){
 
 	        	/*Creating new user*/
-		        var newUser = {
+		      var newUser = {
 					firstname: firstname,
 					lastname: lastname,
 					email: email,
@@ -55,50 +64,50 @@ router.post('/signup', function(req, res){
 				};
 
 				/*Hiding the user's password in the database*/
-		        bcrypt.genSalt(10, function(err, salt) {
-		            bcrypt.hash(newUser.password, salt, function(err, hash) {
-		                newUser.password = hash;
-		                db.User.create(newUser).then(function(user){
-		                    req.flash('success_msg', 'You are registered and can now login');
-		                    console.log("You are registered and can now login")
+		      bcrypt.genSalt(10, function(err, salt) {
+		          bcrypt.hash(newUser.password, salt, function(err, hash) {
+		              newUser.password = hash;
+		              db.User.create(newUser).then(function(user){
+		                  req.flash('success_msg', 'You are registered and can now login');
+		                  console.log("You are registered and can now login")
 				            res.redirect('/signin');
-		                });
-		            });
-		        });
+		              });
+		          });
+		      });
 
 	    	} else { 
-                console.log("Email already registered with us")
-                res.redirect('/signup');
-                req.flash('error_msg', 'Email already registered with us');
-            }
+              console.log("Email already registered with us")
+              res.redirect('/signup');
+              req.flash('error_msg', 'Email already registered with us');
+          }
 		});	
     };
 });
 
 passport.use(new LocalStrategy(
     function(email, password, done) {
-	    db.User.findOne({
-	        where: {
-	            email: email
+	     db.User.findOne({
+	          where: {
+	              email: email
 	          }
 	    }).then(function(user, err){
 	    	if(err) {
 	    		return done(err);
 	    	}
 
-	        if(user === null){
-	            return done(null, false, {error: 'Unknown User'});
-	        } else {
-	            bcrypt.compare(password, user.password, function(err, isMatch){
-	                if(isMatch){
-	                    return done(null, user);
-	                } else {
-	                    return done(null, false, {error: 'Invalid Password'});
-	                };
-	            });
-	        }
-	    });
-	}
+	      if(user === null){
+	          return done(null, false, {error: 'Unknown User'});
+	      } else {
+	          bcrypt.compare(password, user.password, function(err, isMatch){
+	              if(isMatch){
+	                  return done(null, user);
+	              } else {
+	                  return done(null, false, {error: 'Invalid Password'});
+	              };
+	          });
+	      }
+	   });
+	 }
 ));
 
 passport.serializeUser(function(user, done) {
