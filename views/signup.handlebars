@@ -3,14 +3,18 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12 offset-xl-3 offset-lg-3 offset-0">
             
             <div class="card card-sign-up">
-                <div class="card-block">
+                <div class="card-body">
                     <h4 class="card-title">Sign Up</h4>
-                    <hr class="hr-heading">
-                    <form action='/users/signup' method='POST' class="form-sign-up">
+                    <hr class="hr-full">
+                    <form action='/signup' method='POST' class="form-sign-up">
 
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-user-circle text-white"></i></div>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-junglegreen" id="basic-addon1">
+                                        <i class="fas fa-user-circle text-white"></i>
+                                    </span>
+                                </div>
                                 <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name">
                             </div>
                         </div>
@@ -18,40 +22,55 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
-                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-user-circle text-white"></i></div>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-junglegreen" id="basic-addon1">
+                                        <i class="fas fa-user-circle text-white"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-at text-white"></i></div>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-junglegreen" id="basic-addon1">
+                                        <i class="fas fa-at text-white"></i>
+                                    </span>
+                                </div>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Email">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-key text-white"></i></div>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-junglegreen" id="basic-addon1">
+                                        <i class="fas fa-key text-white"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-key text-white"></i></div>
-                                <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-junglegreen" id="basic-addon1">
+                                        <i class="fas fa-key text-white"></i>
+                                    </span>
+                                </div>
+                                <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="input-group">
                                 <textarea class="form-control" id="bio" name="bio" rows="3" placeholder="Tell us something about you"></textarea>
-                                <div class="input-group-addon bg-junglegreen"><i class="fas fa-align-justify text-white"></i></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="profilepic">Profile Picture</label>
+                            <label for="profilepic"><i class="fas fa-image"></i> Profile Picture</label>
                             <input type="file" class="form-control-file" id="profilepic" name="profilepic" aria-describedby="fileHelp">
                             <small id="fileHelp" class="form-text text-muted">File should be less than 3 mb</small>
                         </div>

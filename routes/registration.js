@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-
-var bcrypt = require('bcrypt');
-var salt = bcrypt.genSaltSync(10);
-var hash = bcrypt.hashSync("my password", salt);
+var bcrypt = require('bcryptjs');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var db = require('../models');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -20,30 +20,50 @@ passport.deserializeUser(function(id, done) {
   	});
 });
 
+router.get('/signup', function(req, res){
+	res.render('signup');
+});
+
 //Register User
 router.post('/signup', function(req, res, next) {
 	
-	var firstName = req.body.username;
+	var firstname = req.body.firstname;
 	var	lastname = req.body.lastname;
 	var	email = req.body.email;
 	var	password = req.body.password;
-	var password2 = req.body.password2;
+	var cpassword = req.body.cpassword;
 	var bio	= req.body.bio;
-	var profilepic = req.body.profilepic;
+	// var profilepic = req.body.profilepic;
+
+	console.log(firstname + " " + lastname + " " + email + " " + password + " " + bio);
+	var newUser = {
+		firstname: firstname,
+		lastname: lastname,
+		email: email,
+		password: password,
+		bio: bio
+	};
 
 	//Validating field forms
-	req.checkBody('firstname', 	'Name is required').notEmpty();
-	req.checkBody('lastname',	'Name is required').notEmpty();
-	req.checkBody('email', 		'Email is required').isEmail();
-	req.checkBody('password', 	'Password is required').notEmpty();
-	req.checkBody('cpassword', 	'Password does not match').equals(req.body.password);
-	req.checkBody('bio', 		'Please tell us something about yourself').notEmpty();
-	req.checkBody('profilepic', 'Please upload a profile picture').notEmpty();
+	req.checkBody('firstname', 'Name is required').notEmpty();
+	req.checkBody('lastname', 'Name is required').notEmpty();
+	req.checkBody('email', 'Email is required').isEmail();
+	req.checkBody('password', 'Password is required').notEmpty();
+	req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
+	req.checkBody('bio', 'Please tell us something about yourself').notEmpty();
+	// req.checkBody('profilepic', 'Please upload a profile picture').notEmpty();
 
 	var errors = req.validationErrors();
-	if (errors) {
-		res.render('signup')
-	} ;
+    if(errors){
+        res.render('signup', {
+            error : errors
+        });
+    }
+    else{
+    	db.User.create(newUser).then(function() {
+			res.redirect('/signin');
+		});
+    }
 });
 
 /*Login*/
