@@ -9,10 +9,10 @@ var expressValidator = require('express-validator');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-/*Database*/
+/* Database */
 var db = require('./models');
 
-/*Routes*/
+/* Routes */
 var contactus = require('./routes/contactus.js');
 var dashboard = require('./routes/dashboard.js');
 var index = require('./routes/index.js');
@@ -22,12 +22,14 @@ var index = require('./routes/index');
 
 /* Init App */
 var app = express();
-app.use(expressValidator());
 
 /* View Engine */
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({ defaultLayout : 'main'}));
 app.set('view engine', 'handlebars');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended : false}));
 
 app.use(cookieParser('asdf33g4w4hghjkuil8saef345')); // cookie parser must use the same secret as express-session.
 
@@ -66,38 +68,8 @@ app.use(expressValidator({
     }
 }));
 
-app.use(flash());
-
-/* Global Vars */
-app.use(function (req, res, next) {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
-});
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended : false}));
-
 /* Set Static Folder */
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(cookieParser('asdf33g4w4hghjkuil8saef345')); // cookie parser must use the same secret as express-session.
-
-const cookieExpirationDate = new Date();
-const cookieExpirationDays = 365;
-cookieExpirationDate.setDate(cookieExpirationDate.getDate() + cookieExpirationDays);
-
-app.use(session({
-	secret: 'asdf33g4w4hghjkuil8saef345', // must match with the secret for cookie-parser
-	resave: true,
-	saveUninitialized: true,
-	cookie: {
-	    httpOnly: true,
-	    expires: cookieExpirationDate // use expires instead of maxAge
-	}
-}));
 
 /* Passport init */
 app.use(passport.initialize());
@@ -121,7 +93,6 @@ app.use(expressValidator({
     }
 }));
 
-/* Connect Flash */
 app.use(flash());
 
 /* Global Vars */

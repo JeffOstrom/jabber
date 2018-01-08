@@ -42,45 +42,16 @@ router.post('/signup', function(req, res) {
 	var errors = req.validationErrors();
     if(errors){
         res.render('signup', {
-            errors : errors
+            errors: errors
         });
     }
-    else{
-    	db.User.create(newUser).then(function() {
-			req.flash('success_msg', 'You are registered and can now login');
-			res.redirect('/signin');
-		});
-    }
-
-    var firstname = req.body.firstname;
-	var	lastname = req.body.lastname;
-	var	email = req.body.email;
-	var	contact = req.body.contact;
-	var cpassword = req.body.cpassword;
-	var bio	= req.body.bio;
-
-    //Validating field forms
-	req.checkBody('firstname', 	'Name is required').notEmpty();
-	req.checkBody('lastname',	'Name is required').notEmpty();
-	req.checkBody('email', 		'Email is required').isEmail();
-	req.checkBody('password', 	'Password is required').notEmpty();
-	req.checkBody('cpassword', 	'Password does not match').equals(req.body.password);
-	// req.checkBody('bio', 		'Please tell us something about yourself').notEmpty();
-	// req.checkBody('profilepic', 'Please upload a profile picture').notEmpty();
-
-    var errors = req.validationErrors();
-
-    if(errors){
-        res.render('signup', {
-            errs : errors
-        })
-    } else	{
+    else {
     	db.User.findOne({
 	        where: {
 	            email: email
 	          }
-	    }).then(function(user){
-	        if(user === null){
+	    }).then(function(user) {
+	        if(user === null) {
 
 	        	/*Creating new user*/
 		        var newUser = {
@@ -104,10 +75,10 @@ router.post('/signup', function(req, res) {
 		            });
 		        });
 
-	    	} else { 
-                console.log("Email already registered with us")
-                res.redirect('/signup');
+	    	}
+	    	else {
                 req.flash('error_msg', 'Email already registered with us');
+                res.redirect('/signup');
             }
 		});	
     };
