@@ -17,10 +17,9 @@ router.post('/signup', function(req, res){
     var firstname = req.body.firstname;
 	var	lastname = req.body.lastname;
 	var	email = req.body.email;
-	var	password = req.body.password;
+	var	contact = req.body.contact;
 	var cpassword = req.body.cpassword;
 	var bio	= req.body.bio;
-	var profilepic = req.body.profilepic;
 
     //Validating field forms
 	req.checkBody('firstname', 	'Name is required').notEmpty();
