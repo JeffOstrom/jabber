@@ -10,11 +10,6 @@ router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
-<<<<<<< HEAD
-/* Register */
-=======
-//Register User
->>>>>>> master
 router.post('/signup', function(req, res, next) {
 	
 	var firstname = req.body.firstname;
@@ -76,7 +71,6 @@ router.post('/signup', function(req, res, next) {
 });
 
 passport.use(new LocalStrategy(
-<<<<<<< HEAD
     function(username, password, done) {
         db.User.findOne({
             where: {
@@ -98,32 +92,6 @@ passport.use(new LocalStrategy(
             }
         });
 }));
-=======
-    function(email, password, done) {
-	     db.User.findOne({
-	          where: {
-	              email: email
-	          }
-	    }).then(function(user, err){
-	    	if(err) {
-	    		return done(err);
-	    	}
-
-	      	if(user === null){
-	         	 return done(null, false, {error: 'Unknown User'});
-	      	} else {
-	       	   bcrypt.compare(password, user.password, function(err, isMatch){
-	         	    if(isMatch){
-	         	        return done(null, user);
-	              	} else {
-	                	return done(null, false, {error: 'Invalid Password'});
-	              	};
-	            });
-	      	}
-	   	});
-	}
-));
->>>>>>> master
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -132,13 +100,8 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     db.User.findOne({
         where: {
-<<<<<<< HEAD
             id: id
           }
-=======
-            id: id.email
-        }
->>>>>>> master
     }).then(function(user){
         done(null, user.dataValues);
     });
@@ -159,10 +122,4 @@ router.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/signin');
 });
-<<<<<<< HEAD
 module.exports = router;
-=======
-
-module.exports = router;
-
->>>>>>> master
