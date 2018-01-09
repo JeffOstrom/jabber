@@ -11,31 +11,14 @@ router.get('/signup', function(req, res) {
 });
 
 /* Register */
-router.post('/signup', function(req, res) {
-	
-	var firstname = req.body.firstname;
-	var	lastname = req.body.lastname;
-	var	email = req.body.email;
-	var	password = req.body.password;
-	var cpassword = req.body.cpassword;
-
-//Register User
 router.post('/signup', function(req, res, next) {
 	
-	var firstName = req.body.username;
+	var firstname = req.body.firstname;
 	var lastname = req.body.lastname;
 	var email = req.body.email;
 	var password = req.body.password;
-	var password2 = req.body.password2;
+	var cpassword = req.body.password2;
 	var bio	= req.body.bio;
-  
-	var newUser = {
-		firstname: firstname,
-		lastname: lastname,
-		email: email,
-		password: password,
-		bio: bio
-	};
 
 	//Validating field forms
 	req.checkBody('firstname', 'Firstname is required').notEmpty();
@@ -91,30 +74,27 @@ router.post('/signup', function(req, res, next) {
 });
 
 passport.use(new LocalStrategy(
-    function(email, password, done) {
-	     db.User.findOne({
-	          where: {
-	              email: email
-	          }
-	    }).then(function(user, err){
-	    	if(err) {
-	    		return done(err);
-	    	}
-
-	      if(user === null){
-	          return done(null, false, {error: 'Unknown User'});
-	      } else {
-	          bcrypt.compare(password, user.password, function(err, isMatch){
-	              if(isMatch){
-	                  return done(null, user);
-	              } else {
-	                  return done(null, false, {error: 'Invalid Password'});
-	              };
-	          });
-	      }
-	   });
-	 }
-));
+    function(username, password, done) {
+        db.User.findOne({
+            where: {
+                email: username
+              }
+        }).then(function(user){
+            if(user == null || user.dataValues.email !== username){
+                return done(null, false, {message: 'Unknown User'});
+            }
+            else{
+                bcrypt.compare(password, user.dataValues.password, function(err, isMatch){
+                    if(isMatch){
+                        return done(null, user.dataValues);
+                    }
+                    else{
+                        return done(null, false, {message: 'Invalid Password'});
+                    }
+                });
+            }
+        });
+}));
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -123,27 +103,25 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     db.User.findOne({
         where: {
-            id: id.email
-         }
+            id: id
+          }
     }).then(function(user){
-        done(null, user);
+        done(null, user.dataValues);
     });
 });
 
+
 /*Sign in*/
-router.post('/signin', 
+router.post('/signin',
   	passport.authenticate('local', {successRedirect:'/dashboard', failureRedirect: '/signin', failureFlash: true}),
   	function(req, res) {
     	res.redirect('/dashboard');
   	}
 );
 
-/*Sign out*/
+/* Sign out */
 router.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/signin');
 });
-
-
 module.exports = router;
-
