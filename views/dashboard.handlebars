@@ -1,4 +1,11 @@
 <section class="container wrapper section-dashboard">
+	<div class="row">
+		<div class="col">
+			<h1>This is User's dashboard</h1>
+			<h1>{{user.firstname}}</h1>
+		</div>
+	</div>
+
 
 	<form action='/dashboard' method='POST' class="form-sign-up">
 		<div class="form-group">
@@ -34,5 +41,4 @@
 				</div>
 		{{/each}}
 	{{/if}}
-
 </section>

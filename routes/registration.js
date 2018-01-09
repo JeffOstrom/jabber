@@ -10,23 +10,19 @@ router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
+<<<<<<< HEAD
+/* Register */
+=======
 //Register User
+>>>>>>> master
 router.post('/signup', function(req, res, next) {
 	
 	var firstname = req.body.firstname;
 	var lastname = req.body.lastname;
 	var email = req.body.email;
 	var password = req.body.password;
-	var password2 = req.body.password2;
+	var cpassword = req.body.password2;
 	var bio	= req.body.bio;
-  
-	var newUser = {
-		firstname: firstname,
-		lastname: lastname,
-		email: email,
-		password: password,
-		bio: bio
-	};
 
 	//Validating field forms
 	req.checkBody('firstname', 'First name is required').notEmpty();
@@ -80,6 +76,29 @@ router.post('/signup', function(req, res, next) {
 });
 
 passport.use(new LocalStrategy(
+<<<<<<< HEAD
+    function(username, password, done) {
+        db.User.findOne({
+            where: {
+                email: username
+              }
+        }).then(function(user){
+            if(user == null || user.dataValues.email !== username){
+                return done(null, false, {message: 'Unknown User'});
+            }
+            else{
+                bcrypt.compare(password, user.dataValues.password, function(err, isMatch){
+                    if(isMatch){
+                        return done(null, user.dataValues);
+                    }
+                    else{
+                        return done(null, false, {message: 'Invalid Password'});
+                    }
+                });
+            }
+        });
+}));
+=======
     function(email, password, done) {
 	     db.User.findOne({
 	          where: {
@@ -104,6 +123,7 @@ passport.use(new LocalStrategy(
 	   	});
 	}
 ));
+>>>>>>> master
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -112,15 +132,21 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
     db.User.findOne({
         where: {
+<<<<<<< HEAD
+            id: id
+          }
+=======
             id: id.email
         }
+>>>>>>> master
     }).then(function(user){
-        done(null, user);
+        done(null, user.dataValues);
     });
 });
 
+
 /*Sign in*/
-router.post('/signin', 
+router.post('/signin',
   	passport.authenticate('local', {successRedirect:'/dashboard', failureRedirect: '/signin', failureFlash: true}),
   	function(req, res) {
   		res.flash('error_msg', 'Invalid email or password');
@@ -128,11 +154,15 @@ router.post('/signin',
   	}
 );
 
-/*Sign out*/
+/* Sign out */
 router.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/signin');
 });
+<<<<<<< HEAD
+module.exports = router;
+=======
 
 module.exports = router;
 
+>>>>>>> master

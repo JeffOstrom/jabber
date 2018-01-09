@@ -3,7 +3,8 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/dashboard', function(req, res) {
-    res.render('dashboard');
+	console.log(res.locals.user.id);
+	res.render('dashboard');
 });
 
 module.exports = router;
