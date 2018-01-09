@@ -10,19 +10,10 @@ router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
-/* Register */
-router.post('/signup', function(req, res) {
-	
-	var firstname = req.body.firstname;
-	var	lastname = req.body.lastname;
-	var	email = req.body.email;
-	var	password = req.body.password;
-	var cpassword = req.body.cpassword;
-
 //Register User
 router.post('/signup', function(req, res, next) {
 	
-	var firstName = req.body.username;
+	var firstname = req.body.firstname;
 	var lastname = req.body.lastname;
 	var email = req.body.email;
 	var password = req.body.password;
@@ -38,8 +29,8 @@ router.post('/signup', function(req, res, next) {
 	};
 
 	//Validating field forms
-	req.checkBody('firstname', 'Firstname is required').notEmpty();
-	req.checkBody('lastname', 'Lastname is required').notEmpty();
+	req.checkBody('firstname', 'First name is required').notEmpty();
+	req.checkBody('lastname', 'Last name is required').notEmpty();
 	req.checkBody('email', 'Email is required').isEmail();
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
@@ -50,9 +41,8 @@ router.post('/signup', function(req, res, next) {
     if(errors){
         res.render('signup', {
             errors: errors
-        });
-    }
-    else {
+        })
+    } else {
     	db.User.findOne({
 	       where: {
 	           email: email
@@ -81,8 +71,7 @@ router.post('/signup', function(req, res, next) {
 		              });
 		          });
 		      });
-	    	}
-	    	else {
+	    	} else {
                 req.flash('error_msg', 'Email already registered with us');
                 res.redirect('/signup');
             }
@@ -143,7 +132,6 @@ router.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/signin');
 });
-
 
 module.exports = router;
 
