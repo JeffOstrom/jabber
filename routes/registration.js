@@ -18,10 +18,17 @@ router.post('/signup', function(req, res) {
 	var	email = req.body.email;
 	var	password = req.body.password;
 	var cpassword = req.body.cpassword;
-	var bio	= req.body.bio;
-	// var profilepic = req.body.profilepic;
 
-	console.log(firstname + " " + lastname + " " + email + " " + password + " " + bio);
+//Register User
+router.post('/signup', function(req, res, next) {
+	
+	var firstName = req.body.username;
+	var lastname = req.body.lastname;
+	var email = req.body.email;
+	var password = req.body.password;
+	var password2 = req.body.password2;
+	var bio	= req.body.bio;
+  
 	var newUser = {
 		firstname: firstname,
 		lastname: lastname,
@@ -47,14 +54,14 @@ router.post('/signup', function(req, res) {
     }
     else {
     	db.User.findOne({
-	        where: {
-	            email: email
-	          }
-	    }).then(function(user) {
-	        if(user === null) {
-
+	       where: {
+	           email: email
+	       }
+	   }).then(function(user){
+	        if(user === null){
+            
 	        	/*Creating new user*/
-		        var newUser = {
+		      var newUser = {
 					firstname: firstname,
 					lastname: lastname,
 					email: email,
@@ -64,17 +71,16 @@ router.post('/signup', function(req, res) {
 				};
 
 				/*Hiding the user's password in the database*/
-		        bcrypt.genSalt(10, function(err, salt) {
-		            bcrypt.hash(newUser.password, salt, function(err, hash) {
-		                newUser.password = hash;
-		                db.User.create(newUser).then(function(user){
-		                    req.flash('success_msg', 'You are registered and can now login');
-		                    console.log("You are registered and can now login")
+		      bcrypt.genSalt(10, function(err, salt) {
+		          bcrypt.hash(newUser.password, salt, function(err, hash) {
+		              newUser.password = hash;
+		              db.User.create(newUser).then(function(user){
+		                  req.flash('success_msg', 'You are registered and can now login');
+		                  console.log("You are registered and can now login")
 				            res.redirect('/signin');
-		                });
-		            });
-		        });
-
+		              });
+		          });
+		      });
 	    	}
 	    	else {
                 req.flash('error_msg', 'Email already registered with us');
@@ -86,28 +92,28 @@ router.post('/signup', function(req, res) {
 
 passport.use(new LocalStrategy(
     function(email, password, done) {
-	    db.User.findOne({
-	        where: {
-	            email: email
+	     db.User.findOne({
+	          where: {
+	              email: email
 	          }
 	    }).then(function(user, err){
 	    	if(err) {
 	    		return done(err);
 	    	}
 
-	        if(user === null){
-	            return done(null, false, {error: 'Unknown User'});
-	        } else {
-	            bcrypt.compare(password, user.password, function(err, isMatch){
-	                if(isMatch){
-	                    return done(null, user);
-	                } else {
-	                    return done(null, false, {error: 'Invalid Password'});
-	                };
-	            });
-	        }
-	    });
-	}
+	      if(user === null){
+	          return done(null, false, {error: 'Unknown User'});
+	      } else {
+	          bcrypt.compare(password, user.password, function(err, isMatch){
+	              if(isMatch){
+	                  return done(null, user);
+	              } else {
+	                  return done(null, false, {error: 'Invalid Password'});
+	              };
+	          });
+	      }
+	   });
+	 }
 ));
 
 passport.serializeUser(function(user, done) {
