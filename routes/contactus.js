@@ -10,8 +10,8 @@ router.get('/contactus', function(req, res) {
 router.post('/contactus', function(req, res) {
 
 	var name = req.body.name;
-	var	email = req.body.email;
-	var	contact = req.body.contact;
+	var email = req.body.email;
+	var contact = req.body.contact;
 	var message = req.body.message;
 
 	req.checkBody('name', 'Name is required').notEmpty();
@@ -22,9 +22,7 @@ router.post('/contactus', function(req, res) {
 	var errors = req.validationErrors();
 
     if(errors){
-        res.render('contactus', {
-            errs : errors
-        })
+        res.render('contactus', {errs : errors})
     } else {
 
     	/*Creating new Contact user*/
@@ -39,7 +37,7 @@ router.post('/contactus', function(req, res) {
         	// req.flash('success_msg', 'Message successfully sent');
         	console.log("Message successfully sent!")
         	res.redirect('/contactus');
-   		 });
+   	});
     };
 });
 
