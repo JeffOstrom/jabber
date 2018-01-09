@@ -33,18 +33,17 @@ module.exports = function(sequelize, DataTypes) {
         password: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+
+        bio: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+
+        profilepicture: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
-
-        // bio: {
-        //     type: DataTypes.TEXT,
-        //     allowNull: true
-        // },
-
-        // profilepicture: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true
-        // }
-
   });
 
   return User;

@@ -1,8 +1,15 @@
 <section class="container wrapper section-dashboard">
-	<div class="row">
-		<div class="col">
-			<h1>This is User's dashboard</h1>
-			<h1>{{user.firstname}}</h1>
+	
+	<div class="row user-panel">
+		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
+			<img src="images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="">
+			<h4>{{ user.firstname }} {{ user.lastname }}</h4>
+			<hr class="hr-full">
+
+			<h6> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime tenetur, unde, eligendi nemo et earum adipisci illo nisi quisquam, eveniet, laborum assumenda dolores ipsum. Quidem facilis eius praesentium incidunt quaerat. </h6> {{!-- replace lorem with user.bio --}}
+			<hr class="hr-half">
+
+			<p><strong><i class="fas fa-envelope"></i> {{ user.email }} </strong></p>
 		</div>
 	</div>
 
