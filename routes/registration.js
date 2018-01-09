@@ -33,18 +33,29 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	// req.checkBody('profilePic', 'Please upload a profile picture').notEmpty();
 
 	var fileExt = validateProfilePic(req.files[0]);
+	console.log("validate profile pic : " + fileExt);
 	var profilePic = req.files[0].filename;
 	var isValid = false;
-	if(fileExt) {
-		fs.rename(req.files[0].path, req.files[0].path + fileExt, function(err) {
-			if(err) throw err;
-			profilePic += fileExt;
-			isValid = true;
-		});
+	
+	if( (fileExt == '.jpeg') ||
+		(fileExt == '.jpg') ||
+		(fileExt == '.png') ) {
+		console.log('Going in');
+		isValid = renameFile(req.files[0].path, fileExt);
 	}
 	else {
+		console.log('not going in');
 		isValid = false;
 	}
+	
+	function renameFile(path, ext) {
+		fs.renameSync(path, path + ext, function() {
+			profilePic += ext;
+			return true;
+		});
+	}
+
+	console.log(isValid);
 
 	var errors = req.validationErrors();
     if(errors) {
@@ -52,8 +63,11 @@ router.post('/signup', upload.any(), function(req, res, next) {
             errors: errors
         });
     }
-    else if(isValid) {
+    else if(isValid === false) {
     	req.flash('error_msg', 'Invalid Profile Picture');
+    	fs.unlink(req.files[0].path, function(err){
+			if(err) throw err;
+		});
     	res.redirect('/signup');
     }
     else {
@@ -146,35 +160,51 @@ router.get('/signout', function(req, res){
 });
 
 function validateProfilePic(file) {
-// [ { fieldname: 'profilepic',
-//     originalname: 'web_developer.jpg',
-//     encoding: '7bit',
-//     mimetype: 'image/jpeg',
-//     destination: 'public/images/profile',
-//     filename: '93e08f4b28c622f97c2b7342796bb633',
-//     path: 'public\\images\\profile\\93e08f4b28c622f97c2b7342796bb633',
-//     size: 52702 } ]	
-	var fileExt;
-	if( (file.mimetype === 'image/jpeg') ||
-		(file.mimetype === 'image/jpg') ||
-		(file.mimetype === 'image/png')) {
+	/* [ 
+		{ 
+			fieldname: 'profilepic',
+		    originalname: 'web_developer.jpg',
+		    encoding: '7bit',
+		    mimetype: 'image/jpeg',
+		    destination: 'public/images/profile',
+		    filename: '93e08f4b28c622f97c2b7342796bb633',
+		    path: 'public\\images\\profile\\93e08f4b28c622f97c2b7342796bb633',
+		    size: 52702 
+		} 
+	] */
+	console.log(file);
+	var fileExt = '';
+	var type = file.mimetype.trim();
+	console.log(type);
+	if( (type === 'image/jpeg') ||
+		(type === 'image/jpg') ||
+		(type === 'image/png' )) {
+		console.log('clearing file type');
 		if(file.size > 3000000) {
-			return false;
+			console.log('not clearing file size ' + file.size);
+			return 'invalid';
 		}
 		else {
-			if(file.mimetype === 'image/jpeg') {
+			if(file.mimetype == 'image/jpeg') {
+				console.log('jpeg ' + file.size);
 				fileExt = ".jpeg";
+				return fileExt;
 			}
-			else if(file.mimetype === 'image/jpg') {
+			else if(file.mimetype == 'image/jpg') {
+				console.log('jpg ' + file.size);
 				fileExt = ".jpg";
+				return fileExt;
 			}
-			else if(file.mimetype === 'image/png') {
+			else if(file.mimetype == 'image/png') {
+				console.log('png ' + file.size);
 				fileExt = ".png";
+				return fileExt;
 			}
 		}
-		return fileExt;
 	}
-	return false;
+	else {
+		return 'invalid';
+	}
 
 }
 module.exports = router;
