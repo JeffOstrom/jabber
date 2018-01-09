@@ -51,7 +51,7 @@ router.post('/signup', function(req, res, next) {
 	        if(user === null){
             
 	        	/*Creating new user*/
-		      var newUser = {
+		      	var newUser = {
 					firstname: firstname,
 					lastname: lastname,
 					email: email,
@@ -61,16 +61,16 @@ router.post('/signup', function(req, res, next) {
 				};
 
 				/*Hiding the user's password in the database*/
-		      bcrypt.genSalt(10, function(err, salt) {
-		          bcrypt.hash(newUser.password, salt, function(err, hash) {
-		              newUser.password = hash;
-		              db.User.create(newUser).then(function(user){
-		                  req.flash('success_msg', 'You are registered and can now login');
-		                  console.log("You are registered and can now login")
+				bcrypt.genSalt(10, function(err, salt) {
+				  bcrypt.hash(newUser.password, salt, function(err, hash) {
+				      newUser.password = hash;
+				      db.User.create(newUser).then(function(user){
+				          req.flash('success_msg', 'You are registered and can now login');
+				          console.log("You are registered and can now login")
 				            res.redirect('/signin');
-		              });
-		          });
-		      });
+				      });
+				  });
+				});
 	    	} else {
                 req.flash('error_msg', 'Email already registered with us');
                 res.redirect('/signup');
@@ -90,19 +90,19 @@ passport.use(new LocalStrategy(
 	    		return done(err);
 	    	}
 
-	      if(user === null){
-	          return done(null, false, {error: 'Unknown User'});
-	      } else {
-	          bcrypt.compare(password, user.password, function(err, isMatch){
-	              if(isMatch){
-	                  return done(null, user);
-	              } else {
-	                  return done(null, false, {error: 'Invalid Password'});
-	              };
-	          });
-	      }
-	   });
-	 }
+	      	if(user === null){
+	         	 return done(null, false, {error: 'Unknown User'});
+	      	} else {
+	       	   bcrypt.compare(password, user.password, function(err, isMatch){
+	         	    if(isMatch){
+	         	        return done(null, user);
+	              	} else {
+	                	return done(null, false, {error: 'Invalid Password'});
+	              	};
+	            });
+	      	}
+	   	});
+	}
 ));
 
 passport.serializeUser(function(user, done) {
@@ -113,7 +113,7 @@ passport.deserializeUser(function(id, done) {
     db.User.findOne({
         where: {
             id: id.email
-         }
+        }
     }).then(function(user){
         done(null, user);
     });
@@ -123,7 +123,8 @@ passport.deserializeUser(function(id, done) {
 router.post('/signin', 
   	passport.authenticate('local', {successRedirect:'/dashboard', failureRedirect: '/signin', failureFlash: true}),
   	function(req, res) {
-    	res.redirect('/dashboard');
+  		res.flash('error_msg', 'Invalid email or password');
+    	req.redirect('/dashboard');
   	}
 );
 
