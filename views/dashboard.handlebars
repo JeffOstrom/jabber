@@ -1,19 +1,21 @@
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+
 <section class="container wrapper section-dashboard">
 	
+	{{!-- User Profile  --}}
 	<div class="row user-panel">
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
-			<img src="images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="">
-			<h4>{{ user.firstname }} {{ user.lastname }}</h4>
+			<img src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="">
+			<h4 id="full-name">{{ user.firstname }} {{ user.lastname }}</h4>
 			<hr class="hr-full">
-
-			<h6> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime tenetur, unde, eligendi nemo et earum adipisci illo nisi quisquam, eveniet, laborum assumenda dolores ipsum. Quidem facilis eius praesentium incidunt quaerat. </h6> {{!-- replace lorem with user.bio --}}
+			<h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime tenetur, unde, eligendi nemo et earum adipisci illo nisi quisquam, eveniet, laborum assumenda dolores ipsum. Quidem facilis eius praesentium incidunt quaerat. </h6> {{!-- replace lorem with user.bio --}}
 			<hr class="hr-half">
 
 			<p><strong><i class="fas fa-envelope"></i> {{ user.email }} </strong></p>
 		</div>
 	</div>
 
-
+	{{!-- Message Form --}}
 	<form action='/dashboard' method='POST' class="form-sign-up">
 		<div class="form-group">
 	        <div class="input-group">
@@ -22,7 +24,8 @@
 	                    <i class="fas fa-user-circle text-white"></i>
 	                </span>
 	            </div>
-	            <input type="text" class="form-control" id="tweets" name="tweets" placeholder="Tweets">
+	            <input type="text" class="form-control" id="tweets" name="message" placeholder="Type your message here!">
+	            <input type="text" class="form-control" id="link" name="message" placeholder="Type your message here!">
 	        </div>
 	    </div>
 
@@ -34,6 +37,7 @@
 
 	</form>
 
+	{{!-- Messages --}}
 	{{#if messages}}
 		{{#each messages}}
 				<div class="row">
@@ -49,3 +53,5 @@
 		{{/each}}
 	{{/if}}
 </section>
+
+<script src="assets/javascripts/jabber.js">console.log</script>
