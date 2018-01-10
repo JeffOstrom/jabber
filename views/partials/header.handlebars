@@ -3,7 +3,7 @@
     <div class="container">
 
         {{!-- Brand Name And Logo --}}
-        <a class="navbar-brand text-pastelyellow" href="/">
+        <a class="navbar-brand text-pastelyellow" href="/dashboard">
             <img src="/images/png/jabber-logo.png" alt="Jabber Logo" class="img-fluid jabber-logo">
             <strong>JABBER</strong>
         </a>
@@ -17,23 +17,47 @@
             
             {{!-- Primary Navigation Menu --}}
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-pastelyellow hvr-underline-from-center" href="/signin">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </a>
-                </li>
+
+                {{!-- If user is logged in, he/she shouldn't see login, register --}}
+                {{#if user}}
+
+                    <li class="nav-item">
+                        <a class="nav-link text-pastelyellow hvr-underline-from-center" href="javascript:void(0)">
+                            <i class="fas fa-user-circle"></i> {{ user.firstname }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-pastelyellow hvr-underline-from-center" href="/signout">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-pastelyellow hvr-underline-from-center" href="/signout">
+                            <i class="fas fa-sign-in-alt"></i> Logout
+                        </a>
+                    </li>
+
+                {{else}}
             
-                <li class="nav-item">
-                    <a class="nav-link text-pastelyellow hvr-underline-from-center" href="/signup">
-                        <i class="fas fa-user-plus"></i> Register
-                    </a>
-                </li>
-            
+                    <li class="nav-item">
+                        <a class="nav-link text-pastelyellow hvr-underline-from-center" href="/signin">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-pastelyellow hvr-underline-from-center" href="/signup">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    </li>
+
+                {{/if}}
+
                 <li class="nav-item">
                     <a class="nav-link text-pastelyellow hvr-underline-from-center" href="/contactus">
                         <i class="fas fa-envelope"></i> Contact Us
                     </a>
                 </li>
+
             </ul>
             
         </div>{{!-- primary menu --}}

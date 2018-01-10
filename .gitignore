@@ -6,7 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 
 package-lock.json
-
+config.json
+config/
 # Runtime data
 pids
 *.pid
