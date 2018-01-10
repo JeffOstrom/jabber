@@ -3,31 +3,13 @@ var express = require('express');
 var router = express.Router();
 var models = require("../models");
 
-<<<<<<< HEAD
-var models = require("./models");
-
-/*Retrieve All Global Messages*/
-router.get('/dashboard/', function(req, res) {
-	models.Messages.findAll()
-});
-
-// /*Retrieve User's Messages*/
-// router.get('/dashboard/:userID', function(req, res) {
-// 	models.Messages.findAll({
-// 	where: {
-// 		userID: req.params.name //name in HTML
-// 	}
-// })
-//    	res.render('dashboard');
-// });
-=======
 function ensureAuthenticated(req, res, next){
     if(req.isAuthenticated()){
         return next();
     } else{
         res.render('index');
     }
-}
+};
 
 router.get('/dashboard', ensureAuthenticated, function(req, res) {
     res.render('dashboard');
@@ -52,8 +34,5 @@ router.post('/dashboard', function(req, res) {
 	});
 
 });
-
-
->>>>>>> master
 
 module.exports = router;
