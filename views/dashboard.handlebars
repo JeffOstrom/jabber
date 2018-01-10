@@ -11,41 +11,56 @@
 
 			<p><strong><i class="fas fa-envelope"></i> {{ user.email }} </strong></p>
 		</div>
-	</div>
+		<div class="col-xl-9 col-lg-9 col-md-9">
+			
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="home" aria-selected="true">Posts</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="profile" aria-selected="false">Followers</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#following" role="tab" aria-controls="contact" aria-selected="false">Following</a>
+				</li>
+			</ul><br>
 
-
-	<form action='/dashboard' method='POST' class="form-sign-up">
-		<div class="form-group">
-	        <div class="input-group">
-	            <div class="input-group-prepend">
-	                <span class="input-group-text bg-junglegreen" id="basic-addon1">
-	                    <i class="fas fa-user-circle text-white"></i>
-	                </span>
-	            </div>
-	            <input type="text" class="form-control" id="tweets" name="tweets" placeholder="Tweets">
-	        </div>
-	    </div>
-
-	    <div class="form-group text-right">
-	        <button type='submit' class="btn bg-junglegreen btn-signin text-white">
-	            <i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;Submit
-	        </button><br>
-    	</div>
-
-	</form>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="home-tab">
+					<form action='/dashboard' method='POST' class="form-sign-up">
+						<div class="form-group">
+					        <div class="input-group">
+					            <input type="text" class="form-control" id="tweets" name="tweets" placeholder="what's going on there ?">
+					            <div class="input-group-prepend">
+					                <button class="btn btn-primary">
+					                	<i class="fas fa-comment"></i>
+					                </button>
+					            </div>
+					        </div>
+					    </div>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">
+					All followers goes here
+				</div>
+				<div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="contact-tab">
+					All following goes here
+				</div>
+			</div>
+		</div>
 
 	{{#if messages}}
 		{{#each messages}}
-				<div class="row">
-					<div class="card">
-						{{user}}
-						<div class=".card-block">
-							<h1>Tweets</h1>
-							{{tweets}}
-							{{createdAt}}
-						</div>
-					</div>
+			<div class="row">
+			<div class="card">
+				{{user}}
+				<div class=".card-block">
+					<h1>Tweets</h1>
+					{{tweets}}
+					{{createdAt}}
 				</div>
+			</div>
+			</div>
 		{{/each}}
 	{{/if}}
 </section>

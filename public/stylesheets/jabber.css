@@ -14,7 +14,7 @@
 html,
 body {
     height: 100%;
-    background-color: #EEE;
+    /*background-color: #EEE;*/
     font-family: 'Abel', sans-serif;
 }
 
@@ -55,6 +55,12 @@ input:focus {
     outline: none;
     box-shadow:none !important;
     border:1px solid #ccc !important;
+}
+.nav-tabs .nav-item:hover {
+    border-top: 2px solid #1B998B;
+}
+.nav-tabs .nav-item:active {
+    border-top: 2px solid #FF9B71;
 }
 
 /* Custom classes */
