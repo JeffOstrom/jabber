@@ -34,8 +34,7 @@ router.post('/contactus', function(req, res) {
 		};
 
 		db.Contact.create(contactUser).then(function(contact){
-        	// req.flash('success_msg', 'Message successfully sent');
-        	console.log("Message successfully sent!")
+        	req.flash('success_msg', 'Message successfully sent');
         	res.redirect('/contactus');
    	});
     };
