@@ -33,18 +33,25 @@ $(document).ready(function() {
             $('#delete-' + id).html('<i class="fas fa-trash"></i>');
             $('#delete-' + id).attr('operation', 'delete');
 
-            // $.ajax({
-            //     method: "POST",
-            //     data: {
-            //         'message': updatedTask
-            //     },
-            //     url: "/users/update/" + id
-            // }).done(function(data){
-            //     location.reload();
-            // });
         }
     });
-});
+
+    $('#searchbtn').on('click', function(){
+
+        $.ajax({
+            method: "POST",
+            url: "/dashboard/search/",
+            data: {
+                results: $('#lookup').val()
+            }
+        }).done(function(data){
+
+            location.reload();
+
+        });
+
+    })
+    });
 
 
 
