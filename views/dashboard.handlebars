@@ -1,18 +1,22 @@
-<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+{{!-- <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script> --}}
 
 <section class="container wrapper section-dashboard">
 
 	{{!-- User Profile  --}}
 	<div class="row user-panel">
+		
+		{{!-- Profile Picture --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
 			<img src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="">
 			<h4 id="full-name">{{ user.firstname }} {{ user.lastname }}</h4>
 			<hr class="hr-full">
-			<h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime tenetur, unde, eligendi nemo et earum adipisci illo nisi quisquam, eveniet, laborum assumenda dolores ipsum. Quidem facilis eius praesentium incidunt quaerat. </h6> {{!-- replace lorem with user.bio --}}
+			<h6> {{ user.bio }} </h6>
 			<hr class="hr-half">
 
 			<p><strong><i class="fas fa-envelope"></i> {{ user.email }} </strong></p>
-		</div>
+		</div> {{!-- Profile Picture Column --}}
+		
+		{{!-- Profile Content --}}
 		<div class="col-xl-9 col-lg-9 col-md-9">
 			
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -29,62 +33,90 @@
 
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="home-tab">
-					{{!-- <form action='/dashboard' method='POST' class="form-sign-up">
-						<div class="form-group">
-					        <div class="input-group">
-					            <input type="text" class="form-control" id="tweets" name="tweets" placeholder="what's going on there ?">
-					            <div class="input-group-prepend">
-					                <button class="btn btn-primary">
-					                	<i class="fas fa-comment"></i>
-					                </button>
-					            </div>
-					        </div>
-					    </div>
-					</form> --}}
-					{{!-- Message Form --}}
 					<form action='/dashboard' method='POST' class="form-sign-up">
+						
 						<div class="form-group">
-					        <div class="input-group">
-					            <div class="input-group-prepend">
-					                <span class="input-group-text bg-junglegreen" id="basic-addon1">
-					                    <i class="fas fa-user-circle text-white"></i>
-					                </span>
-					            </div>
-					            <input type="text" class="form-control" id="tweets" name="message" placeholder="Type your message here!">
-					            <input type="text" class="form-control" id="link" name="message" placeholder="Image URL (optional)">
-					        </div>
-					    </div>
-
-					    <div class="form-group text-right">
-					        <button type='submit' class="btn bg-junglegreen btn-signin text-white">
-					            <i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp;Submit
-					        </button><br>
-				    	</div>
-
+							<div class="input-group-prepend">
+								<textarea class="form-control custom-control" name="message" id="message" placeholder="Type your message here!"></textarea>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="btn bg-junglegreen text-white file-upload" for="messageImage">
+								<input id="messageImage" name="messageImage" type="file" style="display:none" 
+								onchange="$('#upload-file-info').html(this.files[0].name)">
+								<i class="fas fa-camera-retro"></i>
+							</label>
+							<span class='label label-info' id="upload-file-info"></span>
+							<button class="btn bg-junglegreen text-white" for="">
+								<i class="fas fa-comment"></i> Post
+							</button>
+						</div>
 					</form>
-				</div>
+					<hr class="hr-full">
+					
+
+						{{#each messages}}
+
+							<div class="media">
+								<img class=" mr-3 post-picture" src="assets/images/profile/8f40b8313dc4bcd7182c2d9f39fb718c.jpeg" alt="Generic placeholder image">
+								<div class="media-body">
+									{{#if image}}
+										<img src="img-fluid" alt="">
+									{{/if}}
+									<h5 class="mt-0">Title</h5>
+
+									<p id="message-{{ id }}">{{ message }}</p>
+
+									<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
+									
+									<button class="btn btn-sm bg-junglegreen text-white btn-update" id="update-{{ id }}" data-value="update" record-id="{{ id }}">
+										<i class="fas fa-pencil-alt"></i>
+									</button>
+									
+									<button class="btn btn-sm bg-desire text-white btn-delete" id="delete-{{ id }}" operation="delete" record-id="{{ id }}">
+										<i class="fas fa-trash"></i>
+									</button>
+
+								</div>
+							</div><br>
+
+						{{/each}}
+					
+					{{!-- Messages --}}
+					{{!-- <div class="card-columns">
+						{{#if messages}}
+							{{#each messages}}
+								<div class="card">
+									{{#if image}}
+										<img class="card-img-top" src="" alt="Card image cap">
+									{{/if}}
+									<div class="card-body">
+										{{!-- <h5 class="card-title">{{ createdAt }}</h5>
+										<p class="card-text">{{ message }}</p>
+									</div>
+									<div class="card-footer">
+										<button class="btn btn-sm bg-junglegreen text-white" data-value="{{id}}">
+											<i class="fas fa-pencil-alt"></i>
+										</button>
+										<button class="btn btn-sm bg-desire text-white" data-value="{{id}}">
+											<i class="fas fa-trash"></i>
+										</button><br>
+										{{!-- <small class="text-muted">Last updated at {{ updatedAt }}</small>
+									</div>
+								</div>
+							{{/each}}
+						{{/if}}
+					</div> --}}{{!-- card columns --}}
+				</div>{{!-- post tab --}}
+
 				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">
 					All followers goes here
-				</div>
+				</div>{{!-- followers tab --}}
 				<div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="contact-tab">
 					All following goes here
-				</div>
-			</div>
-		</div>
-
-	{{!-- Messages --}}
-	{{#if messages}}
-		{{#each messages}}
-			<div class="row">
-			<div class="card">
-				{{user}}
-				<div class=".card-block">
-					<h1>Tweets</h1>
-					{{tweets}}
-					{{createdAt}}
-				</div>
-			</div>
-			</div>
-		{{/each}}
-	{{/if}}
+				</div>{{!-- following tab --}}
+			</div>{{!-- tab content --}}
+		</div>{{!-- Profile Content Column --}}
+	</div>{{!-- row --}}
 </section>
