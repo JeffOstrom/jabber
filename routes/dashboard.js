@@ -12,22 +12,47 @@ function ensureAuthenticated(req, res, next){
 };
 
 router.get('/dashboard', ensureAuthenticated, function(req, res) {
-    res.render('dashboard');
+    if(res.locals.user){
+        var id = res.locals.user.id;
+        models.Messages.findAll({
+            where: {
+                user: id
+            },
+            order: [
+                ['id', 'DESC']
+            ]
+        }).then(function(result){
+            if(result !== undefined){
+                var messages = [];
+                for(var i = 0; i < result.length; i++){
+                    messages.push(result[i].dataValues);
+                }
+                res.render('dashboard', { messages: messages});
+            }
+            else{
+                res.render('dashboard');
+            }
+        });
+    }
+    else {
+        res.render('index');
+    }
 });
 
-/*Post Message*/
+/* Post Message */
 router.post('/dashboard', function(req, res) {
 
 	console.log("locals F: " + res.locals.user.firstname);
 
-
-	/*Creating new message*/
+	/* Creating new message */
 	var newMessage = {
-		user: res.locals.user.firstname + " " + res.locals.user.lastname,
-		message: req.body.message
+		// user: res.locals.user.firstname + " " + res.locals.user.lastname,
+		user: res.locals.user.id,
+		message: req.body.message,
+		image: req.body.messageImage
 	};
 
-	/*Post new message*/
+	/* Post new message */
 	models.Messages.create(newMessage).then(function(message){
 		req.flash('success_msg', 'Message successfully sent');
 		res.redirect('/dashboard');

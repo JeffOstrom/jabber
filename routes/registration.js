@@ -41,6 +41,7 @@ router.post('/signup', upload.any(), function(req, res, next) {
 		(fileExt == '.jpg') ||
 		(fileExt == '.png') ) {
 		console.log('Going in');
+		console.log('1');
 		isValid = renameFile(req.files[0].path, fileExt);
 	}
 	else {
@@ -49,13 +50,14 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	}
 	
 	function renameFile(path, ext) {
-		fs.renameSync(path, path + ext, function() {
+		fs.rename(path, path + ext, function(err) {
+			if(err) throw err;
 			profilePic += ext;
+			console.log('file has been renamed');
+			console.log('2');
 			return true;
 		});
 	}
-
-	console.log(isValid);
 
 	var errors = req.validationErrors();
     if(errors) {
@@ -64,6 +66,8 @@ router.post('/signup', upload.any(), function(req, res, next) {
         });
     }
     else if(isValid === false) {
+    	console.log(isValid);
+		console.log('3');
     	req.flash('error_msg', 'Invalid Profile Picture');
     	fs.unlink(req.files[0].path, function(err){
 			if(err) throw err;
