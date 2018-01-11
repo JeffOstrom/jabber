@@ -10,11 +10,11 @@ var multer  = require('multer');
 var upload = multer({ dest: 'public/assets/images/profile' });
 
 /* Register */
-router.get('/signup', function(req, res) {
-    res.render('signup');
+router.get('/update', function(req, res) {
+    res.render('update');
 });
 
-router.post('/signup', upload.any(), function(req, res, next) {
+router.post('/update', upload.any(), function(req, res, next) {
 
 	var firstname = req.body.firstname;
 	var lastname = req.body.lastname;
@@ -27,10 +27,12 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	req.checkBody('firstname', 'First name is required').notEmpty();
 	req.checkBody('lastname', 'Last name is required').notEmpty();
 	req.checkBody('email', 'Email is required').isEmail();
-	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
+	// req.checkBody('password', 'Password is required').notEmpty();
+	// req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
 	req.checkBody('bio', 'Please tell us something about yourself').notEmpty();
 	// req.checkBody('profilePic', 'Please upload a profile picture').notEmpty();
+
+
 
 	var fileExt = validateProfilePic(req.files[0]);
 	console.log("validate profile pic : " + fileExt);
@@ -211,4 +213,6 @@ function validateProfilePic(file) {
 	}
 
 }
+
+
 module.exports = router;
