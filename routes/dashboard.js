@@ -60,4 +60,22 @@ router.post('/dashboard', function(req, res) {
 
 });
 
+router.post('/dashboard/search', function(req, res) {
+ // data item
+  //sequelize 
+  console.log(req.body)
+
+  models.User.findAll({
+      where: {
+         firstname: ''//req.params.results// req.body.searchItem
+       // [Op.or]: [{firstname: "something"}, {lastname: "email@email.com"}]
+      }
+  }).then(function(results){
+    console.log(results);
+      // res.json(results);
+
+  });
+
+});
+
 module.exports = router;

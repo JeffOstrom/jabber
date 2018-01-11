@@ -89,6 +89,7 @@ router.post('/signup', upload.any(), function(req, res, next) {
 					email: email,
 					password: password,
 					bio: bio,
+					fullname: firstname + " " + lastname,
 					profilepicture: profilePic
 				};
 
