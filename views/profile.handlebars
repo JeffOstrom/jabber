@@ -1,0 +1,61 @@
+<section class="container wrapper section-profile">
+	<div class="col-lg-12 col-sm-12">
+	<div class="card hovercard">
+		<div class="card-background">
+		    <img class="card-bkimg" alt="" src="http://lorempixel.com/850/280/people/9"> 
+		</div>
+		<div class="useravatar">
+		    {{!-- <img alt="Image not available" src="{{user.profilepicture}}"> --}}
+		    <img alt="Image not available" src="{{user.profilepicture}}">
+		</div>
+		<div class="card-info"> <span class="card-title">{{user.firstname}} {{user.lastname}}</span>
+			{{!-- {{this.title}} --}}
+		</div>
+	</div>
+	<div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+		<div class="btn-group" role="group">
+		    <button type="button" id="stars" class="btn btn-primary" href="/timeline" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+		        <div class="hidden-xs">Jibberish</div>
+		    </button>
+		</div>
+		<div class="btn-group" role="group">
+		    <button type="button" id="favorites" class="btn btn-default" href="/profile/timeline" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+		        <div class="hidden-xs">About</div>
+		    </button>
+		</div>
+		<div class="btn-group" role="group">
+		    <button type="button" id="favorites" class="btn btn-default" href="/timeline" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+		        <div class="hidden-xs">Followers</div>
+		    </button>
+		</div>
+		<div class="btn-group" role="group">
+		    <button type="button" id="following" class="btn btn-default" href="/timeline" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+		        <div class="hidden-xs">Following</div>
+		    </button>
+		</div>
+	</div>
+
+	<div class="well">
+		<div class="tab-content">
+			<div class="tab-pane fade in" id="tab1">
+			  	<h3>This is tab 1</h3>
+			</div>
+			<div class="tab-pane fade in" id="tab2">
+			  	<h3>This is tab 2</h3>
+			</div>
+			<div class="tab-pane fade in" id="tab3">
+			  	<h3>This is tab 3</h3>
+			</div>
+		</div>
+	</div>
+</div>
+</section>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".btn-pref .btn").click(function () {
+		    $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+		    // $(".tab").addClass("active"); // instead of this do the below 
+		    $(this).removeClass("btn-default").addClass("btn-primary");   
+		});
+	});
+</script>
