@@ -7,7 +7,7 @@ var db = require("../models");
 
 var fs = require('fs');
 var multer  = require('multer');
-var upload = multer({ dest: 'public/images/profile' });
+var upload = multer({ dest: 'public/assets/images/profile' });
 
 /* Register */
 router.get('/signup', function(req, res) {
