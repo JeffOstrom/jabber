@@ -60,4 +60,27 @@ router.post('/dashboard', function(req, res) {
 
 });
 
+router.get('/dashboard/search', ensureAuthenticated, function(req, res) {
+
+   var result = req.body.search;
+
+   req.checkBody('result').notEmpty();
+
+   console.log(result);
+
+   res.render('search');
+
+});
+
+router.post('/dashboard/search', ensureAuthenticated, function(req, res) {
+
+   var result = req.body.search;
+
+   req.checkBody('result').notEmpty();
+
+   console.log(result);
+
+   res.render('search');
+
+});
 module.exports = router;
