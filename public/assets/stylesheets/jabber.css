@@ -14,7 +14,7 @@
 html,
 body {
     height: 100%;
-    background-color: #EEE;
+    /*background-color: #EEE;*/
     font-family: 'Abel', sans-serif;
 }
 
@@ -56,6 +56,15 @@ input:focus {
     box-shadow:none !important;
     border:1px solid #ccc !important;
 }
+.nav-tabs .nav-item:hover {
+    border-top: 2px solid #1B998B;
+}
+.nav-tabs .nav-item:active {
+    border-top: 2px solid #FF9B71;
+}
+.file-upload {
+    margin: auto;
+}
 
 /* Custom classes */
 .wrapper {
@@ -67,7 +76,16 @@ input:focus {
     margin-top: 20px;
 }
 .profile-picture {
-    width: 200px;
+    width: 150px;
+}
+.post-picture{
+    width: 64px;
+}
+.user-picture {
+    width: 400px;
+}
+.update-task {
+    display: none;
 }
 .hr-half{
 	max-width: 50%;
