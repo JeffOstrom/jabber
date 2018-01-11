@@ -11,23 +11,6 @@
 /* Copyright reserved 2018 */
 /* ----------------------- */
 
-
-
-// $(document).ready(function() {
-
-// 	/* test */
-// 	console.log(1);
-
-// 	/* Get messages from DB */
-// 	function postMessage() {
-
-// 		$.get("/dashboard", function(data) {
-// 			if (data) {
-// 			}
-// 		})
-
-// 	}
-// });
 $(document).ready(function() {
 	$('.btn-update').on('click', function() {
         
