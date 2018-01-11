@@ -8,6 +8,7 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var moment = require('moment');
 
 /* Database */
 var db = require('./models');
@@ -23,8 +24,16 @@ var registration = require('./routes/registration.js');
 var app = express();
 
 /* View Engine */
+var hbs = exphbs.create({
+    // Specify helpers which are only registered on this instance.
+    helpers: {
+        formatDate: function (value, format) { return moment(value).format(format); }
+    },
+    defaultLayout: 'main'
+});
+
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({ defaultLayout : 'main'}));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(bodyParser.json());

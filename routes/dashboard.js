@@ -24,9 +24,14 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
         }).then(function(result){
             if(result !== undefined){
                 var messages = [];
+                
                 for(var i = 0; i < result.length; i++){
+                    result[i].dataValues.firstname = res.locals.user.firstname;
+                    result[i].dataValues.image = res.locals.user.profilepicture;
                     messages.push(result[i].dataValues);
                 }
+                
+                console.log(messages);
                 res.render('dashboard', { messages: messages});
             }
             else{
@@ -60,22 +65,37 @@ router.post('/dashboard', function(req, res) {
 
 });
 
+router.post('/update/:id', function(req, res){
+    var id = req.params.id;
+    var updatedMessage = req.body.message;
+    var date = new Date();
+    models.Messages.update({
+        message: updatedMessage,
+        updatedAt: date
+    },
+    {
+        where: {
+            id: id
+        }
+    }).then(function(todos) {
+        res.send('success');
+    });
+});
+
 router.post('/dashboard/search', function(req, res) {
- // data item
-  //sequelize 
-  console.log(req.body)
+    // data item
+    //sequelize 
+    console.log(req.body)
 
-  models.User.findAll({
-      where: {
-         firstname: ''//req.params.results// req.body.searchItem
-       // [Op.or]: [{firstname: "something"}, {lastname: "email@email.com"}]
-      }
-  }).then(function(results){
-    console.log(results);
-      // res.json(results);
-
-  });
-
+    models.User.findAll({
+    where: {
+        firstname: ''//req.params.results// req.body.searchItem
+        // [Op.or]: [{firstname: "something"}, {lastname: "email@email.com"}]
+        }
+    }).then(function(results){
+        console.log(results);
+        // res.json(results);
+    });
 });
 
 module.exports = router;
