@@ -60,27 +60,22 @@ router.post('/dashboard', function(req, res) {
 
 });
 
-router.get('/dashboard/search', ensureAuthenticated, function(req, res) {
+router.post('/dashboard/search', function(req, res) {
+ // data item
+  //sequelize 
+  console.log(req.body)
 
-   var result = req.body.search;
+  models.User.findAll({
+      where: {
+         firstname: ''//req.params.results// req.body.searchItem
+       // [Op.or]: [{firstname: "something"}, {lastname: "email@email.com"}]
+      }
+  }).then(function(results){
+    console.log(results);
+      // res.json(results);
 
-   req.checkBody('result').notEmpty();
-
-   console.log(result);
-
-   res.render('search');
-
-});
-
-router.post('/dashboard/search', ensureAuthenticated, function(req, res) {
-
-   var result = req.body.search;
-
-   req.checkBody('result').notEmpty();
-
-   console.log(result);
-
-   res.render('search');
+  });
 
 });
+
 module.exports = router;

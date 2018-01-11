@@ -40,6 +40,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
 
+        fullname: {
+            type: DataTypes.STRING, 
+            allowNull: false 
+        },
+
         profilepicture: {
             type: DataTypes.STRING,
             allowNull: false
