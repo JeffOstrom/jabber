@@ -130,19 +130,19 @@ $(document).ready(function() {
                 input: $("#lookup").val().trim(),
             };
 
-            $.post("/dashboard/search", user,
-            function(users) {
+            $.ajax({
+                method: "POST",
+                data: {
+                    input: $("#lookup").val().trim(),
+                },
+                url: '/dashboard/search' 
+            }).done(function(data) {
+                // location.reload();
+                console.log(data)
+                // Add data to the html tags in the modal
+                // $("#matchuser").modal()
 
-                //Clear the forms
-                // $("#searchbtn").val("")
-
-                //Get the data back from the server with the user
-                console.log(users)
-
-                //Open the modal with the user's name and picture
-                // $("#").attr("src", data.profilepicture);
-                // $(".modal").modal()
-             });
+            })
         };  
     });
 });
