@@ -21,7 +21,7 @@
                 {{!-- If user is logged in, he/she shouldn't see login, register --}}
                 {{#if user}}
                 
-                    <form action="/dashboard/search" method="POST">
+                    <form>
                         <span class="form-inline my-2 my-lg-0">
                             <input type="text" class="form-control mr-sm-2" id="lookup" name="search" placeholder="Search a user by email">
                             <button type="submit" class="btn bg-junglegreen text-white my-2 my-sm-0" id="searchbtn"><i class="fas fa-search"></i></button>

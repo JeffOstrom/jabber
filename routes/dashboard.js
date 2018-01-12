@@ -164,27 +164,35 @@ router.post('/delete/:id', function(req, res){
 /* Search Other Users */ 
 router.post('/dashboard/search', function(req, res) {
     
-    var result = req.body.search;
+    /*User's input*/
+    var input = req.body.input;
 
-    /*Splitting first name and last name from input*/
-    var splitResults = result.split(" ");
+    // Splitting first name and last name from input
+    var splitResults = input.split(" ");
 
     models.User.findAll({
     where: {
-            firstname: splitResults[0],
-            lastname: splitResults[1],
-            [Op.or]: [{email: result}]
-        }
+        firstname: splitResults[0],
+        lastname: splitResults[1]
+        // email: splitResults
+    }
     }).then(function(data){
 
-        if(result !== undefined){
+        if(data !== undefined){
 
             var users = [];
                 
             for(var i = 0; i < data.length; i++){
                 users.push(data[i].dataValues);
             }
+
+        } else {
+            res.flash('error_msg', 'No user found')
         };
+
+        // console.log(users); 
+        res.json(users)
+        
     });
 });
 

@@ -109,6 +109,42 @@ $(document).ready(function() {
             location.reload();
         });
     });
+
+    /*Finding other user and function for modal*/
+    $("#searchbtn").on("click", function(event) {
+        event.preventDefault();
+
+        //function to check if all the inputs are filled
+        function validateForm() {
+            var x = $("#lookup").val();
+            if (x == "") {
+                return false;
+            } else {
+                return true;
+            }
+        };
+
+        //If the form is filled out, then run this code
+        if(validateForm()){
+            var user = {
+                input: $("#lookup").val().trim(),
+            };
+
+            $.post("/dashboard/search", user,
+            function(users) {
+
+                //Clear the forms
+                // $("#searchbtn").val("")
+
+                //Get the data back from the server with the user
+                console.log(users)
+
+                //Open the modal with the user's name and picture
+                // $("#").attr("src", data.profilepicture);
+                // $(".modal").modal()
+             });
+        };  
+    });
 });
 
 
