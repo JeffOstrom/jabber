@@ -21,12 +21,8 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	var email = req.body.email;
 	var password = req.body.password;
 	var cpassword = req.body.password2;
-	var bio	= req.body.bio;
-<<<<<<< HEAD
-	var image;
-=======
-	var image ='';
->>>>>>> origin/branch-kp
+    var bio	= req.body.bio;
+    var image ='';
 	/* var profilePic = req.files[0]; */
 	
 	/* Validating field forms */
