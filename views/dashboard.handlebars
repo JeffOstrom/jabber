@@ -7,21 +7,51 @@
 		
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
-			<img src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt=" {{ user.firstname }} {{user.lastname}} profile picture">
-			<h4 id="full-name">{{ user.firstname }} {{ user.lastname }}</h4>
+
+			{{!-- User: Profile Picture --}}
+			<img id='user-image' data-value="{{user.id}}" src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
+
+			
+			<h4>
+				{{!-- User: First Name --}}
+				<span id="user-firstname" class="edit">{{ user.firstname }}</span> 
+				<textarea id="user-firstname-edit" class="update-task form-control update">{{user.firstname}}</textarea>
+				
+				{{!-- User: Last Name --}}
+				<span id="user-lastname" class="edit">{{ user.lastname }}</span>
+				<textarea id="user-lastname-edit" class="update-task form-control update">{{user.lastname}}</textarea>
+			</h4>
+
 			<hr class="hr-full">
-			<h6> {{ user.bio }} </h6>
+			
+			{{!-- User: Bio --}}
+			<h6 id="user-bio" class="edit"> {{ user.bio }} </h6>
+			<textarea id="user-bio-edit" class="update-task form-control update">{{user.bio}}</textarea>
 			<hr class="hr-half">
 
-			<p><strong><i class="fas fa-envelope"></i> {{ user.email }} </strong></p>
-		</div> {{!-- Profile Picture Column --}}
+			{{!-- User: Email --}}
+			<p>
+				<i class="fas fa-envelope"></i>
+				<strong id="user-email" class="edit"> {{ user.email }} </strong>
+				<textarea id="user-email-edit" class="update-task form-control update">{{user.email}}</textarea>
+			</p>
+			
+			{{!-- Update Btn --}}
+			<button class="btn btn-sm bg-junglegreen text-white" id="btn-profile-update" record-id="{{ id }}">
+				<i class="fas fa-pencil-alt"></i>
+			</button>
+
+		</div>
 		
-		{{!-- Profile Content --}}
+		{{!-- Message Feed --}}
 		<div class="col-xl-9 col-lg-9 col-md-9">
 			
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="home" aria-selected="true">Posts</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="feed-tab" data-toggle="tab" href="#feed" role="tab" aria-controls="profile" aria-selected="false">Message Feed</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="profile" aria-selected="false">Followers</a>
@@ -62,7 +92,7 @@
 								<img class=" mr-3 post-picture" src="assets/images/profile/{{ image }}" alt="Generic placeholder image">
 								<div class="media-body">
 									{{#if image}}
-										<img src="img-fluid" alt="">
+										<img src="#"class="img-fluid" alt="">
 									{{/if}}
 									<h5 class="mt-0">{{ firstname }}</h5>
 									<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
@@ -83,33 +113,11 @@
 							<hr>
 						{{/each}}
 					
-					{{!-- Messages --}}
-					{{!-- <div class="card-columns">
-						{{#if messages}}
-							{{#each messages}}
-								<div class="card">
-									{{#if image}}
-										<img class="card-img-top" src="" alt="Card image cap">
-									{{/if}}
-									<div class="card-body">
-										{{!-- <h5 class="card-title">{{ createdAt }}</h5>
-										<p class="card-text">{{ message }}</p>
-									</div>
-									<div class="card-footer">
-										<button class="btn btn-sm bg-junglegreen text-white" data-value="{{id}}">
-											<i class="fas fa-pencil-alt"></i>
-										</button>
-										<button class="btn btn-sm bg-desire text-white" data-value="{{id}}">
-											<i class="fas fa-trash"></i>
-										</button><br>
-										{{!-- <small class="text-muted">Last updated at {{ updatedAt }}</small>
-									</div>
-								</div>
-							{{/each}}
-						{{/if}}
-					</div> --}}{{!-- card columns --}}
 				</div>{{!-- post tab --}}
 
+				<div class="tab-pane fade" id="feed" role="tabpanel" aria-labelledby="feed-tab">
+					All global feed goes here
+				</div>{{!-- feed tab --}}
 				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">
 					All followers goes here
 				</div>{{!-- followers tab --}}

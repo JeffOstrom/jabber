@@ -2,7 +2,7 @@
 {
 	"development": {
 		"username": "root",
-		"password": "123",
+		"password": "admin",
 		"database": "jabber",
 		"host": "localhost",
 		"dialect": "mysql"

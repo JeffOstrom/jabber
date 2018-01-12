@@ -15,7 +15,6 @@ var db = require('./models');
 /* Routes */
 var contactus = require('./routes/contactus.js');
 var dashboard = require('./routes/dashboard.js');
-var update = require('./routes/update.js')
 var index = require('./routes/index.js');
 var login = require('./routes/login.js');
 var registration = require('./routes/registration.js');
@@ -91,7 +90,6 @@ app.use(function (req, res, next) {
 
 app.use('/', index);
 app.use('/', contactus);
-app.use('/', update);
 app.use('/', dashboard);
 app.use('/', login);
 app.use('/', registration);
