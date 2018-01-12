@@ -42,7 +42,11 @@ router.post('/signup', upload.any(), function(req, res, next) {
 		if( (fileExt == '.jpeg') ||
 			(fileExt == '.jpg') ||
 			(fileExt == '.png') ) {
-			isValid = renameFile(req.files[0].path, fileExt);
+			isValid = true;
+            image += fileExt;
+            fs.renameSync(req.files[0].path, req.files[0].path + fileExt, function(err) {
+                if(err) throw err;
+            });
 		}
 		else {
 			isValid = false;
@@ -195,14 +199,6 @@ function validateProfilePic(file) {
 	else {
 		return 'invalid';
 	}
-}
-
-function renameFile(path, ext) {
-	fs.rename(path, path + ext, function(err) {
-		if(err) throw err;
-		profilePic += ext;
-		return true;
-	});
 }
 
 module.exports = router;
