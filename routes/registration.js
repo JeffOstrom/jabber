@@ -22,41 +22,35 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	var password = req.body.password;
 	var cpassword = req.body.password2;
 	var bio	= req.body.bio;
-
-	//Validating field forms
+	/* var profilePic = req.files[0]; */
+	
+	/* Validating field forms */
 	req.checkBody('firstname', 'First name is required').notEmpty();
 	req.checkBody('lastname', 'Last name is required').notEmpty();
 	req.checkBody('email', 'Email is required').isEmail();
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
 	req.checkBody('bio', 'Please tell us something about yourself').notEmpty();
-	// req.checkBody('profilePic', 'Please upload a profile picture').notEmpty();
+	/* req.checkBody('profilePic', 'Please upload a profile picture').notEmpty(); */
 
-	var fileExt = validateProfilePic(req.files[0]);
-	console.log("validate profile pic : " + fileExt);
-	var profilePic = req.files[0].filename;
-	var isValid = false;
-	
-	if( (fileExt == '.jpeg') ||
-		(fileExt == '.jpg') ||
-		(fileExt == '.png') ) {
-		console.log('Going in');
-		console.log('1');
-		isValid = renameFile(req.files[0].path, fileExt);
+	if(req.files[0] !== undefined){
+		var fileExt = validateProfilePic(req.files[0]);
+		console.log("validate profile pic : " + fileExt);
+		var profilePic = req.files[0].filename;
+		var isValid = false;
+		
+		if( (fileExt == '.jpeg') ||
+			(fileExt == '.jpg') ||
+			(fileExt == '.png') ) {
+			isValid = renameFile(req.files[0].path, fileExt);
+		}
+		else {
+			isValid = false;
+		}
 	}
 	else {
-		console.log('not going in');
-		isValid = false;
-	}
-	
-	function renameFile(path, ext) {
-		fs.rename(path, path + ext, function(err) {
-			if(err) throw err;
-			profilePic += ext;
-			console.log('file has been renamed');
-			console.log('2');
-			return true;
-		});
+		req.flash('error_msg', 'Setting Up Default Profile Picture');
+		profilePic = 'avatar.png';
 	}
 
 	var errors = req.validationErrors();
@@ -66,8 +60,6 @@ router.post('/signup', upload.any(), function(req, res, next) {
         });
     }
     else if(isValid === false) {
-    	console.log(isValid);
-		console.log('3');
     	req.flash('error_msg', 'Invalid Profile Picture');
     	fs.unlink(req.files[0].path, function(err){
 			if(err) throw err;
@@ -177,31 +169,24 @@ function validateProfilePic(file) {
 		    size: 52702 
 		} 
 	] */
-	console.log(file);
 	var fileExt = '';
 	var type = file.mimetype.trim();
-	console.log(type);
 	if( (type === 'image/jpeg') ||
 		(type === 'image/jpg') ||
 		(type === 'image/png' )) {
-		console.log('clearing file type');
 		if(file.size > 3000000) {
-			console.log('not clearing file size ' + file.size);
 			return 'invalid';
 		}
 		else {
 			if(file.mimetype == 'image/jpeg') {
-				console.log('jpeg ' + file.size);
 				fileExt = ".jpeg";
 				return fileExt;
 			}
 			else if(file.mimetype == 'image/jpg') {
-				console.log('jpg ' + file.size);
 				fileExt = ".jpg";
 				return fileExt;
 			}
 			else if(file.mimetype == 'image/png') {
-				console.log('png ' + file.size);
 				fileExt = ".png";
 				return fileExt;
 			}
@@ -210,6 +195,14 @@ function validateProfilePic(file) {
 	else {
 		return 'invalid';
 	}
-
 }
+
+function renameFile(path, ext) {
+	fs.rename(path, path + ext, function(err) {
+		if(err) throw err;
+		profilePic += ext;
+		return true;
+	});
+}
+
 module.exports = router;
