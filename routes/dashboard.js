@@ -163,18 +163,28 @@ router.post('/delete/:id', function(req, res){
 
 /* Search Other Users */ 
 router.post('/dashboard/search', function(req, res) {
-    // data item
-    //sequelize 
-    console.log(req.body)
+    
+    var result = req.body.search;
+
+    /*Splitting first name and last name from input*/
+    var splitResults = result.split(" ");
 
     models.User.findAll({
     where: {
-        firstname: ''//req.params.results// req.body.searchItem
-        // [Op.or]: [{firstname: "something"}, {lastname: "email@email.com"}]
+            firstname: splitResults[0],
+            lastname: splitResults[1],
+            [Op.or]: [{email: result}]
         }
-    }).then(function(results){
-        console.log(results);
-        // res.json(results);
+    }).then(function(data){
+
+        if(result !== undefined){
+
+            var users = [];
+                
+            for(var i = 0; i < data.length; i++){
+                users.push(data[i].dataValues);
+            }
+        };
     });
 });
 
