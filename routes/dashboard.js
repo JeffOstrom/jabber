@@ -14,6 +14,7 @@ function ensureAuthenticated(req, res, next){
     }
 };
 
+/* Obtain */
 router.get('/dashboard', ensureAuthenticated, function(req, res) {
     if(res.locals.user){
         var id = res.locals.user.id;
@@ -33,6 +34,7 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
                     result[i].dataValues.profileImage = res.locals.user.profilepicture;
                     messages.push(result[i].dataValues);
                 }
+
                 res.render('dashboard', { messages: messages});
             }
             else{
@@ -98,19 +100,42 @@ router.post('/dashboard', upload.any(), function(req, res) {
             message: message,
             image: image
         };
-
         /* Post new message */
         models.Messages.create(newMessage).then(function(message){
-            req.flash('success_msg', 'Message successfully sent');
+            // req.flash('success_msg', 'Message successfully sent');
             res.redirect('/dashboard');
         });
     }
 });
 
+/* Edit User Profile */
+router.post('/update/profile/:id', function(req, res){
+    var id = req.params.id;
+
+    models.User.update({
+        firstname: req.body.firstname,
+		lastname:  req.body.lastname,
+		email: req.body.email,
+		bio: req.body.bio
+    },
+    { 
+    	where: {
+    		id: id
+    	}
+    }).then(function(todos) {
+        res.send('success');
+    });
+});
+
+
+/* Edit User Message */
 router.post('/update/:id', function(req, res){
     var id = req.params.id;
     var updatedMessage = req.body.message;
     var date = new Date();
+
+    console.log(updatedMessage);
+
     models.Messages.update({
         message: updatedMessage,
         updatedAt: date
@@ -136,6 +161,7 @@ router.post('/delete/:id', function(req, res){
     });
 });
 
+/* Search Other Users */ 
 router.post('/dashboard/search', function(req, res) {
     // data item
     //sequelize 

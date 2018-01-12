@@ -77,6 +77,7 @@ input:focus {
 }
 .profile-picture {
     width: 150px;
+    margin: 0 0 20px 0;
 }
 .post-picture{
     width: 64px;
@@ -97,9 +98,11 @@ input:focus {
     border-width: 3px;
     border-color: #FF9B71;
 }
-/*.notifications {
-    margin-top: 20px;
-}*/
+
+/* Profile (dashboard) */
+#btn-profile-update {
+	display: none;
+}
 
 /* Background color classes */
 .bg-junglegreen {

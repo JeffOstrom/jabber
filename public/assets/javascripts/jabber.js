@@ -11,7 +11,47 @@
 /* Copyright reserved 2018 */
 /* ----------------------- */
 
+
 $(document).ready(function() {
+
+	/* Edit Profile Text Fields */
+	$('.edit').on('click', function() {
+
+		var currentField = "#" + $(this).attr('id');
+		var editField = currentField + "-edit"
+
+		$(currentField).hide();
+		$(editField).show();
+		$(editField).focus();
+		$('#btn-profile-update').show();
+
+		$('#btn-profile-update').on('click', function() {
+			$(".edit").each(function() {
+				var eachUpdate = "#" + $(this).attr('id') + '-edit'
+				$(this).html( $(eachUpdate).val().trim() );
+			});
+
+			$(editField).hide();
+			$(currentField).show();
+
+			var id = $('#user-image').attr('data-value');
+
+			$.ajax({
+				method: "POST",
+				data: {
+					firstname: $('#user-firstname').text(),
+					lastname:  $('#user-lastname').text(),
+					email: $('#user-email').text(),
+					bio: $('#user-bio').text()
+				},
+				url: '/update/profile/' + id
+			}).done(function(data) {
+				location.reload();
+			})
+		});
+	});
+
+	/* Edit User Messages */
 	$('.btn-update').on('click', function() {
         /* Toggle buttons to perform Update/Delete */
         var currentValue = $(this).attr('data-value').trim();
