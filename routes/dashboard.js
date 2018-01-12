@@ -161,38 +161,33 @@ router.post('/delete/:id', function(req, res){
     });
 });
 
+
 /* Search Other Users */ 
 router.post('/dashboard/search', function(req, res) {
-    
+ 
     /*User's input*/
-    var input = req.body.input;
-
-    // Splitting first name and last name from input
-    var splitResults = input.split(" ");
-
+    var email = req.body.email;
+    console.log('This is what Im getting from ajax ' + email);
     models.User.findAll({
-    where: {
-        firstname: splitResults[0],
-        lastname: splitResults[1]
-        // email: splitResults
-    }
+        where: {
+            email: email,
+        }
     }).then(function(data){
 
         if(data !== undefined){
 
             var users = [];
-                
+               
             for(var i = 0; i < data.length; i++){
                 users.push(data[i].dataValues);
             }
+            // console.log(users); 
+            res.json(users);
 
         } else {
-            res.flash('error_msg', 'No user found')
-        };
-
-        // console.log(users); 
-        res.json(users)
-        
+            res.flash('error_msg', 'No user found');
+            res.json(users);
+        }
     });
 });
 

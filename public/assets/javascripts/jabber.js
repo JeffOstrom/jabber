@@ -124,25 +124,21 @@ $(document).ready(function() {
             }
         };
 
-        //If the form is filled out, then run this code
+        //If the input, then run this code
         if(validateForm()){
-            var user = {
-                input: $("#lookup").val().trim(),
-            };
+
+            var email = $('#lookup').val().trim();
 
             $.ajax({
-                method: "POST",
+                method: "post",
                 data: {
-                    input: $("#lookup").val().trim(),
-                },
-                url: '/dashboard/search' 
-            }).done(function(data) {
-                // location.reload();
-                console.log(data)
-                // Add data to the html tags in the modal
-                // $("#matchuser").modal()
+                   email: email
+               },
+               url: "/dashboard/search"
+            }).done(function(data){
+                console.log('result' + data);
+            });
 
-            })
         };  
     });
 });
