@@ -29,6 +29,15 @@ body {
     width: 40px;
 }
 
+/* Homepage */
+#definition {
+	height: 100%;
+	width: 100%;
+	max-width: 550px;
+	margin: 40px 0 0 0;
+}
+
+
 /* Jumbotron */
 .jumbotron {
     background-color: #FFF;
