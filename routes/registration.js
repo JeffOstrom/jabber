@@ -22,6 +22,11 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	var password = req.body.password;
 	var cpassword = req.body.password2;
 	var bio	= req.body.bio;
+<<<<<<< HEAD
+	var image;
+=======
+	var image ='';
+>>>>>>> origin/branch-kp
 	/* var profilePic = req.files[0]; */
 	
 	/* Validating field forms */
@@ -36,7 +41,7 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	if(req.files[0] !== undefined){
 		var fileExt = validateProfilePic(req.files[0]);
 		console.log("validate profile pic : " + fileExt);
-		var profilePic = req.files[0].filename;
+		image = req.files[0].filename;
 		var isValid = false;
 		
 		if( (fileExt == '.jpeg') ||
@@ -86,7 +91,7 @@ router.post('/signup', upload.any(), function(req, res, next) {
 					password: password,
 					bio: bio,
 					fullname: firstname + " " + lastname,
-					profilepicture: profilePic
+					profilepicture: image
 				};
 
 				/* Hiding the user's password in the database */
