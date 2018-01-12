@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 	/* Edit User Messages */
 	$('.btn-update').on('click', function() {
-        
+        /* Toggle buttons to perform Update/Delete */
         var currentValue = $(this).attr('data-value').trim();
         var id = $(this).attr('record-id');
         
@@ -87,6 +87,27 @@ $(document).ready(function() {
                 location.reload();
             });
         }
+    });
+
+    /* When modal show up, grab the 'data-href' attribute of calling button */
+    /* And set it to 'data-id' of 'Delete' button, so that we can grab that id on click event of Delete button */
+    $('#exampleModalCenter').on('shown.bs.modal', function(event) {
+        var id = $(event.relatedTarget).data('href');
+        $('#btn-delete').attr('data-id', id);
+    });
+
+    /* This is Modal's Delete button which has 'data-id' attribute containing current post id */
+    $('#btn-delete').on('click', function() {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            method: "POST",
+            data: {
+                'id': id
+            },
+            url: "/delete/" + id
+        }).done(function(data){
+            location.reload();
+        });
     });
 });
 
