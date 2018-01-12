@@ -5,16 +5,15 @@
 		
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
-			<img src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="">
+			{{!-- <img src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="">
 			<h4 id="full-name">{{ user.firstname }} {{ user.lastname }}</h4>
 			<hr class="hr">
 			<h6> {{ user.bio }} </h6>
-			<hr class="hr">
+			<hr class="hr"> --}}
 
 			{{!-- User: Profile Picture --}}
 			<img id='user-image' data-value="{{user.id}}" src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
 
-			
 			<h4>
 				{{!-- User: First Name --}}
 				<span id="user-firstname" class="edit">{{ user.firstname }}</span> 
