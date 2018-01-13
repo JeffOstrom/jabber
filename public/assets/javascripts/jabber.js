@@ -133,60 +133,40 @@ $(document).ready(function() {
             },
             url: "/dashboard/search",
         }).done(function(data){
-            $("#lookup").val("");
-            $("#insertdata").html("");
+                $("#lookup").val("");
+                $("#insertdata").html("");
 
-            for (var i = 0; i < data.length; i++) {
-                var div = $("<div class='col-md-12'>");
-                /* Profile Image */
-                var showimage = $("<img id='imagepreview' style='width: 80px;'>");
-                showimage.attr("src", "assets/images/profile/" + data[i].profilepicture);
-                
-                /* Profile Name */
-                var name = $("<h4>");
-                name.attr('id', 'matchname');
-                name.text(data[i].firstname + " " + data[i].lastname);
+                for (var i = 0; i < data.length; i++) {
+                    var div = $("<div class='col-md-12'>");
+                    /* Profile Image */
+                    var showimage = $("<img id='imagepreview' style='width: 80px;'>");
+                    showimage.attr("src", "assets/images/profile/" + data[i].profilepicture);
+                    
+                    /* Profile Name */
+                    var name = $("<h4>");
+                    name.attr('id', 'matchname');
+                    name.text(data[i].firstname + " " + data[i].lastname);
 
-                /* Follow Button */
-                var firstButton = $("<button class='btn btn-sm bg-junglegreen text-white' type='button' data-dismiss='modal'>Folloe</button>");
-                firstButton.attr('id', data[i].id);
-                /*View Profile Button*/
-                var secondButton = $("<button class='btn btn-sm bg-junglegreen text-white' type='button' data-dismiss='modal'>View Profile</button>");
-                secondButton.attr('id', data[i].id);
-                div.append(showimage, name, firstButton, secondButton);
-                $("#insertdata").append(div);
-                $("#insertdata").append('<br>');
-            };
-
-            $("#matchuser").modal();
-           
-        });
-
+                    /* Follow Button */
+                    var firstButton = $("<button class='btn btn-sm bg-junglegreen text-white' type='button' data-dismiss='modal'>Folloe</button>");
+                    firstButton.attr('id', data[i].id);
+                    /*View Profile Button*/
+                    var secondButton = $("<button class='btn btn-sm bg-junglegreen text-white' type='button' data-dismiss='modal'>View Profile</button>");
+                    secondButton.attr('id', data[i].id);
+                    div.append(showimage, name, firstButton, secondButton);
+                    $("#insertdata").append(div);
+                    $("#insertdata").append('<br>');
+                };
+                $("#matchuser").modal();
+            });
         };  
     });
 
     /*View profile button*/
     $(document).on("click", "#viewprofile", function() {
-
         event.preventDefault();
-
         console.log("viewprofile buttons works")
-        
-
     });
-
-    /*follow button*/
-    // $("#follow").on("click", function(event) {
-
-    //     $.ajax({
-    //         method: "POST",
-    //         data: {
-    //             email: email
-    //         },
-    //         url: "/dashboard/search",
-    //     }).done(function(data){})
-
-    // })
 });
 
 
