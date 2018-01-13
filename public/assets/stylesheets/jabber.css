@@ -125,7 +125,15 @@ input:focus {
 #matchname, #userProfilepic, .followbtn, #viewprofile{
     display: inline-block;
     vertical-align: middle;
+}
+
+#userProfilepic{
+    width: 100px;
     margin: 5px;
+}
+
+.followbtn{
+    margin-right: 5px;
 }
 
 /* Background color classes */

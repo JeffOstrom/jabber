@@ -260,8 +260,9 @@ router.post('/dashboard/search', function(req, res) {
 router.post('/dashboard/profile', function(req, res) {
  
     /*User id*/
-    var userid = req.body.id;
-
+    var userid = req.body.search;
+    console.log(userid);
+    
     models.User.findAll({
         where: {
             id: userid

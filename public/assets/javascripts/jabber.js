@@ -147,9 +147,9 @@ $(document).ready(function() {
                 var div = $("<div class='col-md-12'>");
 
                 /*Profile Image*/
-                var showimage = $("<img>");
-                showimage.attr("src", "https://res.cloudinary.com/demo/image/upload/w_100,h_100,c_thumb,g_face,r_20,d_avatar.png/non_existing_id.png");
-                
+                var showimage = $("<img id=userProfilepic>");
+                showimage.attr('src', 'assets/images/profile/'+ data[i].profilepicture +'');
+
                 /*Profile Name*/
                 var name = $("<h4>");
                 name.attr('id', 'matchname');
@@ -196,15 +196,15 @@ $(document).ready(function() {
         var userid = $(this).attr("userid");
         console.log("viewprofile buttons works")
         
-        $.ajax({
-            method: "POST",
-            data: {
-                id: userid
-            },
-            url: "/dashboard/profile",
-        }).done(function(data){
-            // location.reload();
-        })
+        // $.ajax({
+        //     method: "POST",
+        //     data: {
+        //         id: userid
+        //     },
+        //     url: "/dashboard/profile",
+        // }).done(function(data){
+        //     // location.reload();
+        // })
     });
 
     /* GET News Feed Messages */
