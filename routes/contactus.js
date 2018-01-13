@@ -21,10 +21,10 @@ router.post('/contactus', function(req, res) {
 
 	var errors = req.validationErrors();
 
-    if(errors){
+    if(errors) {
         res.render('contactus', {errs : errors})
-    } else {
-
+    }
+    else {
     	/*Creating new Contact user*/
     	 var contactUser = {
 			name: name,

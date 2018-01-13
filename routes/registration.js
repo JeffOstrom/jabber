@@ -55,7 +55,7 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	}
 	else {
 		req.flash('error_msg', 'Setting Up Default Profile Picture');
-		profilePic = 'avatar.png';
+		image = 'avatar.png';
 	}
 
 	var errors = req.validationErrors();

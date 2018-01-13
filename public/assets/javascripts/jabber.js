@@ -47,7 +47,7 @@ $(document).ready(function() {
 				url: '/update/profile/' + id
 			}).done(function(data) {
 				location.reload();
-			})
+			});
 		});
 	});
 
@@ -107,6 +107,22 @@ $(document).ready(function() {
             url: "/delete/" + id
         }).done(function(data){
             location.reload();
+        });
+    });
+
+    /* This is Modal's Delete button which has 'data-id' attribute containing current post id */
+    $("#searchbtn").on("click", function(event) {
+        event.preventDefault();
+        var name = $('#lookup').val().trim();
+        $.ajax({
+            method: "post",
+            data: {
+                name: name
+            },
+            url: "/dashboard/search"
+        }).done(function(data){
+            console.log('result' + data);
+            // location.reload();
         });
     });
 });

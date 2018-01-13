@@ -96,7 +96,10 @@ app.use('/', registration);
 
 app.set('port', (process.env.PORT || 3000));
 
-db.sequelize.sync({alter: true}).then(function() {
+db.Messages.belongsTo(db.User);
+db.User.hasMany(db.Messages);
+
+db.sequelize.sync().then(function() {
 	app.listen(app.get('port'), function() {
 	    console.log('Server started on port ' + app.get('port'));
 	});

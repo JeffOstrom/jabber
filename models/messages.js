@@ -1,3 +1,4 @@
+User = require('./accounts');
 module.exports = function(sequelize, DataTypes) {
 	
     var Messages = sequelize.define("Messages", {
@@ -19,9 +20,8 @@ module.exports = function(sequelize, DataTypes) {
         	type: DataTypes.STRING,
         	allowNull: true
         }
-
         /* Time Stamp of Message auto-created by Sequelize: created_at && updated_at */
-  });
+    });
 
   return Messages;
 };
