@@ -14,7 +14,7 @@
 			{{!-- User: Profile Picture --}}
 			<img id='user-image' data-value="{{user.id}}" src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
 
-			<h4></h4>
+			<h4>
 				{{!-- User: First Name --}}
 				<span id="user-firstname" class="edit">{{ user.firstname }}</span> 
 				<textarea id="user-firstname-edit" class="update-task form-control update">{{user.firstname}}</textarea>
@@ -22,7 +22,7 @@
 				{{!-- User: Last Name --}}
 				<span id="user-lastname" class="edit">{{ user.lastname }}</span>
 				<textarea id="user-lastname-edit" class="update-task form-control update">{{user.lastname}}</textarea>
-			
+			</h4>
 
 			<hr class="hr-full">
 			
@@ -151,4 +151,22 @@
 			</div>{{!-- tab content --}}
 		</div>{{!-- Profile Content Column --}}
 	</div>{{!-- row --}}
+
+	{{!-- Modal for searched users --}}
+	<div class="modal fade" id="matchuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="row" id="insertdata">
+                        
+                    </div> 
+            </div>
+        </div>
+    </div>
+
 </section>
+

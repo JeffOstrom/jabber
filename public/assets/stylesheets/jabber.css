@@ -223,6 +223,17 @@ input:focus {
 	display: none;
 }
 
+/*Modal for searching other users*/
+#matchname{
+    font-size: 1.5rem;
+
+}
+
+#matchname, #userProfilepic, #follow, #viewprofile{
+    display: inline-block;
+    vertical-align: middle;
+}
+
 /* Background color classes */
 .bg-junglegreen {
     background-color: #1B998B !important;
