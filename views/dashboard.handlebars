@@ -166,12 +166,40 @@
 
 				{{!-- Followers Tab --}}
 				<div class="tab-pane fade" id="follower" role="tabpanel" aria-labelledby="follower-tab">
-					All followers goes here
+					<h2>These are your followers!</h2>
+					<hr class="hr-full">
+						<div class="media">
+							<div class="media-body">
+								<h3 class="mt-0">Peter Peck</h3>
+							</div>
+						</div>
+						<br>
+					<hr class="hr-full">	
+					<div class="media">
+						<div class="media-body">
+							<h3 class="mt-0">Jeff Ostrom</h3>
+						</div>
+					</div>
+					<br>
+					<hr class="hr-full">				
 				</div>
 
 				{{!-- Following Tab --}}
 				<div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="following-tab">
-					All following goes here
+
+					<h2>You are following:</h2>
+					
+					<div id="fake-following">
+						<hr class="hr-full">
+							<div class="media">
+								<div class="media-body">
+									<h3 class="mt-0">Jeff Ostrom</h3>
+									<button type="button" id="unfollow-btn" class="btn btn-danger btn-delete">Unfollow</button>
+								</div>
+							</div>
+							<br>
+						<hr class="hr-full">	
+					</div>
 				</div>
 
 
