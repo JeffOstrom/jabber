@@ -221,17 +221,21 @@ input:focus {
 /* Profile (dashboard) */
 #btn-profile-update {
 	display: none;
+    width: 100px;
+
 }
 
 /*Modal for searching other users*/
 #matchname{
     font-size: 1.5rem;
-
+    padding-right: 80px;
+    padding-left: 20px;
 }
 
 #matchname, #userProfilepic, #follow, #viewprofile{
     display: inline-block;
     vertical-align: middle;
+    margin: 5px;
 }
 
 /* Background color classes */
