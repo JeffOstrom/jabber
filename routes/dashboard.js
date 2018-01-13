@@ -220,18 +220,7 @@ router.post('/dashboard/profile', function(req, res) {
 });
 
 function validateProfilePic(file) {
-    /* [ 
-        { 
-            fieldname: 'profilepic',
-            originalname: 'web_developer.jpg',
-            encoding: '7bit',
-            mimetype: 'image/jpeg',
-            destination: 'public/images/profile',
-            filename: '93e08f4b28c622f97c2b7342796bb633',
-            path: 'public\\images\\profile\\93e08f4b28c622f97c2b7342796bb633',
-            size: 52702 
-        } 
-    ] */
+    
     var fileExt = '';
     var type = file.mimetype.trim();
     if( (type === 'image/jpeg') ||
