@@ -273,5 +273,10 @@ $(document).ready(function() {
 	});
 
 
+    $('#unfollow-btn').on('click', function() {
+    	$('#fake-following').remove();
+    })
+
+
 });
 
