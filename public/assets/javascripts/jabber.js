@@ -11,7 +11,6 @@
 /* Copyright reserved 2018 */
 /* ----------------------- */
 
-
 $(document).ready(function() {
 
 	/* Edit Profile Text Fields */
@@ -133,41 +132,116 @@ $(document).ready(function() {
             },
             url: "/dashboard/search",
         }).done(function(data){
-                $("#lookup").val("");
-                $("#insertdata").html("");
+            /*Clearing input field and modal each time*/
+            $("#lookup").val("");
+            $("#insertdata").html("");
 
-                for (var i = 0; i < data.length; i++) {
-                    var div = $("<div class='col-md-12'>");
-                    /* Profile Image */
-                    var showimage = $("<img id='imagepreview' style='width: 80px;'>");
-                    showimage.attr("src", "assets/images/profile/" + data[i].profilepicture);
-                    
-                    /* Profile Name */
-                    var name = $("<h4>");
-                    name.attr('id', 'matchname');
-                    name.text(data[i].firstname + " " + data[i].lastname);
+            /*Looping through the object being sent back*/
+            for (var i = 0; i < data.length; i++) {
 
-                    /* Follow Button */
-                    var firstButton = $("<button class='btn btn-sm bg-junglegreen text-white' type='button' data-dismiss='modal'>Folloe</button>");
-                    firstButton.attr('id', data[i].id);
-                    /*View Profile Button*/
-                    var secondButton = $("<button class='btn btn-sm bg-junglegreen text-white' type='button' data-dismiss='modal'>View Profile</button>");
-                    secondButton.attr('id', data[i].id);
-                    div.append(showimage, name, firstButton, secondButton);
-                    $("#insertdata").append(div);
-                    $("#insertdata").append('<br>');
-                };
-                $("#matchuser").modal();
-            });
-        };  
-    });
+                var div = $("<div class='col-md-12'>");
 
-    /*View profile button*/
-    $(document).on("click", "#viewprofile", function() {
-        event.preventDefault();
-        console.log("viewprofile buttons works")
-    });
-});
+                /*Profile Image*/
+                var showimage = $("<img>");
+                showimage.attr("src", "https://res.cloudinary.com/demo/image/upload/w_100,h_100,c_thumb,g_face,r_20,d_avatar.png/non_existing_id.png");
+                
+                /*Profile Name*/
+                var name = $("<h4>");
+                name.attr('id', 'matchname');
+                name.text(data[i].firstname + " " + data[i].lastname)
 
+                /*Follow Button*/
+                var firstButton = $('<button>');
+                firstButton.attr('type', 'button');
+                firstButton.addClass('btn bg-junglegreen text-white follow');
+                firstButton.attr('id', 'follow');
+                firstButton.addClass('follow');
+                firstButton.attr('userid', data[i].id);
+                firstButton.addClass('btn bg-junglegreen text-white');
+                firstButton.attr('data-dismiss', 'modal');
+                firstButton.text('Follow')
 
+                /*View Profile Button*/
+                var secondButton = $('<button>');
+                secondButton.attr('type', 'button');
+                secondButton.attr('id', 'viewprofile');
+                secondButton.attr('userid', data[i].id);
+                secondButton.addClass('btn bg-junglegreen text-white');
+                secondButton.attr('data-dismiss', 'modal');
+                secondButton.text('View Profile')
+
+                div.append(showimage, name, firstButton, secondButton);
+
+                $("#insertdata").append(div);
+
+            };
+
+            $("#matchuser").modal();
+           
+        });
+
+    /* GET News Feed Messages */
+	$('#feed-tab').on('click', function() {
+
+		$.get('/feed', function(data) {
+
+			$('#feed').empty();
+			var print = data;
+
+			for (var i=0; i<print.length; i++) {
+
+				//console.log(print[i]);
+
+				var profilepicture = print[i].profilepicture;
+				var fullname = print[i].fullname;
+				var id = print[i].id;
+				var message = print[i].message;
+				var time = print[i].createdAt;
+				var user = print[i].user;
+				var image;
+				var imageHtml;
+
+				if (print[i].image !== null) {
+					image = print[i].image;
+					imageHtml = '<a href="assets/images/post/' + image + '" target="_blank">' + '<img src="assets/images/post/' + image + '" class="img-fluid user-picture">' + '</a>';
+				} else { 
+					imageHtml = '';
+				};
+
+				$('#feed').append( 
+					'<div class="media">' +
+						'<img class="rounded mr-3 post-picture follow" src="assets/images/profile/' + profilepicture + '" userid="' + user + '">' +
+						'<div class="media-body">' +
+							'<h5 class="mt-0">' + fullname + '</h5>' +
+							imageHtml + 
+							 '<br>' +
+							'<span id="message-'+ id +'">' + message + '</span><br>' +
+							'<small>' +
+								'<span id="postedTime">' + moment(time).format('LLL') + '</span>' + 
+							'</small><br>' +
+						'</div>' +
+					'</div>' +
+					'<br>' + 
+					'<hr class="hr-full">' 
+				);
+
+			}
+		});
+
+	});
+
+ 	/* Follow User */
+    $(document).on ("click", ".follow", function () {
+            
+        var newFollow = $(this).attr('userid');
+        var currentUser = $('#user-image').attr('data-value');
+       
+		$.ajax({
+			method: "POST",
+			url: "/follow/" + currentUser + "/" + newFollow
+		}).done(function(data){
+			//location.reload();
+		});
+
+	});
 
