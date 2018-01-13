@@ -133,7 +133,7 @@ router.post('/dashboard', upload.any(), function(req, res) {
         var newMessage = {
             // user: res.locals.user.firstname + " " + res.locals.user.lastname,
             user: id,
-            fullname: res.locals.user.firstname + res.locals.user.lastname,
+            fullname: res.locals.user.firstname + " " + res.locals.user.lastname,
             profilepicture: res.locals.user.profilepicture,
             message: message,
             image: image
@@ -257,48 +257,42 @@ router.post('/dashboard/search', function(req, res) {
 
 
 /*Profile of searched User */ 
-router.post('/dashboard/profile', function(req, res) {
+router.post('/profile/:id', function(req, res) {
  
     /*User id*/
-    var userid = req.body.search;
-    console.log(userid);
-    
+    var userid = req.params.id;
+
     models.User.findAll({
         where: {
             id: userid
         }
     }).then(function(data){
-
         if(data !== undefined){
-
             var users = data[0].dataValues;
-            
-            console.log(users)
 
-            res.render('profile', users);
-            // models.Messages.findAll({
+            models.Messages.findAll({
 
-            //     where: {
-            //         user: user
-            //     },
-            //     order: [
-            //         ['id', 'DESC']
-            //     ]
-            // }).then(function(result){
+                where: {
+                    user: users.id
+                },
+                order: [
+                    ['id', 'DESC']
+                ]
+            }).then(function(result){
 
-            //     if(result !== undefined){
-
-            //         var messages = [];
+                    var messages;
                     
-            //         for(var i = 0; i < result.length; i++){
-            //             result[i].dataValues.firstname = res.locals.user.firstname;
-            //             result[i].dataValues.profileImage = res.locals.user.profilepicture;
-            //             messages.push(result[i].dataValues);
-            //         }
+                    for(var i = 0; i < result.length; i++){
+                        messages = result[i].dataValues;
+                    }
 
-            //         res.render('profile', { messages: messages}, {user: user});
-            //     }
-            // });
+                    // if(messages){
+                        res.render('profile', users, messages);
+                    // } else {
+                        // res.render('profile', users);
+                    // };
+
+            });
         };
     });
 });

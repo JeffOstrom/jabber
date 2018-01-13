@@ -168,19 +168,14 @@ $(document).ready(function() {
                 firstButton.text('Follow')
 
                 /*View Profile Button*/
-                var secondButton = $('<button>');
-                secondButton.attr('type', 'button');
-                secondButton.attr('id', 'viewprofile');
-                secondButton.attr('userid', data[i].id);
-                secondButton.addClass('btn bg-junglegreen text-white');
-                secondButton.attr('data-dismiss', 'modal');
-                secondButton.text('View Profile')
+                var secondButton = $("<form action='/profile/" + data[i].id + "' method='POST'>" + 
+               "<button type='submit' id=" + data[i].id + " class='btn bg-junglegreen text-white viewprofile'>View Profile</button></form>");
 
                 div.append(showimage, name, firstButton, secondButton);
 
                 $("#insertdata").append(div);
-
             };
+
 
             $("#matchuser").modal();
            
@@ -190,16 +185,16 @@ $(document).ready(function() {
     });
 
     /*View profile button*/
-    $(document).on("click", "#viewprofile", function() {
+    $(document).on("click", ".viewprofile", function() {
 
         /*Unique ID for the user*/
-        var userid = $(this).attr("userid");
-        console.log("viewprofile buttons works")
+        // var userid = $(this).attr("userid");
+        // console.log("viewprofile buttons works")
         
         // $.ajax({
         //     method: "POST",
         //     data: {
-        //         id: userid
+        //         userid: userid
         //     },
         //     url: "/dashboard/profile",
         // }).done(function(data){

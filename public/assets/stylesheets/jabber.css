@@ -122,7 +122,7 @@ input:focus {
     padding-left: 20px;
 }
 
-#matchname, #userProfilepic, .followbtn, #viewprofile{
+#matchname, #userProfilepic, .followbtn, .viewprofile{
     display: inline-block;
     vertical-align: middle;
 }
@@ -130,10 +130,6 @@ input:focus {
 #userProfilepic{
     width: 100px;
     margin: 5px;
-}
-
-.followbtn{
-    margin-right: 5px;
 }
 
 /* Background color classes */
