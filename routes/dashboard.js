@@ -161,20 +161,40 @@ router.post('/delete/:id', function(req, res){
     });
 });
 
+
 /* Search Other Users */ 
 router.post('/dashboard/search', function(req, res) {
-    // data item
-    //sequelize 
-    console.log(req.body)
+ 
+    /*User's input*/
+    var email = req.body.email;
+
+    var name = email.split(' ');
 
     models.User.findAll({
-    where: {
-        firstname: ''//req.params.results// req.body.searchItem
-        // [Op.or]: [{firstname: "something"}, {lastname: "email@email.com"}]
+        where: {
+            $or: [
+                {firstname: name[0]}, 
+                {lastname: name[1]}, 
+                {firstname: name[1]}, 
+                {lastname: name[0]},
+                {email: email}
+            ]
         }
-    }).then(function(results){
-        console.log(results);
-        // res.json(results);
+    }).then(function(data){
+
+        if(data !== undefined){
+
+            var users = [];
+               
+            for(var i = 0; i < data.length; i++){
+                users.push(data[i].dataValues);
+            }
+            res.json(users);
+
+        } else {
+            res.flash('error_msg', 'No user found');
+            res.json(users);
+        }
     });
 });
 
