@@ -108,8 +108,6 @@ $(document).ready(function() {
             location.reload();
         });
     });
-<<<<<<< HEAD
-=======
 
     /*Finding other user and function for modal*/
     $("#searchbtn").on("click", function(event) {
@@ -157,7 +155,7 @@ $(document).ready(function() {
                 /*Follow Button*/
                 var firstButton = $('<button>');
                 firstButton.attr('type', 'button');
-                firstButton.addClass('btn bg-junglegreen text-white');
+                firstButton.addClass('btn bg-junglegreen text-white follow');
                 firstButton.attr('id', 'follow');
                 firstButton.attr('data-dismiss', 'modal');
                 firstButton.text('Follow')
@@ -190,23 +188,7 @@ $(document).ready(function() {
 
         console.log("viewprofile buttons works")
         
-
     });
-
-    /*follow button*/
-    // $("#follow").on("click", function(event) {
-
-    //     $.ajax({
-    //         method: "POST",
-    //         data: {
-    //             email: email
-    //         },
-    //         url: "/dashboard/search",
-    //     }).done(function(data){})
-
-    // })
-});
->>>>>>> origin/PeterPeck
 
 
     /* GET News Feed Messages */
@@ -233,14 +215,13 @@ $(document).ready(function() {
 				if (print[i].image !== null) {
 					image = print[i].image;
 					imageHtml = '<a href="assets/images/post/' + image + '" target="_blank">' + '<img src="assets/images/post/' + image + '" class="img-fluid user-picture">' + '</a>';
-				
 				} else { 
 					imageHtml = '';
 				};
 
 				$('#feed').append( 
 					'<div class="media">' +
-						'<img class="rounded mr-3 post-picture follow" src="assets/images/profile/' + profilepicture + '" data-toggle="modal" data-target="#view" id="' + user + '">' +
+						'<img class="rounded mr-3 post-picture follow" src="assets/images/profile/' + profilepicture + '" userid="' + user + '">' +
 						'<div class="media-body">' +
 							'<h5 class="mt-0">' + fullname + '</h5>' +
 							imageHtml + 
@@ -262,46 +243,21 @@ $(document).ready(function() {
 
 
  	/* Follow */
-	$('.follow').on('click', function() {
-        
-        var profile = $(this).attr('data-value').trim();
-        var id = $(this).attr('record-id');
-        
-        if(currentValue === 'update') {
-            $(this).attr('data-value','save');
-            $(this).html('<i class="fas fa-save"></i>');
-            $('#delete-' + id).html('<i class="fas fa-times-circle"></i>');
-            $('#delete-' + id).attr('operation', 'cancel');
-            var message = $('#message-' + id).text().trim();
-            $('#message-' + id).hide();
-            $('#update-message-' + id).show();
-            $('#update-message-' + id).focus();
-            $('#update-message-' + id).val(message);
-        }
-        else if(currentValue === 'save') {
-            $(this).attr('data-value','update');
-            $(this).html('<i class="fas fa-pencil-alt"></i>');
-            $('#delete-' + id).html('<i class="fas fa-trash"></i>');
-            $('#delete-' + id).attr('operation', 'delete');
-            var message = $('#update-message-' + id).val();
-            $('#message-' + id).show();
-            $('#update-message-' + id).hide();
+    $(document).on ("click", ".follow", function () {
 
-            $.ajax({
-                method: "POST",
-                data: {
-                    'message': message
-                },
-                url: "/update/" + id
-            }).done(function(data){
-                location.reload();
-            });
-        }
+        var newFollow = $(this).attr('userid');
+        var currentUser = $('#user-image').attr('data-value');
+
+        //console.log(newFollow + currentUser);
+       
+		$.ajax({
+			method: "POST",
+			url: "/follow/" + currentUser + "/" + newFollow
+		}).done(function(data){
+			//location.reload();
+		});
 
 	});
-
-
-
 
 
 });

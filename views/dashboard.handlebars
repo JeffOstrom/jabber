@@ -50,11 +50,11 @@
 				<li class="nav-item" id="feed-tab">
 					<a class="nav-link" data-toggle="tab" href="#feed" role="tab" aria-controls="profile" aria-selected="false">News Feed</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="profile" aria-selected="false">Followers</a>
+				<li class="nav-item" id="follower-tab" >
+					<a class="nav-link" data-toggle="tab" href="#follower" role="tab" aria-controls="follower" aria-selected="false">Followers</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#following" role="tab" aria-controls="contact" aria-selected="false">Following</a>
+				<li class="nav-item" id="following-tab">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following-tab" aria-selected="false">Following</a>
 				</li>
 			</ul><br>
 
@@ -140,7 +140,7 @@
 				{{!-- Global Feed Tab --}}
 				<div class="tab-pane fade" id="feed" role="tabpanel" aria-labelledby="feed-tab">
 
-{{!-- 				<!-- Modal: Profile View + Follow -->
+{{!-- 				<!-- Modal: Profile View -->
 					<div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
@@ -165,12 +165,12 @@
 				</div>
 
 				{{!-- Followers Tab --}}
-				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">
+				<div class="tab-pane fade" id="follower" role="tabpanel" aria-labelledby="follower-tab">
 					All followers goes here
 				</div>
 
 				{{!-- Following Tab --}}
-				<div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="contact-tab">
+				<div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="following-tab">
 					All following goes here
 				</div>
 

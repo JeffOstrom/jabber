@@ -184,6 +184,8 @@ router.post('/update/:id', function(req, res){
     });
 });
 
+
+/* Delete Message */
 router.post('/delete/:id', function(req, res){
     var id = req.params.id;
     models.Messages.destroy(
@@ -194,6 +196,22 @@ router.post('/delete/:id', function(req, res){
     }).then(function(todos) {
         res.send('success');
     });
+});
+
+
+/* Follow */
+router.post('/follow/:currentUser/:newFollow', function(req, res) {
+	var currentUser = req.params.currentUser;
+	var newFollow = req.params.newFollow;
+
+	console.log(currentUser + newFollow)
+
+	models.Followers.create({
+		initiator: currentUser,
+		following: newFollow
+	}).then(function(data) {
+		// res.send('success')
+	})
 });
 
 
@@ -233,19 +251,9 @@ router.post('/dashboard/search', function(req, res) {
     });
 });
 
+
 function validateProfilePic(file) {
-    /* [ 
-        { 
-            fieldname: 'profilepic',
-            originalname: 'web_developer.jpg',
-            encoding: '7bit',
-            mimetype: 'image/jpeg',
-            destination: 'public/images/profile',
-            filename: '93e08f4b28c622f97c2b7342796bb633',
-            path: 'public\\images\\profile\\93e08f4b28c622f97c2b7342796bb633',
-            size: 52702 
-        } 
-    ] */
+
     var fileExt = '';
     var type = file.mimetype.trim();
     if( (type === 'image/jpeg') ||
