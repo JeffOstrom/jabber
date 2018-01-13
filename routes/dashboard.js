@@ -129,6 +129,7 @@ router.post('/dashboard', upload.any(), function(req, res) {
         res.redirect('/dashboard');
     }
     else {
+    	
         /* Creating new message */
         var newMessage = {
             // user: res.locals.user.firstname + " " + res.locals.user.lastname,
@@ -294,14 +295,15 @@ router.post('/profile/:id', function(req, res) {
                     }
 
 					//Rendering only messages
-                    res.render('profile',  {messages: messages});
+                    // res.render('profile',  {messages: messages});
 
                     // else {
                     	//Rendering both name and messages
                         // res.render('profile', data);
+                        // console.log(messages)
 
                         // Rendering only name for profile
-                        // res.render('profile', users);
+                        res.render('profile', users);
                     // };
 
             });

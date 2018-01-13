@@ -1,13 +1,20 @@
 module.exports = function(sequelize, DataTypes) {
 
-
-	
     var Messages = sequelize.define("Messages", {
 
     	/* Profile Picture Of Message Creator */
         user: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+
+        fullname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1, 100],
+                isAlpha: true
+            }
         },
 
         profilepicture: {
@@ -27,7 +34,6 @@ module.exports = function(sequelize, DataTypes) {
         	allowNull: true
         }
 
-        /* Time Stamp of Message auto-created by Sequelize: created_at && updated_at */
   });
 
   return Messages;

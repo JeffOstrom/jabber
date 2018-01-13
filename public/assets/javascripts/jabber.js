@@ -156,22 +156,22 @@ $(document).ready(function() {
                 name.text(data[i].firstname + " " + data[i].lastname)
 
                 /*Follow Button*/
-                var firstButton = $('<button>');
-                firstButton.attr('type', 'button');
-                firstButton.addClass('btn bg-junglegreen text-white follow');
-                firstButton.attr('id', 'follow');
-                firstButton.attr('type', 'button');
-                firstButton.addClass('follow followbtn');
-                firstButton.attr('userid', data[i].id);
-                firstButton.addClass('btn bg-junglegreen text-white');
-                firstButton.attr('data-dismiss', 'modal');
-                firstButton.text('Follow')
+                // var firstButton = $('<button>');
+                // firstButton.attr('type', 'button');
+                // firstButton.addClass('btn bg-junglegreen text-white follow');
+                // firstButton.attr('id', 'follow');
+                // firstButton.attr('type', 'button');
+                // firstButton.addClass('follow followbtn');
+                // firstButton.attr('userid', data[i].id);
+                // firstButton.addClass('btn bg-junglegreen text-white');
+                // firstButton.attr('data-dismiss', 'modal');
+                // firstButton.text('Follow')
 
                 /*View Profile Button*/
-                var secondButton = $("<form action='/profile/" + data[i].id + "' method='POST'>" + 
+                var secondButton = $("<br><form action='/profile/" + data[i].id + "' method='POST'>" + 
                "<button type='submit' id=" + data[i].id + " class='btn bg-junglegreen text-white viewprofile'>View Profile</button></form>");
 
-                div.append(showimage, name, firstButton, secondButton);
+                div.append(showimage, name/*, firstButton*/, secondButton);
 
                 $("#insertdata").append(div);
             };
