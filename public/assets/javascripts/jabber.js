@@ -158,10 +158,7 @@ $(document).ready(function() {
                 /*Follow Button*/
                 var firstButton = $('<button>');
                 firstButton.attr('type', 'button');
-<<<<<<< HEAD
                 firstButton.addClass('btn bg-junglegreen text-white follow');
-=======
->>>>>>> master
                 firstButton.attr('id', 'follow');
                 firstButton.addClass('follow');
                 firstButton.attr('userid', data[i].id);
@@ -196,8 +193,6 @@ $(document).ready(function() {
 
         /*Unique ID for the user*/
         var userid = $(this).attr("userid");
-
-<<<<<<< HEAD
         console.log("viewprofile buttons works")
         
     });
@@ -254,45 +249,11 @@ $(document).ready(function() {
 	});
 
 
- 	/* Follow */
+ 	/* Follow User */
     $(document).on ("click", ".follow", function () {
-=======
-            $.ajax({
-                method: "POST",
-                data: {
-                    id: 
-                },
-                url: "/dashboard/profile",
-            }).done(function(data){
-
-            })
-
-    });
-
-    /*follow button*/
-    $(".follow").on("click", function(event) {
-
-        // /*Unique ID for the user*/
-        var userid = $(this).attr("userid");
-        
-        $.ajax({
-            method: "POST",
-            data: {
-                email: email
-            },
-            url: "/follow/" + currentUser + "/" + newFollow,
-        }).done(function(data){
-            location.reload();
-        })
-
-    })
-});
->>>>>>> master
-
+            
         var newFollow = $(this).attr('userid');
         var currentUser = $('#user-image').attr('data-value');
-
-        //console.log(newFollow + currentUser);
        
 		$.ajax({
 			method: "POST",

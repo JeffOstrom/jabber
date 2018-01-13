@@ -252,8 +252,7 @@ router.post('/dashboard/search', function(req, res) {
     });
 });
 
-<<<<<<< HEAD
-=======
+
 /*Profile of searched User */ 
 router.post('/dashboard/profile', function(req, res) {
  
@@ -273,7 +272,7 @@ router.post('/dashboard/profile', function(req, res) {
         };
     });
 });
->>>>>>> master
+
 
 function validateProfilePic(file) {
 
