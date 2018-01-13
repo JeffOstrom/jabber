@@ -167,10 +167,18 @@ router.post('/dashboard/search', function(req, res) {
  
     /*User's input*/
     var email = req.body.email;
-    console.log('This is what Im getting from ajax ' + email);
+
+    var name = email.split(' ');
+
     models.User.findAll({
         where: {
-            email: email,
+            $or: [
+                {firstname: name[0]}, 
+                {lastname: name[1]}, 
+                {firstname: name[1]}, 
+                {lastname: name[0]},
+                {email: email}
+            ]
         }
     }).then(function(data){
 
@@ -181,7 +189,6 @@ router.post('/dashboard/search', function(req, res) {
             for(var i = 0; i < data.length; i++){
                 users.push(data[i].dataValues);
             }
-            // console.log(users); 
             res.json(users);
 
         } else {
