@@ -141,7 +141,7 @@ $(document).ready(function() {
 
 				$('#feed').append( 
 					'<div class="media">' +
-						'<img class="rounded mr-3 post-picture" src="assets/images/profile/' + profilepicture + '" alt="profile picture">' +
+						'<img class="rounded mr-3 post-picture follow" src="assets/images/profile/' + profilepicture + '" data-toggle="modal" data-target="#view" id="' + user + '">' +
 						'<div class="media-body">' +
 							'<h5 class="mt-0">' + fullname + '</h5>' +
 							imageHtml + 
@@ -160,6 +160,49 @@ $(document).ready(function() {
 		});
 
 	});
+
+
+ 	/* Follow */
+	$('.follow').on('click', function() {
+        
+        var profile = $(this).attr('data-value').trim();
+        var id = $(this).attr('record-id');
+        
+        if(currentValue === 'update') {
+            $(this).attr('data-value','save');
+            $(this).html('<i class="fas fa-save"></i>');
+            $('#delete-' + id).html('<i class="fas fa-times-circle"></i>');
+            $('#delete-' + id).attr('operation', 'cancel');
+            var message = $('#message-' + id).text().trim();
+            $('#message-' + id).hide();
+            $('#update-message-' + id).show();
+            $('#update-message-' + id).focus();
+            $('#update-message-' + id).val(message);
+        }
+        else if(currentValue === 'save') {
+            $(this).attr('data-value','update');
+            $(this).html('<i class="fas fa-pencil-alt"></i>');
+            $('#delete-' + id).html('<i class="fas fa-trash"></i>');
+            $('#delete-' + id).attr('operation', 'delete');
+            var message = $('#update-message-' + id).val();
+            $('#message-' + id).show();
+            $('#update-message-' + id).hide();
+
+            $.ajax({
+                method: "POST",
+                data: {
+                    'message': message
+                },
+                url: "/update/" + id
+            }).done(function(data){
+                location.reload();
+            });
+        }
+
+	});
+
+
+
 
 
 });
