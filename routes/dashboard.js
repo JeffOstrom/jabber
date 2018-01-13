@@ -49,16 +49,19 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
     
     if(res.locals.user){
 
-        var id = res.locals.user.id;
+        var localId = res.locals.user.id;
+
         models.Messages.findAll({
             where: {
-                user: id
+                user: localId
             },
             order: [
                 ['id', 'DESC']
             ]
+
         }).then(function(result) {
             if(result !== undefined) {
+
                 var messages = [];
                 
                 for(var i = 0; i < result.length; i++){
@@ -126,11 +129,12 @@ router.post('/dashboard', upload.any(), function(req, res) {
         res.redirect('/dashboard');
     }
     else {
+    	
         /* Creating new message */
         var newMessage = {
             // user: res.locals.user.firstname + " " + res.locals.user.lastname,
             user: id,
-            fullname: res.locals.user.firstname + res.locals.user.lastname,
+            fullname: res.locals.user.firstname + " " + res.locals.user.lastname,
             profilepicture: res.locals.user.profilepicture,
             message: message,
             image: image
@@ -247,19 +251,19 @@ router.post('/dashboard/search', function(req, res) {
 
         } else {
             res.flash('error_msg', 'No user found');
-            res.json(users);
-        }
+            res.redirect('/dashboard/search')
+        };
     });
 });
 
 
 /*Profile of searched User */ 
-router.post('/dashboard/profile', function(req, res) {
+router.post('/profile/:id', function(req, res) {
  
     /*User id*/
-    var userid = req.body.id;
+    var userid = req.params.id;
 
-    models.User.findOne({
+    models.User.findAll({
         where: {
             id: userid
         }
@@ -267,8 +271,42 @@ router.post('/dashboard/profile', function(req, res) {
 
         if(data !== undefined){
 
-            console.log(" profile works " + data.dataValues)
+            var users = data[0].dataValues;
 
+            models.Messages.findAll({
+
+                where: {
+                    user: users.id
+                },
+                order: [
+                    ['id', 'DESC']
+                ]
+            }).then(function(result){
+
+                    var messages = [];
+                    
+                    for(var i = 0; i < result.length; i++){
+                        messages.push(result[i].dataValues);
+                    }
+
+                    var data = {
+                    	messages: messages,
+                    	users: users
+                    }
+
+					//Rendering only messages
+                    // res.render('profile',  {messages: messages});
+
+                    // else {
+                    	//Rendering both name and messages
+                        // res.render('profile', data);
+                        // console.log(messages)
+
+                        // Rendering only name for profile
+                        res.render('profile', users);
+                    // };
+
+            });
         };
     });
 });

@@ -122,9 +122,17 @@ input:focus {
     padding-left: 20px;
 }
 
-#matchname, #userProfilepic, #follow, #viewprofile{
+#matchname, #userProfilepic, .followbtn, .viewprofile{
     display: inline-block;
     vertical-align: middle;
+}
+
+.viewprofile{
+    margin: 5px;
+}
+
+#userProfilepic{
+    width: 100px;
     margin: 5px;
 }
 

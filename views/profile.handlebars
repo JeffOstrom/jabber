@@ -6,30 +6,30 @@
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
 			
-			<img id='user-image' data-value="{{user.id}}" src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
+			<img id='user-image' data-value="{{this.id}}" src="/assets/images/profile/{{ this.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ firstname }} {{users.lastname}}">
 
 			<h4>
 				{{!-- User: First Name --}}
-				<span id="user-firstname" class="edit">{{ user.firstname }}</span> 
-				<textarea id="user-firstname-edit" class="update-task form-control update">{{user.firstname}}</textarea>
+				<span id="user-firstname" class="edit">{{ this.firstname }}</span> 
+				<textarea id="user-firstname-edit" class="update-task form-control update">{{this.firstname}}</textarea>
 				
 				{{!-- User: Last Name --}}
-				<span id="user-lastname" class="edit">{{ user.lastname }}</span>
+				<span id="user-lastname" class="edit">{{ this.lastname }}</span>
 				<textarea id="user-lastname-edit" class="update-task form-control update">{{user.lastname}}</textarea>
 			</h4>
 
 			<hr class="hr-full">
 			
 			{{!-- User: Bio --}}
-			<h6 id="user-bio" class="edit"> {{ user.bio }} </h6>
-			<textarea id="user-bio-edit" class="update-task form-control update">{{user.bio}}</textarea>
+			<h6 id="user-bio" class="edit"> {{ this.bio }} </h6>
+			<textarea id="user-bio-edit" class="update-task form-control update">{{this.bio}}</textarea>
 			<hr class="hr-half">
 
 			{{!-- User: Email --}}
 			<p>
 				<i class="fas fa-envelope"></i>
-				<strong id="user-email" class="edit"> {{ user.email }} </strong>
-				<textarea id="user-email-edit" class="update-task form-control update">{{user.email}}</textarea>
+				<strong id="user-email" class="edit"> {{ this.email }} </strong>
+				<textarea id="user-email-edit" class="update-task form-control update">{{this.email}}</textarea>
 			</p>
 			
 			{{!-- Update Btn --}}
@@ -47,9 +47,6 @@
 					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="home" aria-selected="true">Posts</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="feed-tab" data-toggle="tab" href="#feed" role="tab" aria-controls="profile" aria-selected="false">Message Feed</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="profile" aria-selected="false">Followers</a>
 				</li>
 				<li class="nav-item">
@@ -61,31 +58,13 @@
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="home-tab">
 					
-					<form action='/dashboard' method='POST' class="form-sign-up" enctype="multipart/form-data">
-						
-						<div class="form-group">
-							<textarea class="form-control" name="message" id="message" placeholder="Type your message here !"></textarea>
-						</div>
-						
-						<div class="form-group">
-							<label class="btn bg-junglegreen text-white file-upload" for="messageImage">
-								<input id="messageImage" name="messageImage" type="file" style="display:none" 
-								onchange="$('#upload-file-info').html(this.files[0].name)">
-								<i class="fas fa-camera-retro"></i>
-							</label>
-							<span class='label label-info' id="upload-file-info"></span>
-							<button class="btn bg-junglegreen text-white" for="">
-								<i class="fas fa-comment"></i> Post
-							</button>
-						</div>
-					</form>
-
 					<hr class="hr-full">
-
+						
+						{{!-- Doesn't work --}}
 						{{#each messages}}
 
 							<div class="media">
-								<img class="rounded mr-3 post-picture" src="assets/images/profile/{{ profileImage }}" alt="Generic placeholder image">
+								<img class="rounded mr-3 post-picture" src="/assets/images/profile/{{ profileImage }}" alt="Generic placeholder image">
 								<div class="media-body">
 									<h5 class="mt-0">{{ firstname }}</h5>
 									{{#if image}}
@@ -104,10 +83,6 @@
 						{{/each}}
 				
 				</div>{{!-- post tab --}}
-
-				<div class="tab-pane fade" id="feed" role="tabpanel" aria-labelledby="feed-tab">
-					All global feed goes here
-				</div>{{!-- feed tab --}}
 				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">
 					All followers goes here
 				</div>{{!-- followers tab --}}
@@ -117,6 +92,22 @@
 			</div>{{!-- tab content --}}
 		</div>{{!-- Profile Content Column --}}
 	</div>{{!-- row --}}
+	
+	{{!-- Modal for searched users --}}
+	<div class="modal fade" id="matchuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="row" id="insertdata">
+                        
+                    </div> 
+            </div>
+        </div>
+    </div>
 
 </section>
 

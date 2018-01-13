@@ -147,39 +147,35 @@ $(document).ready(function() {
                 var div = $("<div class='col-md-12'>");
 
                 /*Profile Image*/
-                var showimage = $("<img>");
-                showimage.attr("src", "https://res.cloudinary.com/demo/image/upload/w_100,h_100,c_thumb,g_face,r_20,d_avatar.png/non_existing_id.png");
-                
+                var showimage = $("<img id=userProfilepic>");
+                showimage.attr('src', '/assets/images/profile/'+ data[i].profilepicture +'');
+
                 /*Profile Name*/
                 var name = $("<h4>");
                 name.attr('id', 'matchname');
                 name.text(data[i].firstname + " " + data[i].lastname)
 
                 /*Follow Button*/
-                var firstButton = $('<button>');
-                firstButton.attr('type', 'button');
-                firstButton.addClass('btn bg-junglegreen text-white follow');
-                firstButton.attr('id', 'follow');
-                firstButton.addClass('follow');
-                firstButton.attr('userid', data[i].id);
-                firstButton.addClass('btn bg-junglegreen text-white');
-                firstButton.attr('data-dismiss', 'modal');
-                firstButton.text('Follow')
+                // var firstButton = $('<button>');
+                // firstButton.attr('type', 'button');
+                // firstButton.addClass('btn bg-junglegreen text-white follow');
+                // firstButton.attr('id', 'follow');
+                // firstButton.attr('type', 'button');
+                // firstButton.addClass('follow followbtn');
+                // firstButton.attr('userid', data[i].id);
+                // firstButton.addClass('btn bg-junglegreen text-white');
+                // firstButton.attr('data-dismiss', 'modal');
+                // firstButton.text('Follow')
 
                 /*View Profile Button*/
-                var secondButton = $('<button>');
-                secondButton.attr('type', 'button');
-                secondButton.attr('id', 'viewprofile');
-                secondButton.attr('userid', data[i].id);
-                secondButton.addClass('btn bg-junglegreen text-white');
-                secondButton.attr('data-dismiss', 'modal');
-                secondButton.text('View Profile')
+                var secondButton = $("<br><form action='/profile/" + data[i].id + "' method='POST'>" + 
+               "<button type='submit' id=" + data[i].id + " class='btn bg-junglegreen text-white viewprofile'>View Profile</button></form>");
 
-                div.append(showimage, name, firstButton, secondButton);
+                div.append(showimage, name/*, firstButton*/, secondButton);
 
                 $("#insertdata").append(div);
-
             };
+
 
             $("#matchuser").modal();
            
@@ -187,16 +183,6 @@ $(document).ready(function() {
 
         };  
     });
-
-    /*View profile button*/
-    $(document).on("click", "#viewprofile", function() {
-
-        /*Unique ID for the user*/
-        var userid = $(this).attr("userid");
-        console.log("viewprofile buttons works")
-        
-    });
-
 
     /* GET News Feed Messages */
 	$('#feed-tab').on('click', function() {
@@ -247,7 +233,6 @@ $(document).ready(function() {
 		});
 
 	});
-
 
  	/* Follow User */
     $(document).on ("click", ".follow", function () {
