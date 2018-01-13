@@ -14,9 +14,41 @@ function ensureAuthenticated(req, res, next){
     }
 };
 
-/* Obtain */
+
+/* Retrieve GLOBAL Messages */
+router.get('/feed', ensureAuthenticated, function(req, res) {
+
+    models.Messages.findAll({
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then(function(result){
+
+    	if (result) {
+
+			var messages = [];
+			   
+			for(var i = 0; i < result.length; i++){
+				messages.push(result[i].dataValues);
+			}
+
+	        res.json(messages);
+	        //console.log(messages);
+
+		} else {
+            res.render('dashboard');
+        }
+
+    });  
+
+});
+
+
+/* Retrieve USER Messages */
 router.get('/dashboard', ensureAuthenticated, function(req, res) {
+    
     if(res.locals.user){
+
         var id = res.locals.user.id;
         models.Messages.findAll({
             where: {
@@ -25,8 +57,8 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
             order: [
                 ['id', 'DESC']
             ]
-        }).then(function(result){
-            if(result !== undefined){
+        }).then(function(result) {
+            if(result !== undefined) {
                 var messages = [];
                 
                 for(var i = 0; i < result.length; i++){
@@ -36,16 +68,17 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
                 }
 
                 res.render('dashboard', { messages: messages});
-            }
-            else{
+
+            } else {
                 res.render('dashboard');
             }
         });
-    }
-    else {
+
+    } else {
         res.render('index');
     }
 });
+
 
 /* Post Message */
 router.post('/dashboard', upload.any(), function(req, res) {
@@ -97,6 +130,8 @@ router.post('/dashboard', upload.any(), function(req, res) {
         var newMessage = {
             // user: res.locals.user.firstname + " " + res.locals.user.lastname,
             user: id,
+            fullname: res.locals.user.firstname + res.locals.user.lastname,
+            profilepicture: res.locals.user.profilepicture,
             message: message,
             image: image
         };
@@ -149,6 +184,8 @@ router.post('/update/:id', function(req, res){
     });
 });
 
+
+/* Delete Message */
 router.post('/delete/:id', function(req, res){
     var id = req.params.id;
     models.Messages.destroy(
@@ -159,6 +196,22 @@ router.post('/delete/:id', function(req, res){
     }).then(function(todos) {
         res.send('success');
     });
+});
+
+
+/* Follow */
+router.post('/follow/:currentUser/:newFollow', function(req, res) {
+	var currentUser = req.params.currentUser;
+	var newFollow = req.params.newFollow;
+
+	console.log(currentUser + newFollow)
+
+	models.Followers.create({
+		initiator: currentUser,
+		following: newFollow
+	}).then(function(data) {
+		// res.send('success')
+	})
 });
 
 
@@ -199,6 +252,7 @@ router.post('/dashboard/search', function(req, res) {
     });
 });
 
+
 /*Profile of searched User */ 
 router.post('/dashboard/profile', function(req, res) {
  
@@ -219,19 +273,9 @@ router.post('/dashboard/profile', function(req, res) {
     });
 });
 
+
 function validateProfilePic(file) {
-    /* [ 
-        { 
-            fieldname: 'profilepic',
-            originalname: 'web_developer.jpg',
-            encoding: '7bit',
-            mimetype: 'image/jpeg',
-            destination: 'public/images/profile',
-            filename: '93e08f4b28c622f97c2b7342796bb633',
-            path: 'public\\images\\profile\\93e08f4b28c622f97c2b7342796bb633',
-            size: 52702 
-        } 
-    ] */
+
     var fileExt = '';
     var type = file.mimetype.trim();
     if( (type === 'image/jpeg') ||

@@ -11,7 +11,6 @@
 /* Copyright reserved 2018 */
 /* ----------------------- */
 
-
 $(document).ready(function() {
 
 	/* Edit Profile Text Fields */
@@ -159,6 +158,7 @@ $(document).ready(function() {
                 /*Follow Button*/
                 var firstButton = $('<button>');
                 firstButton.attr('type', 'button');
+                firstButton.addClass('btn bg-junglegreen text-white follow');
                 firstButton.attr('id', 'follow');
                 firstButton.addClass('follow');
                 firstButton.attr('userid', data[i].id);
@@ -193,37 +193,77 @@ $(document).ready(function() {
 
         /*Unique ID for the user*/
         var userid = $(this).attr("userid");
-
-            $.ajax({
-                method: "POST",
-                data: {
-                    id: 
-                },
-                url: "/dashboard/profile",
-            }).done(function(data){
-
-            })
-
+        console.log("viewprofile buttons works")
+        
     });
 
-    /*follow button*/
-    $(".follow").on("click", function(event) {
 
-        // /*Unique ID for the user*/
-        var userid = $(this).attr("userid");
-        
-        $.ajax({
-            method: "POST",
-            data: {
-                email: email
-            },
-            url: "/follow/" + currentUser + "/" + newFollow,
-        }).done(function(data){
-            location.reload();
-        })
+    /* GET News Feed Messages */
+	$('#feed-tab').on('click', function() {
 
-    })
+		$.get('/feed', function(data) {
+
+			$('#feed').empty();
+			var print = data;
+
+			for (var i=0; i<print.length; i++) {
+
+				//console.log(print[i]);
+
+				var profilepicture = print[i].profilepicture;
+				var fullname = print[i].fullname;
+				var id = print[i].id;
+				var message = print[i].message;
+				var time = print[i].createdAt;
+				var user = print[i].user;
+				var image;
+				var imageHtml;
+
+				if (print[i].image !== null) {
+					image = print[i].image;
+					imageHtml = '<a href="assets/images/post/' + image + '" target="_blank">' + '<img src="assets/images/post/' + image + '" class="img-fluid user-picture">' + '</a>';
+				} else { 
+					imageHtml = '';
+				};
+
+				$('#feed').append( 
+					'<div class="media">' +
+						'<img class="rounded mr-3 post-picture follow" src="assets/images/profile/' + profilepicture + '" userid="' + user + '">' +
+						'<div class="media-body">' +
+							'<h5 class="mt-0">' + fullname + '</h5>' +
+							imageHtml + 
+							 '<br>' +
+							'<span id="message-'+ id +'">' + message + '</span><br>' +
+							'<small>' +
+								'<span id="postedTime">' + moment(time).format('LLL') + '</span>' + 
+							'</small><br>' +
+						'</div>' +
+					'</div>' +
+					'<br>' + 
+					'<hr class="hr-full">' 
+				);
+
+			}
+		});
+
+	});
+
+
+ 	/* Follow User */
+    $(document).on ("click", ".follow", function () {
+            
+        var newFollow = $(this).attr('userid');
+        var currentUser = $('#user-image').attr('data-value');
+       
+		$.ajax({
+			method: "POST",
+			url: "/follow/" + currentUser + "/" + newFollow
+		}).done(function(data){
+			//location.reload();
+		});
+
+	});
+
+
 });
-
-
 

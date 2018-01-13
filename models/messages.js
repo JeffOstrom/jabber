@@ -1,4 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
+
+
 	
     var Messages = sequelize.define("Messages", {
 
@@ -6,6 +8,20 @@ module.exports = function(sequelize, DataTypes) {
         user: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+
+        fullname: {
+        	type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [1, 100],
+                isAlpha: true
+            }
+        },
+
+        profilepicture: {
+        	type: DataTypes.STRING,
+        	allowNull: false
         },
 
         /* Message Posted */
