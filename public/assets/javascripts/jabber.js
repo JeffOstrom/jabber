@@ -158,9 +158,9 @@ $(document).ready(function() {
 
                 /*Follow Button*/
                 var firstButton = $('<button>');
-                firstButton.attr('id', data[i].id);
+                firstButton.attr('id', 'follow');
                 firstButton.attr('type', 'button');
-                firstButton.addClass('follow', 'followbtn');
+                firstButton.addClass('follow followbtn');
                 firstButton.attr('userid', data[i].id);
                 firstButton.addClass('btn bg-junglegreen text-white');
                 firstButton.attr('data-dismiss', 'modal');
@@ -201,7 +201,7 @@ $(document).ready(function() {
                 },
                 url: "/dashboard/profile",
             }).done(function(data){
-
+                location.reload();
             })
 
     });
@@ -210,14 +210,11 @@ $(document).ready(function() {
     $(document).on("click", ".follow", function(event) {
 
         var newFollow = $(this).attr('id');
-        
+
         var currentUser = $('#user-image').attr('data-value');
 
         $.ajax({
             method: "POST",
-            data: {
-                email: email
-            },
             url: "/follow/" + currentUser + "/" + newFollow,
         }).done(function(data){
             location.reload();

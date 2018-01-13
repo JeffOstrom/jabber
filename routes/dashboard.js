@@ -17,14 +17,17 @@ function ensureAuthenticated(req, res, next){
 /* Obtain */
 router.get('/dashboard', ensureAuthenticated, function(req, res) {
     if(res.locals.user){
-        var id = res.locals.user.id;
+
+        var localId = res.locals.user.id;
+
         models.Messages.findAll({
             where: {
-                user: id
+                user: localId
             },
             order: [
                 ['id', 'DESC']
             ]
+
         }).then(function(result){
             if(result !== undefined){
                 var messages = [];
@@ -213,8 +216,32 @@ router.post('/dashboard/profile', function(req, res) {
 
         if(data !== undefined){
 
-            console.log(" profile works " + data.dataValues)
+            var user = data.dataValues;            
 
+            res.render('profile', user);
+            // models.Messages.findAll({
+
+            //     where: {
+            //         user: user
+            //     },
+            //     order: [
+            //         ['id', 'DESC']
+            //     ]
+            // }).then(function(result){
+
+            //     if(result !== undefined){
+
+            //         var messages = [];
+                    
+            //         for(var i = 0; i < result.length; i++){
+            //             result[i].dataValues.firstname = res.locals.user.firstname;
+            //             result[i].dataValues.profileImage = res.locals.user.profilepicture;
+            //             messages.push(result[i].dataValues);
+            //         }
+
+            //         res.render('profile', { messages: messages}, {user: user});
+            //     }
+            // });
         };
     });
 });
