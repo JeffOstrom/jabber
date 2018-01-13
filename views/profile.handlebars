@@ -6,7 +6,7 @@
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
 			
-			<img id='user-image' data-value="{{this.id}}" src="/assets/images/profile/{{ this.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ this.firstname }} {{this.lastname}}">
+			<img id='user-image' data-value="{{this.id}}" src="/assets/images/profile/{{ this.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ firstname }} {{users.lastname}}">
 
 			<h4>
 				{{!-- User: First Name --}}
@@ -61,18 +61,18 @@
 					<hr class="hr-full">
 						
 						{{!-- Doesn't work --}}
-						{{!-- {{#each messages}}
+						{{#each messages}}
 
 							<div class="media">
-								<img class="rounded mr-3 post-picture" src="/assets/images/profile/{{ this.profileImage }}" alt="Generic placeholder image">
+								<img class="rounded mr-3 post-picture" src="/assets/images/profile/{{ profileImage }}" alt="Generic placeholder image">
 								<div class="media-body">
-									<h5 class="mt-0">{{ this.firstname }}</h5>
+									<h5 class="mt-0">{{ firstname }}</h5>
 									{{#if image}}
 										<a href="assets/images/post/{{ image }}" target="_blank"><img src="assets/images/post/{{ image }}" alt="" class="img-fluid user-picture"></a><br>
 									{{/if}}
 									<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
 
-									<span id="message-{{ this.id }}">{{ message }}</span><br>
+									<span id="message-{{ id }}">{{ message }}</span><br>
 									<small>
 										<span id="postedTime"> {{ formatDate createdAt 'MMMM Do YYYY, h:mm:ss a' }} </span>
 									</small><br>
@@ -80,7 +80,7 @@
 								</div>
 							</div><br>
 							<hr>
-						{{/each}} --}}
+						{{/each}}
 				
 				</div>{{!-- post tab --}}
 				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">

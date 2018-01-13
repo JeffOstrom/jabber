@@ -250,8 +250,8 @@ router.post('/dashboard/search', function(req, res) {
 
         } else {
             res.flash('error_msg', 'No user found');
-            res.json(users);
-        }
+            res.redirect('/dashboard/search')
+        };
     });
 });
 
@@ -282,19 +282,26 @@ router.post('/profile/:id', function(req, res) {
                 ]
             }).then(function(result){
 
-                    var messages;
+                    var messages = [];
                     
                     for(var i = 0; i < result.length; i++){
-                        messages = result[i].dataValues;
+                        messages.push(result[i].dataValues);
                     }
 
-                    // console.log(messages);
+                    var data = {
+                    	messages: messages,
+                    	users: users
+                    }
 
-                    // if(messages){
-                    //     res.render('profile', messages);
-                    // } 
+					//Rendering only messages
+                    res.render('profile',  {messages: messages});
+
                     // else {
-                        res.render('profile', users);
+                    	//Rendering both name and messages
+                        // res.render('profile', data);
+
+                        // Rendering only name for profile
+                        // res.render('profile', users);
                     // };
 
             });
