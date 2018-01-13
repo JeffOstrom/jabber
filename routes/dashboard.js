@@ -49,12 +49,8 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
     
     if(res.locals.user){
 
-<<<<<<< HEAD
         var localId = res.locals.user.id;
 
-=======
-        var id = res.locals.user.id;
->>>>>>> 229a66951a80e546011e9face896b45a6ac077d6
         models.Messages.findAll({
             where: {
                 user: localId
@@ -62,14 +58,10 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
             order: [
                 ['id', 'DESC']
             ]
-<<<<<<< HEAD
 
-        }).then(function(result){
-            if(result !== undefined){
-=======
         }).then(function(result) {
             if(result !== undefined) {
->>>>>>> 229a66951a80e546011e9face896b45a6ac077d6
+
                 var messages = [];
                 
                 for(var i = 0; i < result.length; i++){
@@ -270,7 +262,7 @@ router.post('/dashboard/profile', function(req, res) {
     /*User id*/
     var userid = req.body.id;
 
-    models.User.findOne({
+    models.User.findAll({
         where: {
             id: userid
         }
@@ -278,9 +270,11 @@ router.post('/dashboard/profile', function(req, res) {
 
         if(data !== undefined){
 
-            var user = data.dataValues;            
+            var users = data[0].dataValues;
+            
+            console.log(users)
 
-            res.render('profile', user);
+            res.render('profile', users);
             // models.Messages.findAll({
 
             //     where: {
@@ -310,7 +304,7 @@ router.post('/dashboard/profile', function(req, res) {
 
 
 function validateProfilePic(file) {
-    
+
     var fileExt = '';
     var type = file.mimetype.trim();
     if( (type === 'image/jpeg') ||

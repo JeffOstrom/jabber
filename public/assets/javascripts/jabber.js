@@ -157,11 +157,8 @@ $(document).ready(function() {
 
                 /*Follow Button*/
                 var firstButton = $('<button>');
-<<<<<<< HEAD
-=======
                 firstButton.attr('type', 'button');
                 firstButton.addClass('btn bg-junglegreen text-white follow');
->>>>>>> 229a66951a80e546011e9face896b45a6ac077d6
                 firstButton.attr('id', 'follow');
                 firstButton.attr('type', 'button');
                 firstButton.addClass('follow followbtn');
@@ -206,7 +203,7 @@ $(document).ready(function() {
             },
             url: "/dashboard/profile",
         }).done(function(data){
-            location.reload();
+            // location.reload();
         })
     });
 

@@ -6,30 +6,30 @@
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
 			
-			<img id='user-image' data-value="{{this.id}}" src="assets/images/profile/{{ this.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ this.firstname }} {{this.lastname}}">
+			<img id='user-image' data-value="{{user.id}}" src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
 
 			<h4>
 				{{!-- User: First Name --}}
-				<span id="user-firstname" class="edit">{{ this.firstname }}</span> 
-				<textarea id="user-firstname-edit" class="update-task form-control update">{{this.firstname}}</textarea>
+				<span id="user-firstname" class="edit">{{ user.firstname }}</span> 
+				<textarea id="user-firstname-edit" class="update-task form-control update">{{user.firstname}}</textarea>
 				
 				{{!-- User: Last Name --}}
-				<span id="user-lastname" class="edit">{{ this.lastname }}</span>
+				<span id="user-lastname" class="edit">{{ user.lastname }}</span>
 				<textarea id="user-lastname-edit" class="update-task form-control update">{{user.lastname}}</textarea>
 			</h4>
 
 			<hr class="hr-full">
 			
 			{{!-- User: Bio --}}
-			<h6 id="user-bio" class="edit"> {{ this.bio }} </h6>
-			<textarea id="user-bio-edit" class="update-task form-control update">{{this.bio}}</textarea>
+			<h6 id="user-bio" class="edit"> {{ user.bio }} </h6>
+			<textarea id="user-bio-edit" class="update-task form-control update">{{user.bio}}</textarea>
 			<hr class="hr-half">
 
 			{{!-- User: Email --}}
 			<p>
 				<i class="fas fa-envelope"></i>
-				<strong id="user-email" class="edit"> {{ this.email }} </strong>
-				<textarea id="user-email-edit" class="update-task form-control update">{{this.email}}</textarea>
+				<strong id="user-email" class="edit"> {{ user.email }} </strong>
+				<textarea id="user-email-edit" class="update-task form-control update">{{user.email}}</textarea>
 			</p>
 			
 			{{!-- Update Btn --}}
