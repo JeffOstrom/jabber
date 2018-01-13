@@ -14,9 +14,41 @@ function ensureAuthenticated(req, res, next){
     }
 };
 
-/* Obtain */
+
+/* Retrieve GLOBAL Messages */
+router.get('/feed', ensureAuthenticated, function(req, res) {
+
+    models.Messages.findAll({
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    }).then(function(result){
+
+    	if (result) {
+
+			var messages = [];
+			   
+			for(var i = 0; i < result.length; i++){
+				messages.push(result[i].dataValues);
+			}
+
+	        res.json(messages);
+	        //console.log(messages);
+
+		} else {
+            res.render('dashboard');
+        }
+
+    });  
+
+});
+
+
+/* Retrieve USER Messages */
 router.get('/dashboard', ensureAuthenticated, function(req, res) {
+    
     if(res.locals.user){
+
         var id = res.locals.user.id;
         models.Messages.findAll({
             where: {
@@ -25,8 +57,8 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
             order: [
                 ['id', 'DESC']
             ]
-        }).then(function(result){
-            if(result !== undefined){
+        }).then(function(result) {
+            if(result !== undefined) {
                 var messages = [];
                 
                 for(var i = 0; i < result.length; i++){
@@ -36,16 +68,17 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
                 }
 
                 res.render('dashboard', { messages: messages});
-            }
-            else{
+
+            } else {
                 res.render('dashboard');
             }
         });
-    }
-    else {
+
+    } else {
         res.render('index');
     }
 });
+
 
 /* Post Message */
 router.post('/dashboard', upload.any(), function(req, res) {
@@ -97,6 +130,8 @@ router.post('/dashboard', upload.any(), function(req, res) {
         var newMessage = {
             // user: res.locals.user.firstname + " " + res.locals.user.lastname,
             user: id,
+            fullname: res.locals.user.firstname + res.locals.user.lastname,
+            profilepicture: res.locals.user.profilepicture,
             message: message,
             image: image
         };
