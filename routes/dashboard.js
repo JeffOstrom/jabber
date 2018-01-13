@@ -168,6 +168,7 @@ router.post('/dashboard/search', function(req, res) {
     /*User's input*/
     var email = req.body.email;
 
+    /*If name, split the first and last name*/
     var name = email.split(' ');
 
     models.User.findAll({
@@ -195,6 +196,26 @@ router.post('/dashboard/search', function(req, res) {
             res.flash('error_msg', 'No user found');
             res.json(users);
         }
+    });
+});
+
+/*Profile of searched User */ 
+router.post('/dashboard/profile', function(req, res) {
+ 
+    /*User id*/
+    var userid = req.body.id;
+
+    models.User.findOne({
+        where: {
+            id: userid
+        }
+    }).then(function(data){
+
+        if(data !== undefined){
+
+            console.log(" profile works " + data.dataValues)
+
+        };
     });
 });
 
