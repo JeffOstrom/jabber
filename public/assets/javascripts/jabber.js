@@ -14,45 +14,45 @@
 
 $(document).ready(function() {
 
-	/* Edit Profile Text Fields */
-	$('.edit').on('click', function() {
+    /* Edit Profile Text Fields */
+    $('.edit').on('click', function() {
 
-		var currentField = "#" + $(this).attr('id');
-		var editField = currentField + "-edit"
+        var currentField = "#" + $(this).attr('id');
+        var editField = currentField + "-edit"
 
-		$(currentField).hide();
-		$(editField).show();
-		$(editField).focus();
-		$('#btn-profile-update').show();
+        $(currentField).hide();
+        $(editField).show();
+        $(editField).focus();
+        $('#btn-profile-update').show();
 
-		$('#btn-profile-update').on('click', function() {
-			$(".edit").each(function() {
-				var eachUpdate = "#" + $(this).attr('id') + '-edit'
-				$(this).html( $(eachUpdate).val().trim() );
-			});
+        $('#btn-profile-update').on('click', function() {
+            $(".edit").each(function() {
+                var eachUpdate = "#" + $(this).attr('id') + '-edit'
+                $(this).html( $(eachUpdate).val().trim() );
+            });
 
-			$(editField).hide();
-			$(currentField).show();
+            $(editField).hide();
+            $(currentField).show();
 
-			var id = $('#user-image').attr('data-value');
+            var id = $('#user-image').attr('data-value');
 
-			$.ajax({
-				method: "POST",
-				data: {
-					firstname: $('#user-firstname').text(),
-					lastname:  $('#user-lastname').text(),
-					email: $('#user-email').text(),
-					bio: $('#user-bio').text()
-				},
-				url: '/update/profile/' + id
-			}).done(function(data) {
-				location.reload();
-			})
-		});
-	});
+            $.ajax({
+                method: "POST",
+                data: {
+                    firstname: $('#user-firstname').text(),
+                    lastname:  $('#user-lastname').text(),
+                    email: $('#user-email').text(),
+                    bio: $('#user-bio').text()
+                },
+                url: '/update/profile/' + id
+            }).done(function(data) {
+                location.reload();
+            })
+        });
+    });
 
-	/* Edit User Messages */
-	$('.btn-update').on('click', function() {
+    /* Edit User Messages */
+    $('.btn-update').on('click', function() {
         /* Toggle buttons to perform Update/Delete */
         var currentValue = $(this).attr('data-value').trim();
         var id = $(this).attr('record-id');
@@ -109,7 +109,75 @@ $(document).ready(function() {
             location.reload();
         });
     });
+
+    /*Finding other user and function for modal*/
+    $("#searchbtn").on("click", function(event) {
+        event.preventDefault();
+        //function to check if all the inputs are filled
+        function validateForm() {
+            var x = $("#lookup").val();
+            if (x == "") {
+                return false;
+            } else {
+                return true;
+            }
+        };
+
+        //If the input, then run this code
+        if(validateForm()){
+
+            var email = $('#lookup').val().trim();
+
+            $.ajax({
+            method: "POST",
+            data: {
+                email: email
+            },
+            url: "/dashboard/search",
+        }).done(function(data){
+
+             $("#insertdata").html("");
+             
+            for (var i = 0; i < data.length; i++) {
+
+                var div = $("<div class='col-md-12'>");
+
+                /*Profile Image*/
+                var showimage = $("<img>");
+                showimage.attr("src", "https://res.cloudinary.com/demo/image/upload/w_100,h_100,c_thumb,g_face,r_20,d_avatar.png/non_existing_id.png");
+                
+                /*Profile Name*/
+                var name = $("<h4>");
+                name.attr('id', 'matchname');
+                name.text(data[i].firstname + " " + data[i].lastname)
+
+                /*Follow Button*/
+                var firstButton = $('<button>');
+                firstButton.attr('type', 'button');
+                firstButton.addClass('btn bg-junglegreen text-white');
+                firstButton.attr('id', 'follow');
+                firstButton.attr('data-dismiss', 'modal');
+                firstButton.text('Follow')
+
+                /*View Profile Button*/
+                var secondButton = $('<button>');
+                secondButton.attr('type', 'button');
+                secondButton.addClass('btn bg-junglegreen text-white');
+                secondButton.attr('id', 'viewprofile');
+                secondButton.attr('data-dismiss', 'modal');
+                secondButton.text('View Profile')
+
+                div.append(showimage, name, firstButton, secondButton);
+
+                $("#insertdata").append(div);
+
+            }
+
+            $("#matchuser").modal()
+           
+        });
+
+        };  
+    });
 });
-
-
 
