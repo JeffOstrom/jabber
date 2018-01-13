@@ -267,36 +267,34 @@ router.post('/profile/:id', function(req, res) {
             id: userid
         }
     }).then(function(data){
+
         if(data !== undefined){
-            var user = data[0].dataValues;
+
+            var users = data[0].dataValues;
 
             models.Messages.findAll({
 
                 where: {
-                    user: user.id
+                    user: users.id
                 },
                 order: [
                     ['id', 'DESC']
                 ]
             }).then(function(result){
 
-                    var messages = [];
+                    var messages;
                     
                     for(var i = 0; i < result.length; i++){
-                        messages.push(result[i].dataValues);
+                        messages = result[i].dataValues;
                     }
 
-                    // var array = {
-                    //     messages: messages,
-                    //     users:users
-                    // }
-
+                    // console.log(messages);
 
                     // if(messages){
-                        res.render('profile', user);
+                    //     res.render('profile', messages);
                     // } 
                     // else {
-                    //     res.render('profile', users);
+                        res.render('profile', users);
                     // };
 
             });

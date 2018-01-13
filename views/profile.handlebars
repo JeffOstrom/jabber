@@ -59,8 +59,9 @@
 				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="home-tab">
 					
 					<hr class="hr-full">
-
-						{{#each messages}}
+						
+						{{!-- Doesn't work --}}
+						{{!-- {{#each messages}}
 
 							<div class="media">
 								<img class="rounded mr-3 post-picture" src="/assets/images/profile/{{ this.profileImage }}" alt="Generic placeholder image">
@@ -71,7 +72,7 @@
 									{{/if}}
 									<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
 
-									<span id="message-{{ this.id }}">{{ this.message }}</span><br>
+									<span id="message-{{ this.id }}">{{ message }}</span><br>
 									<small>
 										<span id="postedTime"> {{ formatDate createdAt 'MMMM Do YYYY, h:mm:ss a' }} </span>
 									</small><br>
@@ -79,7 +80,7 @@
 								</div>
 							</div><br>
 							<hr>
-						{{/each}}
+						{{/each}} --}}
 				
 				</div>{{!-- post tab --}}
 				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">
@@ -107,6 +108,6 @@
             </div>
         </div>
     </div>
-    
+
 </section>
 

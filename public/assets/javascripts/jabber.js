@@ -148,7 +148,7 @@ $(document).ready(function() {
 
                 /*Profile Image*/
                 var showimage = $("<img id=userProfilepic>");
-                showimage.attr('src', 'assets/images/profile/'+ data[i].profilepicture +'');
+                showimage.attr('src', '/assets/images/profile/'+ data[i].profilepicture +'');
 
                 /*Profile Name*/
                 var name = $("<h4>");
