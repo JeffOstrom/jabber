@@ -112,8 +112,10 @@ $(document).ready(function() {
 
     /*Finding other user and function for modal*/
     $("#searchbtn").on("click", function(event) {
+
         event.preventDefault();
-        //function to check if all the inputs are filled
+
+        //function to check the input is filled
         function validateForm() {
             var x = $("#lookup").val();
             if (x == "") {
@@ -135,9 +137,9 @@ $(document).ready(function() {
             },
             url: "/dashboard/search",
         }).done(function(data){
+            $("#lookup").val("");
+            $("#insertdata").html("");
 
-             $("#insertdata").html("");
-             
             for (var i = 0; i < data.length; i++) {
 
                 var div = $("<div class='col-md-12'>");
@@ -171,14 +173,37 @@ $(document).ready(function() {
 
                 $("#insertdata").append(div);
 
-            }
+            };
 
-            $("#matchuser").modal()
+            $("#matchuser").modal();
            
         });
 
         };  
     });
+
+    /*View profile button*/
+    $(document).on("click", "#viewprofile", function() {
+
+        event.preventDefault();
+
+        console.log("viewprofile buttons works")
+        
+
+    });
+
+    /*follow button*/
+    // $("#follow").on("click", function(event) {
+
+    //     $.ajax({
+    //         method: "POST",
+    //         data: {
+    //             email: email
+    //         },
+    //         url: "/dashboard/search",
+    //     }).done(function(data){})
+
+    // })
 });
 
 
