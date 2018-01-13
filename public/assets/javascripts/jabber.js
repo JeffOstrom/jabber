@@ -136,9 +136,12 @@ $(document).ready(function() {
             },
             url: "/dashboard/search",
         }).done(function(data){
+
+            /*Clearing input field and modal each time*/
             $("#lookup").val("");
             $("#insertdata").html("");
 
+            /*Looping through the object being sent back*/
             for (var i = 0; i < data.length; i++) {
 
                 var div = $("<div class='col-md-12'>");
@@ -155,16 +158,23 @@ $(document).ready(function() {
                 /*Follow Button*/
                 var firstButton = $('<button>');
                 firstButton.attr('type', 'button');
+<<<<<<< HEAD
                 firstButton.addClass('btn bg-junglegreen text-white follow');
+=======
+>>>>>>> master
                 firstButton.attr('id', 'follow');
+                firstButton.addClass('follow');
+                firstButton.attr('userid', data[i].id);
+                firstButton.addClass('btn bg-junglegreen text-white');
                 firstButton.attr('data-dismiss', 'modal');
                 firstButton.text('Follow')
 
                 /*View Profile Button*/
                 var secondButton = $('<button>');
                 secondButton.attr('type', 'button');
-                secondButton.addClass('btn bg-junglegreen text-white');
                 secondButton.attr('id', 'viewprofile');
+                secondButton.attr('userid', data[i].id);
+                secondButton.addClass('btn bg-junglegreen text-white');
                 secondButton.attr('data-dismiss', 'modal');
                 secondButton.text('View Profile')
 
@@ -184,8 +194,10 @@ $(document).ready(function() {
     /*View profile button*/
     $(document).on("click", "#viewprofile", function() {
 
-        event.preventDefault();
+        /*Unique ID for the user*/
+        var userid = $(this).attr("userid");
 
+<<<<<<< HEAD
         console.log("viewprofile buttons works")
         
     });
@@ -244,6 +256,38 @@ $(document).ready(function() {
 
  	/* Follow */
     $(document).on ("click", ".follow", function () {
+=======
+            $.ajax({
+                method: "POST",
+                data: {
+                    id: 
+                },
+                url: "/dashboard/profile",
+            }).done(function(data){
+
+            })
+
+    });
+
+    /*follow button*/
+    $(".follow").on("click", function(event) {
+
+        // /*Unique ID for the user*/
+        var userid = $(this).attr("userid");
+        
+        $.ajax({
+            method: "POST",
+            data: {
+                email: email
+            },
+            url: "/follow/" + currentUser + "/" + newFollow,
+        }).done(function(data){
+            location.reload();
+        })
+
+    })
+});
+>>>>>>> master
 
         var newFollow = $(this).attr('userid');
         var currentUser = $('#user-image').attr('data-value');
