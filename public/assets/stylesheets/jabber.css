@@ -127,6 +127,10 @@ input:focus {
     vertical-align: middle;
 }
 
+.viewprofile{
+    padding-left: 0px;
+}
+
 #userProfilepic{
     width: 100px;
     margin: 5px;

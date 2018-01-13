@@ -10,15 +10,6 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
         },
 
-        fullname: {
-        	type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [1, 100],
-                isAlpha: true
-            }
-        },
-
         profilepicture: {
         	type: DataTypes.STRING,
         	allowNull: false

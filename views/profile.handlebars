@@ -6,7 +6,7 @@
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
 			
-			<img id='user-image' data-value="{{this.id}}" src="assets/images/profile/{{ this.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ this.firstname }} {{this.lastname}}">
+			<img id='user-image' data-value="{{this.id}}" src="/assets/images/profile/{{ this.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ this.firstname }} {{this.lastname}}">
 
 			<h4>
 				{{!-- User: First Name --}}
@@ -58,31 +58,12 @@
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="home-tab">
 					
-					<form action='/dashboard' method='POST' class="form-sign-up" enctype="multipart/form-data">
-						
-						<div class="form-group">
-							<textarea class="form-control" name="message" id="message" placeholder="Type your message here !"></textarea>
-						</div>
-						
-						<div class="form-group">
-							<label class="btn bg-junglegreen text-white file-upload" for="messageImage">
-								<input id="messageImage" name="messageImage" type="file" style="display:none" 
-								onchange="$('#upload-file-info').html(this.files[0].name)">
-								<i class="fas fa-camera-retro"></i>
-							</label>
-							<span class='label label-info' id="upload-file-info"></span>
-							<button class="btn bg-junglegreen text-white" for="">
-								<i class="fas fa-comment"></i> Post
-							</button>
-						</div>
-					</form>
-
 					<hr class="hr-full">
 
 						{{#each messages}}
 
 							<div class="media">
-								<img class="rounded mr-3 post-picture" src="assets/images/profile/{{ this.profileImage }}" alt="Generic placeholder image">
+								<img class="rounded mr-3 post-picture" src="/assets/images/profile/{{ this.profileImage }}" alt="Generic placeholder image">
 								<div class="media-body">
 									<h5 class="mt-0">{{ this.firstname }}</h5>
 									{{#if image}}
@@ -90,7 +71,7 @@
 									{{/if}}
 									<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
 
-									<span>{{ this.message }}</span><br>
+									<span id="message-{{ this.id }}">{{ this.message }}</span><br>
 									<small>
 										<span id="postedTime"> {{ formatDate createdAt 'MMMM Do YYYY, h:mm:ss a' }} </span>
 									</small><br>
@@ -110,6 +91,22 @@
 			</div>{{!-- tab content --}}
 		</div>{{!-- Profile Content Column --}}
 	</div>{{!-- row --}}
-
+	
+	{{!-- Modal for searched users --}}
+	<div class="modal fade" id="matchuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="row" id="insertdata">
+                        
+                    </div> 
+            </div>
+        </div>
+    </div>
+    
 </section>
 

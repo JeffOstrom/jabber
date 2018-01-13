@@ -268,28 +268,35 @@ router.post('/profile/:id', function(req, res) {
         }
     }).then(function(data){
         if(data !== undefined){
-            var users = data[0].dataValues;
+            var user = data[0].dataValues;
 
             models.Messages.findAll({
 
                 where: {
-                    user: users.id
+                    user: user.id
                 },
                 order: [
                     ['id', 'DESC']
                 ]
             }).then(function(result){
 
-                    var messages;
+                    var messages = [];
                     
                     for(var i = 0; i < result.length; i++){
-                        messages = result[i].dataValues;
+                        messages.push(result[i].dataValues);
                     }
 
+                    // var array = {
+                    //     messages: messages,
+                    //     users:users
+                    // }
+
+
                     // if(messages){
-                        res.render('profile', users, messages);
-                    // } else {
-                        // res.render('profile', users);
+                        res.render('profile', user);
+                    // } 
+                    // else {
+                    //     res.render('profile', users);
                     // };
 
             });

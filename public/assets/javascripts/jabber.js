@@ -184,24 +184,6 @@ $(document).ready(function() {
         };  
     });
 
-    /*View profile button*/
-    $(document).on("click", ".viewprofile", function() {
-
-        /*Unique ID for the user*/
-        // var userid = $(this).attr("userid");
-        // console.log("viewprofile buttons works")
-        
-        // $.ajax({
-        //     method: "POST",
-        //     data: {
-        //         userid: userid
-        //     },
-        //     url: "/dashboard/profile",
-        // }).done(function(data){
-        //     // location.reload();
-        // })
-    });
-
     /* GET News Feed Messages */
 	$('#feed-tab').on('click', function() {
 
