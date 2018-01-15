@@ -7,7 +7,7 @@
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
 
 			{{!-- User: Profile Picture --}}
-			<img id='user-image' data-value="{{user.id}}" src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
+			<img id='user-image' data-value="{{user.id}}" src="/assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
 
 			<h4></h4>
 				{{!-- User: First Name --}}
@@ -51,10 +51,10 @@
 					<a class="nav-link" data-toggle="tab" href="#feed" role="tab" aria-controls="profile" aria-selected="false">News Feed</a>
 				</li>
 				<li class="nav-item" id="follower-tab" >
-					<a class="nav-link" data-toggle="tab" href="#follower" role="tab" aria-controls="follower" aria-selected="false">Followers</a>
+					<a class="nav-link" id="followers-user" data-toggle="tab" href="#follower" role="tab" aria-controls="follower" aria-selected="false">Followers</a>
 				</li>
 				<li class="nav-item" id="following-tab">
-					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#following" role="tab" aria-controls="following-tab" aria-selected="false">Following</a>
+					<a class="nav-link" id="following-user" data-toggle="tab" href="#following" role="tab" aria-controls="following-tab" aria-selected="false">Following</a>
 				</li>
 			</ul><br>
 
@@ -62,7 +62,7 @@
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="home-tab">
 					
-					<form action='/dashboard' method='POST' class="form-sign-up" enctype="multipart/form-data">
+					<form action='/users/dashboard' method='POST' class="form-sign-up" enctype="multipart/form-data">
 						
 						<div class="form-group">
 							<textarea class="form-control" name="message" id="message" placeholder="Type your message here !"></textarea>
@@ -87,11 +87,11 @@
 						{{#each messages}}
 
 							<div class="media">
-								<img class="rounded mr-3 post-picture" src="assets/images/profile/{{ profileImage }}" alt="Generic placeholder image">
+								<img class="rounded mr-3 post-picture" src="/assets/images/profile/{{ User.dataValues.profilepicture }}" alt="Generic placeholder image">
 								<div class="media-body">
-									<h5 class="mt-0">{{ firstname }}</h5>
+									<h5 class="mt-0">{{ User.dataValues.firstname }}</h5>
 									{{#if image}}
-										<a href="assets/images/post/{{ image }}" target="_blank"><img src="assets/images/post/{{ image }}" alt="" class="img-fluid user-picture"></a><br>
+										<a href="/assets/images/post/{{ image }}" target="_blank"><img src="/assets/images/post/{{ image }}" alt="" class="img-fluid user-picture"></a><br>
 									{{/if}}
 									<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
 
@@ -139,64 +139,22 @@
 
 				{{!-- Global Feed Tab --}}
 				<div class="tab-pane fade" id="feed" role="tabpanel" aria-labelledby="feed-tab">
-
-{{!-- 				<!-- Modal: Profile View -->
-					<div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title"> </h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									Are you sure want to delete this post ?
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-									<button type="button" id="btn-delete" class="btn btn-success btn-delete">Follow</button>
-								</div>
-							</div>
-						</div>
-					</div>
---}}
-
+					
 				</div>
 
 				{{!-- Followers Tab --}}
 				<div class="tab-pane fade" id="follower" role="tabpanel" aria-labelledby="follower-tab">
-					All followers goes here
+					
 				</div>
 
 				{{!-- Following Tab --}}
 				<div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="following-tab">
-					All following goes here
+					
 				</div>
 
 
 			</div>{{!-- tab content --}}
 		</div>{{!-- Profile Content Column --}}
 	</div>{{!-- row --}}
-
-	{{!-- Modal for searched users --}}
-	<div class="modal fade" id="matchuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-				<div class="modal-body" id="insertdata">
-					{{!-- Body is generated on the fly --}}
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-            </div>
-        </div>
-    </div>
-
 </section>
 

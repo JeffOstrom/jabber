@@ -10,14 +10,13 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var moment = require('moment');
 
-/* Database */
+/* sequelize instance */
 var db = require('./models');
-/* Routes */
-var contactus = require('./routes/contactus.js');
-var dashboard = require('./routes/dashboard.js');
+
+/* route handlers/controllers */
 var index = require('./routes/index.js');
-var login = require('./routes/login.js');
-var registration = require('./routes/registration.js');
+var authentication = require('./routes/authentication');
+var users = require('./routes/users.js');
 
 /* Init App */
 var app = express();
@@ -89,15 +88,22 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', index);
-app.use('/', contactus);
-app.use('/', dashboard);
-app.use('/', login);
-app.use('/', registration);
+app.use('/users', users);
+app.use('/authentication', authentication);
 
 app.set('port', (process.env.PORT || 3000));
 
+/* User Relation */
 db.Messages.belongsTo(db.User);
 db.User.hasMany(db.Messages);
+
+db.Followers.belongsTo(db.User, { foreignKey: 'following', as: 'followingfk' });
+db.Followers.belongsTo(db.User, { foreignKey: 'followers', as: 'followersfk' });
+db.User.hasMany(db.Followers, { foreignKey: 'following', as: 'followingfk' });
+db.User.hasMany(db.Followers, { foreignKey: 'followers', as: 'followersfk' });
+
+db.Contact.belongsTo(db.User);
+db.User.hasMany(db.Contact);
 
 db.sequelize.sync().then(function() {
 	app.listen(app.get('port'), function() {

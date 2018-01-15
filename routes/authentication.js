@@ -1,3 +1,17 @@
+/**
+	This route handler/controller handles all authentication stuff. i.e registration/login/logout
+	---------------------------------------------------------------------------------------------
+	Get Methods:
+	------------
+	1) Login
+	2) Logout
+
+	Post Methods:
+	-------------
+	1) User Registration
+	2) User Login
+**/
+
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcryptjs');
@@ -9,11 +23,18 @@ var fs = require('fs');
 var multer  = require('multer');
 var upload = multer({ dest: 'public/assets/images/profile' });
 
-/* Register */
+/* renders 'signup' handlebars on get request */
 router.get('/signup', function(req, res) {
     res.render('signup');
 });
 
+/* renders 'dashboard' handlebars if user's session is active */
+/* renders 'signin' handlebars if there is no user session */
+router.get('/signin', ensureAuthenticated, function(req, res) {
+    res.render('dashboard');
+});
+
+/* 'POST' request to register new user */
 router.post('/signup', upload.any(), function(req, res, next) {
 
 	var firstname = req.body.firstname;
@@ -23,7 +44,6 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	var cpassword = req.body.password2;
     var bio	= req.body.bio;
     var image ='';
-	/* var profilePic = req.files[0]; */
 	
 	/* Validating field forms */
 	req.checkBody('firstname', 'First name is required').notEmpty();
@@ -32,7 +52,6 @@ router.post('/signup', upload.any(), function(req, res, next) {
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('cpassword', 'Password does not match').equals(req.body.password);
 	req.checkBody('bio', 'Please tell us something about yourself').notEmpty();
-	/* req.checkBody('profilePic', 'Please upload a profile picture').notEmpty(); */
 
 	if(req.files[0] !== undefined){
 		var fileExt = validateProfilePic(req.files[0]);
@@ -69,7 +88,7 @@ router.post('/signup', upload.any(), function(req, res, next) {
     	fs.unlink(req.files[0].path, function(err){
 			if(err) throw err;
 		});
-    	res.redirect('/signup');
+    	res.redirect('/authentication/signup');
     }
     else {
     	db.User.findOne({
@@ -86,7 +105,6 @@ router.post('/signup', upload.any(), function(req, res, next) {
 					email: email,
 					password: password,
 					bio: bio,
-					fullname: firstname + " " + lastname,
 					profilepicture: image
 				};
 
@@ -96,17 +114,35 @@ router.post('/signup', upload.any(), function(req, res, next) {
 						newUser.password = hash;
 				      	db.User.create(newUser).then(function(user) {
 							req.flash('success_msg', 'You are registered and can now login');
-							res.redirect('/signin');
+							res.redirect('/authentication/signin');
 				      	});
 				  	});
 				});
 	    	} else {
                 req.flash('error_msg', 'Email already registered with us');
-                res.redirect('/signup');
+                res.redirect('/authentication/signup');
             }
 		});	
     };
 });
+
+/* 'POST' request to login */
+router.post('/signin',
+  	passport.authenticate('local', {successRedirect:'/users/dashboard', failureRedirect: '/authentication/signin', failureFlash: true}),
+  	function(req, res) {
+  		res.flash('error_msg', 'Invalid email or password');
+    	req.redirect('/users/dashboard');
+  	}
+);
+
+function ensureAuthenticated(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    else {
+        res.render('signin');
+    }
+}
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
@@ -115,6 +151,7 @@ passport.use(new LocalStrategy(
                 email: username
               }
         }).then(function(user){
+            console.log('User from database : ' + user);
             if(user == null || user.dataValues.email !== username){
                 return done(null, false, {message: 'Unknown User'});
             }
@@ -145,35 +182,13 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-
-/*Sign in*/
-router.post('/signin',
-  	passport.authenticate('local', {successRedirect:'/dashboard', failureRedirect: '/signin', failureFlash: true}),
-  	function(req, res) {
-  		res.flash('error_msg', 'Invalid email or password');
-    	req.redirect('/dashboard');
-  	}
-);
-
-/* Sign out */
+/* logout: removes user session */
 router.get('/signout', function(req, res){
 	req.logout();
-	res.redirect('/signin');
+	res.redirect('/authentication/signin');
 });
 
 function validateProfilePic(file) {
-	/* [ 
-		{ 
-			fieldname: 'profilepic',
-		    originalname: 'web_developer.jpg',
-		    encoding: '7bit',
-		    mimetype: 'image/jpeg',
-		    destination: 'public/images/profile',
-		    filename: '93e08f4b28c622f97c2b7342796bb633',
-		    path: 'public\\images\\profile\\93e08f4b28c622f97c2b7342796bb633',
-		    size: 52702 
-		} 
-	] */
 	var fileExt = '';
 	var type = file.mimetype.trim();
 	if( (type === 'image/jpeg') ||

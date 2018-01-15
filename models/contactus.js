@@ -18,13 +18,6 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
 
-        contact: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            isNumeric: true,          
-            isInt: true
-        },
-
         message: {
             type: DataTypes.TEXT,
             allowNull: true

@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
 
-	/*User Profile Schema*/
+	/* User Profile Schema */
     var User = sequelize.define("User", {
 
         firstname: {
@@ -38,11 +38,6 @@ module.exports = function(sequelize, DataTypes) {
         bio: {
             type: DataTypes.TEXT,
             allowNull: false
-        },
-
-        fullname: {
-            type: DataTypes.STRING, 
-            allowNull: false 
         },
 
         profilepicture: {

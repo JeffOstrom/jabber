@@ -5,38 +5,16 @@
 		
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
-			
-			<img id='user-image' data-value="{{user.id}}" src="assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
 
-			<h4>
-				{{!-- User: First Name --}}
-				<span id="user-firstname" class="edit">{{ user.firstname }}</span> 
-				<textarea id="user-firstname-edit" class="update-task form-control update">{{user.firstname}}</textarea>
-				
-				{{!-- User: Last Name --}}
-				<span id="user-lastname" class="edit">{{ user.lastname }}</span>
-				<textarea id="user-lastname-edit" class="update-task form-control update">{{user.lastname}}</textarea>
-			</h4>
+			{{!-- User: Profile Picture --}}
+			<img id='user-image' data-value="{{ messages.0.User.dataValues.id }}" src="/assets/images/profile/{{ messages.0.User.dataValues.profilepicture }}" class="img-fluid rounded profile-picture" alt="profile picture for {{ messages.0.User.dataValues.firstname }} {{ messages.0.User.dataValues.lastname }}">
 
+			<h4> {{ messages.0.User.dataValues.firstname }} {{ messages.0.User.dataValues.lastname }}</h4>
 			<hr class="hr-full">
 			
 			{{!-- User: Bio --}}
-			<h6 id="user-bio" class="edit"> {{ user.bio }} </h6>
-			<textarea id="user-bio-edit" class="update-task form-control update">{{user.bio}}</textarea>
-			<hr class="hr-half">
-
-			{{!-- User: Email --}}
-			<p>
-				<i class="fas fa-envelope"></i>
-				<strong id="user-email" class="edit"> {{ user.email }} </strong>
-				<textarea id="user-email-edit" class="update-task form-control update">{{user.email}}</textarea>
-			</p>
-			
-			{{!-- Update Btn --}}
-			<button class="btn btn-sm bg-junglegreen text-white" id="btn-profile-update" record-id="{{ id }}">
-				<i class="fas fa-pencil-alt"></i>
-			</button>
-
+			<h6 id="user-bio"> {{ messages.0.User.dataValues.bio }} </h6>
+			<a href="/users/follow/{{ messages.0.User.dataValues.id }}" class="btn btn-primary">Follow {{ messages.0.User.dataValues.firstname }}</a>
 		</div>
 		
 		{{!-- Message Feed --}}
@@ -46,77 +24,53 @@
 				<li class="nav-item">
 					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="home" aria-selected="true">Posts</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="feed-tab" data-toggle="tab" href="#feed" role="tab" aria-controls="profile" aria-selected="false">Message Feed</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="profile" aria-selected="false">Followers</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#following" role="tab" aria-controls="contact" aria-selected="false">Following</a>
-				</li>
 			</ul><br>
 
 			{{!-- Message Form  --}}
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="home-tab">
-					
-					<form action='/dashboard' method='POST' class="form-sign-up" enctype="multipart/form-data">
-						
-						<div class="form-group">
-							<textarea class="form-control" name="message" id="message" placeholder="Type your message here !"></textarea>
-						</div>
-						
-						<div class="form-group">
-							<label class="btn bg-junglegreen text-white file-upload" for="messageImage">
-								<input id="messageImage" name="messageImage" type="file" style="display:none" 
-								onchange="$('#upload-file-info').html(this.files[0].name)">
-								<i class="fas fa-camera-retro"></i>
-							</label>
-							<span class='label label-info' id="upload-file-info"></span>
-							<button class="btn bg-junglegreen text-white" for="">
-								<i class="fas fa-comment"></i> Post
-							</button>
-						</div>
-					</form>
+					{{!-- User Messages --}}
+					{{#each messages}}
+						<div class="media">
+							<img class="rounded mr-3 post-picture" src="/assets/images/profile/{{ User.dataValues.profilepicture }}" alt="Generic placeholder image">
+							<div class="media-body">
+								<h5 class="mt-0">{{ User.dataValues.firstname }}</h5>
+								{{#if image}}
+									<a href="/assets/images/post/{{ image }}" target="_blank"><img src="/assets/images/post/{{ image }}" alt="" class="img-fluid user-picture"></a><br>
+								{{/if}}
+								<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
 
-					<hr class="hr-full">
-
-						{{#each messages}}
-
-							<div class="media">
-								<img class="rounded mr-3 post-picture" src="assets/images/profile/{{ profileImage }}" alt="Generic placeholder image">
-								<div class="media-body">
-									<h5 class="mt-0">{{ firstname }}</h5>
-									{{#if image}}
-										<a href="assets/images/post/{{ image }}" target="_blank"><img src="assets/images/post/{{ image }}" alt="" class="img-fluid user-picture"></a><br>
-									{{/if}}
-									<textarea name="update-task" id="update-message-{{ id }}" class="update-task form-control"></textarea>
-
-									<span id="message-{{ id }}">{{ message }}</span><br>
-									<small>
-										<span id="postedTime"> {{ formatDate createdAt 'MMMM Do YYYY, h:mm:ss a' }} </span>
-									</small><br>
-
-								</div>
-							</div><br>
-							<hr>
-						{{/each}}
-				
-				</div>{{!-- post tab --}}
-
-				<div class="tab-pane fade" id="feed" role="tabpanel" aria-labelledby="feed-tab">
-					All global feed goes here
-				</div>{{!-- feed tab --}}
-				<div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="profile-tab">
-					All followers goes here
-				</div>{{!-- followers tab --}}
-				<div class="tab-pane fade" id="following" role="tabpanel" aria-labelledby="contact-tab">
-					All following goes here
-				</div>{{!-- following tab --}}
+								<span id="message-{{ id }}">{{ message }}</span><br>
+								<small>
+									<span id="postedTime"> {{ formatDate createdAt 'MMMM Do YYYY, h:mm:ss a' }} </span>
+								</small><br>
+							</div>
+						</div><br>
+						<hr class="hr">
+					{{/each}}
+				</div>
 			</div>{{!-- tab content --}}
 		</div>{{!-- Profile Content Column --}}
 	</div>{{!-- row --}}
+
+	{{!-- Modal for searched users --}}
+	<div class="modal fade" id="matchuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+				<div class="modal-body" id="insertdata">
+					{{!-- Body is generated on the fly --}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+            </div>
+        </div>
+    </div>
 
 </section>
 
