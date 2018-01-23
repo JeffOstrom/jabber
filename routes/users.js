@@ -165,6 +165,25 @@ router.get('/feed', ensureAuthenticated, function(req, res) {
     });
 });
 
+/* Edit User Profile */
+router.post('/profile/:id', function(req, res){
+    var id = req.params.id;
+
+    models.User.update({
+        firstname: req.body.firstname,
+        lastname:  req.body.lastname,
+        email: req.body.email,
+        bio: req.body.bio
+    },
+    { 
+        where: {
+            id: id
+        }
+    }).then(function(todos) {
+        res.send('success');
+    });
+});
+
 /* user profile */
 router.get('/profile/:id', function(req, res) {
     var id = req.params.id;

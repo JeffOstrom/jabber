@@ -9,7 +9,7 @@
 			{{!-- User: Profile Picture --}}
 			<img id='user-image' data-value="{{user.id}}" src="/assets/images/profile/{{ user.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ user.firstname }} {{user.lastname}}">
 
-			<h4></h4>
+			<h4>
 				{{!-- User: First Name --}}
 				<span id="user-firstname" class="edit">{{ user.firstname }}</span> 
 				<textarea id="user-firstname-edit" class="update-task form-control update">{{user.firstname}}</textarea>
@@ -17,7 +17,7 @@
 				{{!-- User: Last Name --}}
 				<span id="user-lastname" class="edit">{{ user.lastname }}</span>
 				<textarea id="user-lastname-edit" class="update-task form-control update">{{user.lastname}}</textarea>
-			
+			</h4>
 
 			<hr class="hr-full">
 			

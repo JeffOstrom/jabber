@@ -43,7 +43,7 @@ $(document).ready(function() {
 					email: $('#user-email').text(),
 					bio: $('#user-bio').text()
 				},
-				url: '/update/profile/' + id
+				url: '/users/profile/' + id
 			}).done(function(data) {
 				location.reload();
 			});
