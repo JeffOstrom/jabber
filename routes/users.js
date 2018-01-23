@@ -26,7 +26,6 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
             	]
             }).then(function(result) {
                 if(result.length > 0) {
-                    console.log('result length is > 0');
                     var messages = [];
                     for(var i = 0; i < result.length; i++) {
                         messages.push(result[i].dataValues);
@@ -34,7 +33,6 @@ router.get('/dashboard', ensureAuthenticated, function(req, res) {
                     res.render('dashboard', { messages: messages});
 
                 } else {
-                    console.log('result length is 0');
                     res.render('dashboard');
                 }
             });
@@ -117,9 +115,6 @@ router.post('/update/:id', function(req, res) {
     var id = req.params.id;
     var updatedMessage = req.body.message;
     var date = new Date();
-
-    console.log(updatedMessage);
-
     models.Messages.update({
         message: updatedMessage,
         updatedAt: date
@@ -195,12 +190,11 @@ router.get('/profile/:id', function(req, res) {
                 for(var i = 0; i < result.length; i++) {
                     messages.push(result[i].dataValues);
                 }
-                console.log(messages);
                 res.render('profile', { messages: messages});
 
             } else {
-                console.log('User not found !');
-                res.render('dashboard');
+                req.flash('error_msg', 'This user hasn\'t posted anything yet !');
+                res.redirect('/users/dashboard');
             }
         });
     }
@@ -244,7 +238,7 @@ router.post('/search', function(req, res) {
             res.render('searchresult', { users: users });
 
         } else {
-            res.flash('error_msg', 'No user found');
+            req.flash('error_msg', 'No user found');
             res.redirect('/users/dashboard');
         }
     });

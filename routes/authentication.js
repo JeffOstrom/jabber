@@ -55,7 +55,6 @@ router.post('/signup', upload.any(), function(req, res, next) {
 
 	if(req.files[0] !== undefined){
 		var fileExt = validateProfilePic(req.files[0]);
-		console.log("validate profile pic : " + fileExt);
 		image = req.files[0].filename;
 		var isValid = false;
 		
@@ -151,7 +150,6 @@ passport.use(new LocalStrategy(
                 email: username
               }
         }).then(function(user){
-            console.log('User from database : ' + user);
             if(user == null || user.dataValues.email !== username){
                 return done(null, false, {message: 'Unknown User'});
             }

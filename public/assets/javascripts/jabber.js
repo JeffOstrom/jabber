@@ -115,7 +115,6 @@ $(document).ready(function() {
 
 			$('#feed').empty();
 			var print = data;
-            console.log(print);
 			for (var i=0; i<print.length; i++) {
 
 				var profilepicture = print[i].User.profilepicture;
@@ -149,7 +148,6 @@ $(document).ready(function() {
     $('#following-user').on('click', function() {
         var id = $(this).attr('data-value');
         $.get('/users/following', function(data) {
-            console.log(data);
             $('#following').empty();
             for (var i=0; i<data.length; i++) {
 
