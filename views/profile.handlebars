@@ -6,15 +6,36 @@
 		{{!-- Profile Card --}}
 		<div class="col-xl-3 col-lg-3 col-md-3 text-center">
 
-			{{!-- User: Profile Picture --}}
-			<img id='user-image' data-value="{{ messages.0.User.dataValues.id }}" src="/assets/images/profile/{{ messages.0.User.dataValues.profilepicture }}" class="img-fluid rounded profile-picture" alt="profile picture for {{ messages.0.User.dataValues.firstname }} {{ messages.0.User.dataValues.lastname }}">
+			<img id='user-image' data-value="{{this.id}}" src="/assets/images/profile/{{ this.profilepicture}}" class="img-fluid rounded profile-picture" alt="profile picture for {{ firstname }} {{users.lastname}}">
 
-			<h4> {{ messages.0.User.dataValues.firstname }} {{ messages.0.User.dataValues.lastname }}</h4>
+			<h4>
+				{{!-- User: First Name --}}
+				<span id="user-firstname" class="edit">{{ this.firstname }}</span> 
+				<textarea id="user-firstname-edit" class="update-task form-control update">{{this.firstname}}</textarea>
+				
+				{{!-- User: Last Name --}}
+				<span id="user-lastname" class="edit">{{ this.lastname }}</span>
+				<textarea id="user-lastname-edit" class="update-task form-control update">{{user.lastname}}</textarea>
+			</h4>
 			<hr class="hr-full">
 			
 			{{!-- User: Bio --}}
-			<h6 id="user-bio"> {{ messages.0.User.dataValues.bio }} </h6>
-			<a href="/users/follow/{{ messages.0.User.dataValues.id }}" class="btn btn-primary">Follow {{ messages.0.User.dataValues.firstname }}</a>
+			<h6 id="user-bio" class="edit"> {{ this.bio }} </h6>
+			<textarea id="user-bio-edit" class="update-task form-control update">{{this.bio}}</textarea>
+			<hr class="hr-half">
+
+			{{!-- User: Email --}}
+			<p>
+				<i class="fas fa-envelope"></i>
+				<strong id="user-email" class="edit"> {{ this.email }} </strong>
+				<textarea id="user-email-edit" class="update-task form-control update">{{this.email}}</textarea>
+			</p>
+			
+			{{!-- Update Btn --}}
+			<button class="btn btn-sm bg-junglegreen text-white" id="btn-profile-update" record-id="{{ id }}">
+				<i class="fas fa-pencil-alt"></i>
+			</button>
+
 		</div>
 		
 		{{!-- Message Feed --}}
@@ -23,6 +44,14 @@
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="home" aria-selected="true">Posts</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#followers" role="tab" aria-controls="profile" aria-selected="false">Followers</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#following" role="tab" aria-controls="contact" aria-selected="false">Following</a>
 				</li>
 			</ul><br>
 
@@ -52,6 +81,22 @@
 			</div>{{!-- tab content --}}
 		</div>{{!-- Profile Content Column --}}
 	</div>{{!-- row --}}
+	
+	{{!-- Modal for searched users --}}
+	<div class="modal fade" id="matchuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="row" id="insertdata">
+                        
+                    </div> 
+            </div>
+        </div>
+    </div>
 
 	{{!-- Modal for searched users --}}
 	<div class="modal fade" id="matchuser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -1,6 +1,5 @@
 User = require('./accounts');
 module.exports = function(sequelize, DataTypes) {
-	
     var Messages = sequelize.define("Messages", {
         /* Message Posted */
         message: {
@@ -14,6 +13,6 @@ module.exports = function(sequelize, DataTypes) {
         }
         /* id, and time stamp of message auto-created by Sequelize: createdAt && updatedAt */
     });
-
   return Messages;
 };
+
