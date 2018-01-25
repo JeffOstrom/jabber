@@ -1,8 +1,7 @@
-
 {
 	"development": {
 		"username": "root",
-		"password": "some1is11",
+		"password": "admin",
 		"database": "jabber",
 		"host": "localhost",
 		"dialect": "mysql"
@@ -15,7 +14,10 @@
 		"dialect": "mysql"
 	},
 	"production": {
-		"use_env_variable": "JAWSDB_URL",
+		"username": "uy19782yj1ivrmvg",
+		"password": "d1gylmls078dtadx",
+		"database": "h6ddhp2y6py1zy5v",
+		"host": "cdm1s48crk8itlnr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
 		"dialect": "mysql"
 	}
 }

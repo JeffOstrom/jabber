@@ -43,10 +43,10 @@ $(document).ready(function() {
 					email: $('#user-email').text(),
 					bio: $('#user-bio').text()
 				},
-				url: '/update/profile/' + id
+				url: '/users/profile/' + id
 			}).done(function(data) {
 				location.reload();
-			})
+			});
 		});
 	});
 
@@ -81,8 +81,8 @@ $(document).ready(function() {
                 data: {
                     'message': message
                 },
-                url: "/update/" + id
-            }).done(function(data){
+                url: "/users/update/" + id
+            }).done(function(data) {
                 location.reload();
             });
         }
@@ -103,157 +103,93 @@ $(document).ready(function() {
             data: {
                 'id': id
             },
-            url: "/delete/" + id
-        }).done(function(data){
+            url: "/users/delete/" + id
+        }).done(function(data) {
             location.reload();
         });
     });
 
-    /*Finding other user and function for modal*/
-    $("#searchbtn").on("click", function(event) {
-
-        event.preventDefault();
-
-        //function to check the input is filled
-        function validateForm() {
-            var x = $("#lookup").val();
-            if (x == "") {
-                return false;
-            } else {
-                return true;
-            }
-        };
-
-        //If the input, then run this code
-        if(validateForm()){
-
-            var email = $('#lookup').val().trim();
-
-            $.ajax({
-            method: "POST",
-            data: {
-                email: email
-            },
-            url: "/dashboard/search",
-        }).done(function(data){
-
-            /*Clearing input field and modal each time*/
-            $("#lookup").val("");
-            $("#insertdata").html("");
-
-            /*Looping through the object being sent back*/
-            for (var i = 0; i < data.length; i++) {
-
-                var div = $("<div class='col-md-12'>");
-
-                /*Profile Image*/
-                var showimage = $("<img id=userProfilepic>");
-                showimage.attr('src', '/assets/images/profile/'+ data[i].profilepicture +'');
-
-                /*Profile Name*/
-                var name = $("<h4>");
-                name.attr('id', 'matchname');
-                name.text(data[i].firstname + " " + data[i].lastname)
-
-                /*Follow Button*/
-                // var firstButton = $('<button>');
-                // firstButton.attr('type', 'button');
-                // firstButton.addClass('btn bg-junglegreen text-white follow');
-                // firstButton.attr('id', 'follow');
-                // firstButton.attr('type', 'button');
-                // firstButton.addClass('follow followbtn');
-                // firstButton.attr('userid', data[i].id);
-                // firstButton.addClass('btn bg-junglegreen text-white');
-                // firstButton.attr('data-dismiss', 'modal');
-                // firstButton.text('Follow')
-
-                /*View Profile Button*/
-                var secondButton = $("<br><form action='/profile/" + data[i].id + "' method='POST'>" + 
-               "<button type='submit' id=" + data[i].id + " class='btn bg-junglegreen text-white viewprofile'>View Profile</button></form>");
-
-                div.append(showimage, name/*, firstButton*/, secondButton);
-
-                $("#insertdata").append(div);
-            };
-
-
-            $("#matchuser").modal();
-           
-        });
-
-        };  
-    });
-
     /* GET News Feed Messages */
 	$('#feed-tab').on('click', function() {
-
-		$.get('/feed', function(data) {
+		$.get('/users/feed', function(data) {
 
 			$('#feed').empty();
 			var print = data;
-
 			for (var i=0; i<print.length; i++) {
 
-				//console.log(print[i]);
-
-				var profilepicture = print[i].profilepicture;
-				var fullname = print[i].fullname;
-				var id = print[i].id;
+				var profilepicture = print[i].User.profilepicture;
+                var userid = print[i].User.id;
+				var fullname = print[i].User.firstname + " " + print[i].User.lastname;
 				var message = print[i].message;
 				var time = print[i].createdAt;
-				var user = print[i].user;
-				var image;
-				var imageHtml;
+				var image = print[i].image;
 
-				if (print[i].image !== null) {
-					image = print[i].image;
-					imageHtml = '<a href="assets/images/post/' + image + '" target="_blank">' + '<img src="assets/images/post/' + image + '" class="img-fluid user-picture">' + '</a>';
-				} else { 
-					imageHtml = '';
-				};
-
-				$('#feed').append( 
-					'<div class="media">' +
-						'<img class="rounded mr-3 post-picture follow" src="assets/images/profile/' + profilepicture + '" userid="' + user + '">' +
-						'<div class="media-body">' +
-							'<h5 class="mt-0">' + fullname + '</h5>' +
-							imageHtml + 
-							 '<br>' +
-							'<span id="message-'+ id +'">' + message + '</span><br>' +
-							'<small>' +
-								'<span id="postedTime">' + moment(time).format('LLL') + '</span>' + 
-							'</small><br>' +
-						'</div>' +
-					'</div>' +
-					'<br>' + 
-					'<hr class="hr-full">' 
-				);
-
+                /* creating global feed on the fly */
+                var media = $("<div class='media'>");
+                var profilepicture = $("<a href='/users/profile/" + userid + "'><img class='rounded mr-3 post-picture follow' src='/assets/images/profile/" + profilepicture + "'><a/>");
+                var body = $("<div class='media-body'>");
+                var h5 = $("<h5 class='mt-0'>" + fullname + "</h5>");
+                var msg = $("<span>" + message + "</span><br>");
+                var timestamp = $("<small><span>" + moment(time).format('LLL') + "</span></small>");
+                var hr = $('<hr>');
+                body.append(h5);
+                if(image !== null) {
+                    var postImage = $('<a href="/assets/images/post/' + image + '" target="_blank">' + '<img src="/assets/images/post/' + image + '" class="img-fluid user-picture">' + '</a><br>');
+                    body.append(postImage);
+                }
+                body.append(msg, timestamp, hr);
+                media.append(profilepicture, body);
+                $('#feed').append(media);
 			}
 		});
-
 	});
 
- 	/* Follow User */
-    $(document).on ("click", ".follow", function () {
-            
-        var newFollow = $(this).attr('userid');
-        var currentUser = $('#user-image').attr('data-value');
-       
-		$.ajax({
-			method: "POST",
-			url: "/follow/" + currentUser + "/" + newFollow
-		}).done(function(data){
-			//location.reload();
-		});
+    /* GET News Feed Messages */
+    $('#following-user').on('click', function() {
+        var id = $(this).attr('data-value');
+        $.get('/users/following', function(data) {
+            $('#following').empty();
+            for (var i=0; i<data.length; i++) {
 
-	});
+                var profilepicture = data[i].followingfk.profilepicture;
+                var userid = data[i].followingfk.id;
+                var fullname = data[i].followingfk.firstname + " " + data[i].followingfk.lastname;
 
+                /* creating global feed on the fly */
+                var media = $("<div class='media'>");
+                var profilepicture = $("<a href='/users/profile/" + userid + "'><img class='rounded mr-3 post-picture follow' src='/assets/images/profile/" + profilepicture + "'><a/>");
+                var body = $("<div class='media-body'>");
+                var h5 = $("<h5 class='mt-0'>" + fullname + "</h5>");
+                var unfollow = $("<button class='btn btn-danger btn-sm'>Unfollow</button>");
 
-    $('#unfollow-btn').on('click', function() {
-    	$('#fake-following').remove();
-    })
+                var hr = $('<hr><br>');
+                body.append(h5, unfollow, hr);
+                media.append(profilepicture, body);
+                $('#following').append(media);
+            }
+        });
+    });
 
+    /* GET News Feed Messages */
+    $('#followers-user').on('click', function() {
+        $.get('/users/followers', function(data) {
+            $('#follower').empty();
+            for (var i=0; i<data.length; i++) {
 
+                var profilepicture = data[i].followersfk.profilepicture;
+                var userid = data[i].followersfk.id;
+                var fullname = data[i].followersfk.firstname + " " + data[i].followersfk.lastname;
+
+                /* creating global feed on the fly */
+                var media = $("<div class='media'>");
+                var profilepicture = $("<a href='/users/profile/" + userid + "'><img class='rounded mr-3 post-picture follow' src='/assets/images/profile/" + profilepicture + "'><a/>");
+                var body = $("<div class='media-body'>");
+                var h5 = $("<h5 class='mt-0'>" + fullname + "</h5>");
+                var hr = $('<hr><br>');
+                body.append(h5, hr);
+                media.append(profilepicture, body);
+                $('#follower').append(media);
+            }
+        });
+    });
 });
-
